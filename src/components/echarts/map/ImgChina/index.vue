@@ -512,9 +512,7 @@ const option = computed(() => {
         },
         itemSymbol: "circle",
         seriesIndex: cubeData.length > 0 ? 1 : -1,
-        outOfRange: {
-          opacity: 0,
-        },
+        legendHoverLink: false,
         ...pickPositionOnly(props.option?.visualMap1),
       },
       {
@@ -655,9 +653,9 @@ function createSeries(mapData, cubeData, lines) {
   list.push({
     ...seriesOption.map,
     id: "mapSeries",
-    name: props.name1,
+    name: props.name1 || "地图数据",
     zlevel: 5,
-    nameMap: ChinaNameMap, // 在 map 系列也应用地名简化映射
+    nameMap: ChinaNameMap,
     data: mapData,
     silent: false,
   });
@@ -686,7 +684,8 @@ function createSeries(mapData, cubeData, lines) {
       zlevel: 5,
       coordinateSystem: "geo",
       geoIndex: 0,
-      name: props.name2 || "立方体数据",
+      name: props.name2 || "企业数量",
+      legendIndex: 1,
       renderItem: function (params, api) {
         const visualOpacity = api.visual('opacity');
         if (visualOpacity != null && visualOpacity < 0.01) {
@@ -720,7 +719,7 @@ function createSeries(mapData, cubeData, lines) {
       silent: false,
       tooltip: {
         formatter: (params) => {
-          return `${props.name2 || "立方体数据"} <br/>${params.name} ${
+          return `${props.name2 || "企业数量"} <br/>${params.name} ${
             params.value[2]
           }`;
         },
