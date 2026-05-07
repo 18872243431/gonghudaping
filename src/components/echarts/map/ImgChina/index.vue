@@ -41,8 +41,6 @@ import { CubeLeft, CubeRight, CubeTop } from "./cube";
 const NANSHA_SHIFT_LON = -2.5;
 const NANSHA_SHIFT_LAT = -1;
 
-const cubeVisible = ref(true);
-
 use([
   CanvasRenderer,
   MapChart,
@@ -457,7 +455,6 @@ const option = computed(() => {
     from: ChinaNameMap[line.from] || line.from,
     to: ChinaNameMap[line.to] || line.to,
   }));
-  const visible = cubeVisible.value;
   const mapValues = mapData.map((item) => item.value);
   // 从大到小排序
   const sortedMapValues = [...mapValues].sort((a, b) => b - a);
@@ -670,31 +667,33 @@ function setupChartEvents() {
     if (chart) {
       chart.on('legendselectchanged', function(params) {
         if (props.name2 && params.selected.hasOwnProperty(props.name2)) {
-          cubeVisible.value = params.selected[props.name2];
+          const isVisible = params.selected[props.name2];
+          chart.setOption({
+            series: [{
+              id: 'cubeSeries',
+              data: isVisible ? coordsFmt(transformDataForMap(props.data?.cube || [])) : []
+            }]
+          });
         }
       });
       chart.on('click', function(params) {
         if (params.componentType === 'visualMap') {
-          cubeVisible.value = !cubeVisible.value;
+          const seriesIndex = chart.getOption().series.findIndex(s => s.id === 'cubeSeries');
+          if (seriesIndex !== -1) {
+            const currentData = chart.getOption().series[seriesIndex].data || [];
+            const isVisible = currentData.length > 0;
+            chart.setOption({
+              series: [{
+                id: 'cubeSeries',
+                data: isVisible ? [] : coordsFmt(transformDataForMap(props.data?.cube || []))
+              }]
+            });
+          }
         }
       });
     }
   });
 }
-
-watch(cubeVisible, function(newVal) {
-  nextTick(() => {
-    const chart = mapChart.value?.chart;
-    if (chart) {
-      chart.setOption({
-        series: [{
-          id: 'cubeSeries',
-          data: newVal ? coordsFmt(transformDataForMap(props.data?.cube || [])) : []
-        }]
-      });
-    }
-  });
-});
 
 onMounted(() => {
   setupChartEvents();
@@ -763,7 +762,7 @@ function createSeries(mapData, cubeData, lines) {
           height * 3,
         );
       },
-      data: cubeVisible.value ? coordsFmt(cubeData) : [],
+      data: coordsFmt(cubeData),
       silent: false,
       tooltip: {
         formatter: (params) => {
