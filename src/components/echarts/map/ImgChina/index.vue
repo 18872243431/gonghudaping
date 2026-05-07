@@ -15,12 +15,13 @@
       :option="option"
       :autoresize="true"
       :style="mapLayerStyle"
+      @legendselectchanged="handleLegendSelectChanged"
     ></v-chart>
   </div>
 </template>
 
 <script setup>
-import { computed, ref, onBeforeMount } from "vue";
+import { computed, ref, onBeforeMount, watch } from "vue";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import {
@@ -40,6 +41,8 @@ import { CubeLeft, CubeRight, CubeTop } from "./cube";
 
 const NANSHA_SHIFT_LON = -2.5;
 const NANSHA_SHIFT_LAT = -1;
+
+const cubeVisible = ref(true);
 
 use([
   CanvasRenderer,
@@ -512,7 +515,6 @@ const option = computed(() => {
         },
         itemSymbol: "circle",
         seriesIndex: cubeData.length > 0 ? 1 : -1,
-        legendHoverLink: false,
         ...pickPositionOnly(props.option?.visualMap1),
       },
       {
@@ -648,6 +650,13 @@ onBeforeMount(() => {
   isMapReady.value = true;
 });
 
+function handleLegendSelectChanged(params) {
+  const selected = params.selected;
+  if (props.name2 && selected.hasOwnProperty(props.name2)) {
+    cubeVisible.value = selected[props.name2];
+  }
+}
+
 function createSeries(mapData, cubeData, lines) {
   const list = [];
   list.push({
@@ -686,9 +695,9 @@ function createSeries(mapData, cubeData, lines) {
       geoIndex: 0,
       name: props.name2 || "企业数量",
       legendIndex: 1,
+      legendHoverLink: false,
       renderItem: function (params, api) {
-        const visualOpacity = api.visual('opacity');
-        if (visualOpacity != null && visualOpacity < 0.01) {
+        if (!cubeVisible.value) {
           return { type: 'group', children: [] };
         }
         const value = cubeData[params.dataIndex].value;
