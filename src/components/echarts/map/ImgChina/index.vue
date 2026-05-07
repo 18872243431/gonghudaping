@@ -660,7 +660,30 @@ function setupChartEvents() {
       chart.on('legendselectchanged', function(params) {
         const legendName = props.name2 || "企业数量";
         if (params.selected.hasOwnProperty(legendName)) {
-          cubeVisible.value = params.selected[legendName];
+          const isSelected = params.selected[legendName];
+          cubeVisible.value = isSelected;
+          
+          // 使用 ECharts dispatchAction 来控制 series 显示/隐藏
+          if (isSelected) {
+            chart.dispatchAction({
+              type: 'legendSelect',
+              name: legendName
+            });
+          } else {
+            chart.dispatchAction({
+              type: 'legendUnSelect',
+              name: legendName
+            });
+          }
+        }
+      });
+      
+      // 同时监听 visualMap 点击事件
+      chart.off('click');
+      chart.on('click', function(params) {
+        if (params.componentType === 'visualMap') {
+          // 切换 cube 可见性
+          cubeVisible.value = !cubeVisible.value;
         }
       });
     }
@@ -672,6 +695,20 @@ watch(cubeVisible, function(newVal) {
     const chart = mapChart.value?.chart;
     if (chart) {
       const legendName = props.name2 || "企业数量";
+      
+      // 通过设置 series data 为空或非空来控制显示
+      const seriesIndex = chart.getOption().series.findIndex(s => s.id === 'cubeSeries');
+      if (seriesIndex !== -1) {
+        const cubeData = transformDataForMap(props.data?.cube || []);
+        chart.setOption({
+          series: [{
+            id: 'cubeSeries',
+            data: newVal ? coordsFmt(cubeData) : []
+          }]
+        }, { notMerge: false, replaceMerge: [] });
+      }
+      
+      // 同步更新 legend 状态
       chart.setOption({
         legend: {
           selected: {
