@@ -722,7 +722,7 @@ function createSeries(mapData, cubeData, lines) {
       data: [],
     });
   }
-  if (props.showCube && cubeData.length > 0 && cubeVisible.value) {
+  if (props.showCube && cubeData.length > 0) {
     const cubeValues = cubeData.map((item) => item.value);
     const cubeMin = cubeValues.length > 0 ? Math.min(...cubeValues) : 200;
     const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
@@ -763,7 +763,7 @@ function createSeries(mapData, cubeData, lines) {
           height * 3,
         );
       },
-      data: coordsFmt(cubeData),
+      data: cubeVisible.value ? coordsFmt(cubeData) : [],
       silent: false,
       tooltip: {
         formatter: (params) => {
