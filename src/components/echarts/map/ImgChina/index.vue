@@ -31,6 +31,7 @@
       :option="option"
       :autoresize="true"
       :style="mapLayerStyle"
+      :key="chartKey"
     ></v-chart>
   </div>
 </template>
@@ -59,9 +60,11 @@ const NANSHA_SHIFT_LAT = -1;
 
 const mapChart = ref(null);
 const cubeVisible = ref(true);
+const chartKey = ref(0);
 
 function toggleCubeLegend() {
   cubeVisible.value = !cubeVisible.value;
+  chartKey.value++; // 强制重新渲染图表
 }
 
 const legendStyle = computed(() => ({
@@ -677,36 +680,15 @@ function setupChartEvents() {
   nextTick(() => {
     const chart = mapChart.value?.chart;
     if (chart) {
-      // 监听 visualMap 点击事件
       chart.off('click');
       chart.on('click', function(params) {
         if (params.componentType === 'visualMap') {
-          // 切换 cube 可见性
           cubeVisible.value = !cubeVisible.value;
         }
       });
     }
   });
 }
-
-watch(cubeVisible, function(newVal) {
-  nextTick(() => {
-    const chart = mapChart.value?.chart;
-    if (chart) {
-      // 通过设置 series data 为空或非空来控制显示
-      const seriesIndex = chart.getOption().series.findIndex(s => s.id === 'cubeSeries');
-      if (seriesIndex !== -1) {
-        const cubeData = transformDataForMap(props.data?.cube || []);
-        chart.setOption({
-          series: [{
-            id: 'cubeSeries',
-            data: newVal ? coordsFmt(cubeData) : []
-          }]
-        });
-      }
-    }
-  });
-});
 
 onMounted(() => {
   setupChartEvents();
