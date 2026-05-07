@@ -15,7 +15,6 @@
       :option="option"
       :autoresize="true"
       :style="mapLayerStyle"
-      @legendselectchanged="handleLegendSelectChanged"
     ></v-chart>
   </div>
 </template>
@@ -650,6 +649,8 @@ const option = computed(() => {
   return option;
 });
 
+import { nextTick, watch } from "vue";
+
 onBeforeMount(() => {
   echarts.registerMap("china", shiftedChinaMap);
   echarts.registerMap("chinaContour", shiftedChinaContour);
@@ -663,11 +664,41 @@ onBeforeMount(() => {
   isMapReady.value = true;
 });
 
-function handleLegendSelectChanged(params) {
-  if (props.name2 && params.selected.hasOwnProperty(props.name2)) {
-    cubeVisible.value = params.selected[props.name2];
-  }
+function setupChartEvents() {
+  nextTick(() => {
+    const chart = mapChart.value?.chart;
+    if (chart) {
+      chart.on('legendselectchanged', function(params) {
+        if (props.name2 && params.selected.hasOwnProperty(props.name2)) {
+          cubeVisible.value = params.selected[props.name2];
+        }
+      });
+      chart.on('click', function(params) {
+        if (params.componentType === 'visualMap') {
+          cubeVisible.value = !cubeVisible.value;
+        }
+      });
+    }
+  });
 }
+
+watch(cubeVisible, function(newVal) {
+  nextTick(() => {
+    const chart = mapChart.value?.chart;
+    if (chart) {
+      chart.setOption({
+        series: [{
+          id: 'cubeSeries',
+          data: newVal ? coordsFmt(transformDataForMap(props.data?.cube || [])) : []
+        }]
+      });
+    }
+  });
+});
+
+onMounted(() => {
+  setupChartEvents();
+});
 
 function createSeries(mapData, cubeData, lines) {
   const list = [];
