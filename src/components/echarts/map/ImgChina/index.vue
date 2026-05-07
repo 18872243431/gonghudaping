@@ -15,6 +15,7 @@
       :option="option"
       :autoresize="true"
       :style="mapLayerStyle"
+      @click="handleChartClick"
     ></v-chart>
   </div>
 </template>
@@ -40,6 +41,8 @@ import { CubeLeft, CubeRight, CubeTop } from "./cube";
 
 const NANSHA_SHIFT_LON = -2.5;
 const NANSHA_SHIFT_LAT = -1;
+
+const cubeVisible = ref(true);
 
 use([
   CanvasRenderer,
@@ -455,6 +458,7 @@ const option = computed(() => {
     from: ChinaNameMap[line.from] || line.from,
     to: ChinaNameMap[line.to] || line.to,
   }));
+  const visible = cubeVisible.value;
   const mapValues = mapData.map((item) => item.value);
   // 从大到小排序
   const sortedMapValues = [...mapValues].sort((a, b) => b - a);
@@ -658,6 +662,21 @@ onBeforeMount(() => {
   }
   isMapReady.value = true;
 });
+
+function handleChartClick(params) {
+  if (params.componentType === 'visualMap') {
+    const chart = mapChart.value?.chart;
+    if (chart) {
+      cubeVisible.value = !cubeVisible.value;
+      chart.setOption({
+        series: [{
+          id: 'cubeSeries',
+          data: cubeVisible.value ? coordsFmt(transformDataForMap(props.data?.cube || [])) : []
+        }]
+      });
+    }
+  }
+}
 
 function createSeries(mapData, cubeData, lines) {
   const list = [];
