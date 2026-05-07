@@ -651,14 +651,14 @@ onBeforeMount(() => {
 function handleLegendSelectChanged(params) {
   const selected = params.selected;
   if (props.name2 && selected.hasOwnProperty(props.name2)) {
-    cubeVisible.value = selected[props.name2];
     const chart = mapChart.value?.chart;
     if (chart) {
-      if (selected[props.name2]) {
-        chart.showSeries('cubeSeries');
-      } else {
-        chart.hideSeries('cubeSeries');
-      }
+      chart.setOption({
+        series: [{
+          id: 'cubeSeries',
+          data: selected[props.name2] ? coordsFmt(transformDataForMap(props.data?.cube || [])) : []
+        }]
+      });
     }
   }
 }
