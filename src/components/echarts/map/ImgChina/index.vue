@@ -458,6 +458,7 @@ const option = computed(() => {
     from: ChinaNameMap[line.from] || line.from,
     to: ChinaNameMap[line.to] || line.to,
   }));
+  const visible = cubeVisible.value;
   const mapValues = mapData.map((item) => item.value);
   // 从大到小排序
   const sortedMapValues = [...mapValues].sort((a, b) => b - a);
@@ -679,7 +680,7 @@ function createSeries(mapData, cubeData, lines) {
       data: [],
     });
   }
-  if (props.showCube && cubeData.length > 0) {
+  if (props.showCube && cubeData.length > 0 && cubeVisible.value) {
     const cubeValues = cubeData.map((item) => item.value);
     const cubeMin = cubeValues.length > 0 ? Math.min(...cubeValues) : 200;
     const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
@@ -697,9 +698,6 @@ function createSeries(mapData, cubeData, lines) {
       legendIndex: 1,
       legendHoverLink: false,
       renderItem: function (params, api) {
-        if (!cubeVisible.value) {
-          return { type: 'group', children: [] };
-        }
         const value = cubeData[params.dataIndex].value;
         let color;
         if (value >= max1) {
