@@ -8,6 +8,22 @@
       </defs>
     </svg>
     <img v-if="showBaseImage" src="./China1.png" :style="baseImageStyle" />
+    
+    <!-- 自定义图例 - 完全由 Vue 控制 -->
+    <div class="custom-legend" v-if="props.showCube" :style="legendStyle">
+      <div 
+        class="legend-item" 
+        :class="{ disabled: !cubeVisible }"
+        @click="toggleCubeLegend"
+      >
+        <span class="legend-icon">
+          <span v-if="cubeVisible" class="icon-visible">●</span>
+          <span v-else class="icon-hidden">○</span>
+        </span>
+        <span class="legend-text">{{ props.name2 || "企业数量" }}</span>
+      </div>
+    </div>
+    
     <v-chart
       class="chart"
       v-if="isMapReady"
@@ -43,6 +59,20 @@ const NANSHA_SHIFT_LAT = -1;
 
 const mapChart = ref(null);
 const cubeVisible = ref(true);
+
+function toggleCubeLegend() {
+  cubeVisible.value = !cubeVisible.value;
+}
+
+const legendStyle = computed(() => ({
+  position: 'absolute',
+  bottom: '10px',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  display: 'flex',
+  gap: '20px',
+  zIndex: 100,
+}));
 
 use([
   CanvasRenderer,
@@ -467,16 +497,7 @@ const option = computed(() => {
   return {
     animation: true,
     legend: {
-      show: true,
-      data: [props.name1 || "地图数据", props.name2 || "企业数量"],
-      selected: {
-        [props.name2 || "企业数量"]: cubeVisible.value
-      },
-      bottom: 10,
-      textStyle: {
-        color: "#ffffff",
-        fontSize: 18,
-      },
+      show: false,
     },
     visualMap: [
       {
@@ -656,29 +677,7 @@ function setupChartEvents() {
   nextTick(() => {
     const chart = mapChart.value?.chart;
     if (chart) {
-      chart.off('legendselectchanged');
-      chart.on('legendselectchanged', function(params) {
-        const legendName = props.name2 || "企业数量";
-        if (params.selected.hasOwnProperty(legendName)) {
-          const isSelected = params.selected[legendName];
-          cubeVisible.value = isSelected;
-          
-          // 使用 ECharts dispatchAction 来控制 series 显示/隐藏
-          if (isSelected) {
-            chart.dispatchAction({
-              type: 'legendSelect',
-              name: legendName
-            });
-          } else {
-            chart.dispatchAction({
-              type: 'legendUnSelect',
-              name: legendName
-            });
-          }
-        }
-      });
-      
-      // 同时监听 visualMap 点击事件
+      // 监听 visualMap 点击事件
       chart.off('click');
       chart.on('click', function(params) {
         if (params.componentType === 'visualMap') {
@@ -694,8 +693,6 @@ watch(cubeVisible, function(newVal) {
   nextTick(() => {
     const chart = mapChart.value?.chart;
     if (chart) {
-      const legendName = props.name2 || "企业数量";
-      
       // 通过设置 series data 为空或非空来控制显示
       const seriesIndex = chart.getOption().series.findIndex(s => s.id === 'cubeSeries');
       if (seriesIndex !== -1) {
@@ -705,17 +702,8 @@ watch(cubeVisible, function(newVal) {
             id: 'cubeSeries',
             data: newVal ? coordsFmt(cubeData) : []
           }]
-        }, { notMerge: false, replaceMerge: [] });
+        });
       }
-      
-      // 同步更新 legend 状态
-      chart.setOption({
-        legend: {
-          selected: {
-            [legendName]: newVal
-          }
-        }
-      });
     }
   });
 });
@@ -1015,6 +1003,48 @@ function renderItem(params, api, styleColor, cubeOption, value) {
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
+  }
+  
+  .custom-legend {
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 8px 16px;
+      background: rgba(11, 36, 57, 0.8);
+      border: 1px solid rgba(77, 213, 255, 0.5);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: rgba(11, 36, 57, 0.95);
+        border-color: rgba(77, 213, 255, 0.8);
+      }
+      
+      &.disabled {
+        opacity: 0.5;
+        
+        .legend-icon {
+          color: #666;
+        }
+      }
+      
+      .legend-icon {
+        color: #4dd5ff;
+        font-size: 16px;
+        
+        .icon-hidden {
+          color: #666;
+        }
+      }
+      
+      .legend-text {
+        color: #ffffff;
+        font-size: 18px;
+        font-family: "PingFang SC", "Microsoft YaHei", "SourceHanSansSC", sans-serif;
+      }
+    }
   }
 }
 </style>
