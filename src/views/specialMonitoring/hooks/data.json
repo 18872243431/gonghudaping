@@ -1,0 +1,242 @@
+{
+  "eventList": [
+    {
+      "id": "1",
+      "name": "某电力企业网络安全专项监测",
+      "time": "2023-07-01 - 2023-07-31",
+      "attackNum": 1258
+    },
+    {
+      "id": "2",
+      "name": "某金融机构网络安全专项监测",
+      "time": "2023-08-01 - 2023-08-31",
+      "attackNum": 2426
+    },
+    {
+      "id": "3",
+      "name": "某医疗机构网络安全专项监测",
+      "time": "2023-09-01 - 2023-09-30",
+      "attackNum": 1835
+    }
+  ],
+  "specialDetail": {
+    "eventName": "某电力企业网络安全专项监测",
+    "monitorCompanyNum": 156,
+    "riskEvent": 1258,
+    "startTime": "2023-07-01",
+    "endTime": "2023-07-31",
+    "eventDesc": "针对全国范围内的重点电力企业进行的网络安全专项监测任务，监测内容包括网络攻击、漏洞利用、恶意代码传播等安全事件，旨在及时发现并处理电力企业面临的网络安全威胁，确保电力系统的安全稳定运行。"
+  },
+  "realTimeAttackDynamics": [
+    {
+      "timestamp": "2023-07-15 08:23:15",
+      "type": 1,
+      "attackedCorpName": "某电力公司A",
+      "attackedIp": "192.168.1.105",
+      "attackIp": "45.134.26.178",
+      "attackCountry": "俄罗斯",
+      "eventTypeName": "暴力破解"
+    },
+    {
+      "timestamp": "2023-07-15 10:12:45",
+      "type": 2,
+      "attackedCorpName": "某电力公司B",
+      "attackedIp": "192.168.1.107",
+      "attackIp": "103.45.78.92",
+      "attackCountry": "美国",
+      "eventTypeName": "网络扫描"
+    },
+    {
+      "timestamp": "2023-07-15 13:45:32",
+      "type": 3,
+      "attackedCorpName": "某电力公司C",
+      "attackedIp": "192.168.1.110",
+      "attackIp": "78.156.32.45",
+      "attackCountry": "中国",
+      "eventTypeName": "漏洞利用"
+    },
+    {
+      "timestamp": "2023-07-15 16:23:45",
+      "type": 1,
+      "attackedCorpName": "某电力公司D",
+      "attackedIp": "192.168.1.112",
+      "attackIp": "125.67.89.32",
+      "attackCountry": "印度",
+      "eventTypeName": "DDoS攻击"
+    },
+    {
+      "timestamp": "2023-07-15 19:34:23",
+      "type": 2,
+      "attackedCorpName": "某电力公司E",
+      "attackedIp": "192.168.1.115",
+      "attackIp": "67.89.123.45",
+      "attackCountry": "巴西",
+      "eventTypeName": "钓鱼攻击"
+    }
+  ],
+  "map": {
+    "provinceMap": {
+      "北京市": 156,
+      "上海市": 125,
+      "广东省": 210,
+      "江苏省": 98,
+      "浙江省": 86,
+      "四川省": 142,
+      "湖北省": 78,
+      "湖南省": 65,
+      "黑龙江省": 45,
+      "广西壮族自治区": 35
+    },
+    "ipMap": {
+      "北京市": 3240,
+      "上海市": 2850,
+      "广东省": 4500,
+      "江苏省": 2100,
+      "浙江省": 1850,
+      "四川省": 2600,
+      "湖北省": 1750,
+      "湖南省": 1350,
+      "黑龙江省": 950,
+      "广西壮族自治区": 750
+    }
+  },
+  "numberCard": {
+    "monitorIp": 3856,
+    "monitorDomain": 527,
+    "totalNum": 12560,
+    "attackNum": 783,
+    "attackedNum": 105
+  },
+  "riskEnterprise": [
+    {
+      "logo": "",
+      "companyName": "某电力集团有限公司",
+      "atdNum": 2356,
+      "ipNum": 32,
+      "eventTab": ["暴力破解", "漏洞利用", "DDoS攻击"]
+    },
+    {
+      "logo": "",
+      "companyName": "某区域电力供应公司",
+      "atdNum": 1835,
+      "ipNum": 27,
+      "eventTab": ["网络扫描", "漏洞利用", "恶意代码"]
+    },
+    {
+      "logo": "",
+      "companyName": "某发电厂",
+      "atdNum": 1452,
+      "ipNum": 18,
+      "eventTab": ["暴力破解", "网络扫描", "钓鱼攻击"]
+    },
+    {
+      "logo": "",
+      "companyName": "某电力变电站",
+      "atdNum": 1253,
+      "ipNum": 14,
+      "eventTab": ["DDoS攻击", "钓鱼攻击", "恶意代码"]
+    },
+    {
+      "logo": "",
+      "companyName": "某电力研究院",
+      "atdNum": 982,
+      "ipNum": 11,
+      "eventTab": ["网络扫描", "漏洞利用", "暴力破解"]
+    }
+  ],
+  "eventTypeDistribution": {
+    "网络扫描": 4567,
+    "暴力破解": 3245,
+    "漏洞利用": 2138,
+    "DDoS攻击": 1567,
+    "钓鱼攻击": 743,
+    "恶意代码": 300
+  },
+  "attackCountryRanking": [
+    {
+      "country": "美国",
+      "attackNum": 325,
+      "atdNum": 4562
+    },
+    {
+      "country": "俄罗斯",
+      "attackNum": 287,
+      "atdNum": 3890
+    },
+    {
+      "country": "中国",
+      "attackNum": 156,
+      "atdNum": 1856
+    },
+    {
+      "country": "印度",
+      "attackNum": 98,
+      "atdNum": 1245
+    },
+    {
+      "country": "巴西",
+      "attackNum": 76,
+      "atdNum": 985
+    },
+    {
+      "country": "韩国",
+      "attackNum": 52,
+      "atdNum": 768
+    },
+    {
+      "country": "日本",
+      "attackNum": 37,
+      "atdNum": 523
+    }
+  ],
+  "attackIPBehaviorAnalysis": [
+    {
+      "ip": "45.134.26.178",
+      "country": "俄罗斯",
+      "eventTypeList": ["暴力破解", "网络扫描", "漏洞利用"],
+      "atdNum": 2546,
+      "attackedIpList": [{ "ip": "192.168.1.105" }],
+      "provinceList": ["北京", "上海", "广东"],
+      "industryList": ["电力", "能源"]
+    },
+    {
+      "ip": "103.45.78.92",
+      "country": "美国",
+      "eventTypeList": ["网络扫描", "DDoS攻击", "恶意代码"],
+      "atdNum": 1987,
+      "attackedIpList": [
+        { "ip": "192.168.1.112" },
+        { "ip": "192.168.1.115" },
+        { "ip": "192.168.1.118" }
+      ],
+      "provinceList": ["江苏", "浙江", "四川"],
+      "industryList": ["电力", "工业"]
+    },
+    {
+      "ip": "78.156.32.45",
+      "country": "中国",
+      "eventTypeList": ["漏洞利用", "钓鱼攻击", "网络扫描"],
+      "atdNum": 1564,
+      "attackedIpList": [
+        { "ip": "192.168.1.120" },
+        { "ip": "192.168.1.122" },
+        { "ip": "192.168.1.125" }
+      ],
+      "provinceList": ["湖北", "湖南", "黑龙江"],
+      "industryList": ["电力", "通信"]
+    },
+    {
+      "ip": "45.134.26.178",
+      "country": "俄罗斯",
+      "eventTypeList": ["暴力破解", "网络扫描", "漏洞利用"],
+      "atdNum": 2546,
+      "attackedIpList": [{ "ip": "192.168.1.105" }],
+      "provinceList": ["北京", "上海", "广东"],
+      "industryList": ["电力", "能源"]
+    }
+  ],
+  "attackTrend": {
+    "timeList": ["7-01", "7-05", "7-10", "7-15", "7-20", "7-25", "7-30"],
+    "dataList": [156, 205, 187, 245, 310, 275, 230]
+  }
+}

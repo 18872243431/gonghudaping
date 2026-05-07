@@ -1,0 +1,403 @@
+{
+  "overview": {
+    "code": 0,
+    "data": "截至目前，全国工业企业遭受网络攻击告警达到 25,678 次，其中境内攻击源 3,245 个，境外攻击源 1,876 个，共有 568 家企业遭受攻击。攻击类型主要包括恶意软件、网络扫描、漏洞利用等。"
+  },
+  "attackRanking": {
+    "code": 0,
+    "data": [
+      { "key": "北京市", "doc_count": 35999999978 },
+      { "key": "广东省", "doc_count": 2987 },
+      { "key": "浙江省", "doc_count": 2456 },
+      { "key": "江苏省", "doc_count": 2134 },
+      { "key": "湖北省", "doc_count": 1876 },
+      { "key": "四川省", "doc_count": 1654 },
+      { "key": "山东省", "doc_count": 1543 },
+      { "key": "重庆市", "doc_count": 1432 },
+      { "key": "上海市", "doc_count": 1321 },
+      { "key": "陕西省", "doc_count": 1245 },
+      { "key": "福建省", "doc_count": 1187 },
+      { "key": "河北省", "doc_count": 1065 },
+      { "key": "湖南省", "doc_count": 978 },
+      { "key": "安徽省", "doc_count": 876 },
+      { "key": "辽宁省", "doc_count": 765 },
+      { "key": "江西省", "doc_count": 687 },
+      { "key": "河南省", "doc_count": 645 },
+      { "key": "广西壮族自治区", "doc_count": 576 },
+      { "key": "贵州省", "doc_count": 498 },
+      { "key": "云南省", "doc_count": 456 },
+      { "key": "山西省", "doc_count": 432 },
+      { "key": "黑龙江省", "doc_count": 398 },
+      { "key": "吉林省", "doc_count": 365 },
+      { "key": "内蒙古自治区", "doc_count": 334 },
+      { "key": "天津市", "doc_count": 312 },
+      { "key": "甘肃省", "doc_count": 287 },
+      { "key": "新疆维吾尔自治区", "doc_count": 254 },
+      { "key": "海南省", "doc_count": 223 },
+      { "key": "宁夏回族自治区", "doc_count": 198 },
+      { "key": "青海省", "doc_count": 165 },
+      { "key": "西藏自治区", "doc_count": 132 }
+    ]
+  },
+  "realTimeAttack": {
+    "code": 0,
+    "data": [
+      {
+        "timestamp": "2023-06-19 15:23:45",
+        "eventTypeName": "恶意软件",
+        "killChainCn": "初始访问",
+        "attackIp": "192.168.1.100",
+        "attackedCountry": "美国",
+        "attackedCorpName": "华为技术有限公司",
+        "attackedIp": "203.45.67.89",
+        "attackedProvince": "广东省"
+      },
+      {
+        "timestamp": "2023-06-19 15:10:23",
+        "eventTypeName": "网络扫描",
+        "killChainCn": "侦察",
+        "attackIp": "45.78.123.45",
+        "attackedCountry": "荷兰",
+        "attackedCorpName": "中国石化集团",
+        "attackedIp": "114.67.89.123",
+        "attackedProvince": "北京市"
+      },
+      {
+        "timestamp": "2023-06-19 14:58:12",
+        "eventTypeName": "漏洞利用",
+        "killChainCn": "武器化",
+        "attackIp": "78.45.123.67",
+        "attackedCountry": "俄罗斯",
+        "attackedCorpName": "中国移动通信集团",
+        "attackedIp": "120.78.156.234",
+        "attackedProvince": "上海市"
+      },
+      {
+        "timestamp": "2023-06-19 14:45:36",
+        "eventTypeName": "DDoS攻击",
+        "killChainCn": "传递",
+        "attackIp": "123.45.67.89",
+        "attackedCountry": "中国",
+        "attackedCorpName": "中国电信集团",
+        "attackedIp": "58.67.89.123",
+        "attackedProvince": "浙江省"
+      },
+      {
+        "timestamp": "2023-06-19 14:32:18",
+        "eventTypeName": "网络钓鱼",
+        "killChainCn": "利用",
+        "attackIp": "67.89.123.45",
+        "attackedCountry": "德国",
+        "attackedCorpName": "联想集团",
+        "attackedIp": "45.67.89.123",
+        "attackedProvince": "北京市"
+      }
+    ]
+  },
+  "foreignAttackCountry": {
+    "code": 0,
+    "data": [
+      { "key": "美国", "doc_count": 1134 },
+      { "key": "荷兰", "doc_count": 876 },
+      { "key": "俄罗斯", "doc_count": 765 },
+      { "key": "德国", "doc_count": 654 },
+      { "key": "英国", "doc_count": 543 },
+      { "key": "日本", "doc_count": 432 },
+      { "key": "韩国", "doc_count": 321 },
+      { "key": "法国", "doc_count": 298 },
+      { "key": "加拿大", "doc_count": 276 },
+      { "key": "澳大利亚", "doc_count": 254 },
+      { "key": "印度", "doc_count": 154 },
+      { "key": "新加坡", "doc_count": 143 },
+      { "key": "巴西", "doc_count": 132 },
+      { "key": "以色列", "doc_count": 128 },
+      { "key": "瑞典", "doc_count": 115 },
+      { "key": "瑞士", "doc_count": 103 },
+      { "key": "意大利", "doc_count": 98 },
+      { "key": "西班牙", "doc_count": 87 },
+      { "key": "阿联酋", "doc_count": 76 },
+      { "key": "马来西亚", "doc_count": 65 }
+    ]
+  },
+  "securitySituation": {
+    "code": 0,
+    "data": {
+      "网络攻击告警": 25678231,
+      "境内攻击源数量": 3245,
+      "境外攻击源数量": 1876,
+      "被攻击企业数量": 568
+    }
+  },
+  "attackDistribution": {
+    "code": 0,
+    "data": [
+      { "key": "恶意服务", "doc_count": 815974 },
+      { "key": "密码暴力", "doc_count": 178889 },
+      { "key": "外联恶意", "doc_count": 132403 },
+      { "key": "僵尸网络", "doc_count": 117874 },
+      { "key": "漏洞攻击", "doc_count": 95156 }
+    ]
+  },
+  "attackTrend": {
+    "code": 0,
+    "data": {
+      "境内": [
+        { "key_as_string": "06-13", "doc_count": 876 },
+        { "key_as_string": "06-14", "doc_count": 954 },
+        { "key_as_string": "06-15", "doc_count": 1023 },
+        { "key_as_string": "06-16", "doc_count": 987 },
+        { "key_as_string": "06-17", "doc_count": 1141125 },
+        { "key_as_string": "06-18", "doc_count": 1234 },
+        { "key_as_string": "06-19", "doc_count": 1087 }
+      ],
+      "境外": [
+        { "key_as_string": "06-13", "doc_count": 62254 },
+        { "key_as_string": "06-14", "doc_count": 72343 },
+        { "key_as_string": "06-15", "doc_count": 79128 },
+        { "key_as_string": "06-16", "doc_count": 84245 },
+        { "key_as_string": "06-17", "doc_count": 91342 },
+        { "key_as_string": "06-18", "doc_count": 9823437 },
+        { "key_as_string": "06-19", "doc_count": 4282376 }
+      ]
+    }
+  },
+  "exposedIndustrialControlSystem": {
+    "code": 0,
+    "data": {
+      "assetTotal": 373529,
+      "assetTypeTotal": 22,
+      "assetInfo": [
+        { "key": "DTU数据中心", "doc_count": 48338 },
+        { "key": "可编程逻辑控制器", "doc_count": 18165 },
+        { "key": "OPC服务器", "doc_count": 16738 },
+        { "key": "IPMI监视服务器", "doc_count": 15107 },
+        { "key": "网关", "doc_count": 9664 },
+        { "key": "集散控制系统", "doc_count": 2674 },
+        { "key": "数据采集监控系统", "doc_count": 1964 },
+        { "key": "电力应用系统", "doc_count": 1827 },
+        { "key": "操作员站", "doc_count": 1783 },
+        { "key": "灾害预警系统", "doc_count": 1391 },
+        { "key": "其他", "doc_count": 255878 }
+      ],
+      "detail": [
+        {
+          "logo": "Moxa",
+          "deviceCount": 6689,
+          "loopholeCount": 249
+        },
+        {
+          "logo": "Rockwell Automation",
+          "deviceCount": 5549,
+          "loopholeCount": 225
+        },
+        {
+          "logo": "Honeywell",
+          "deviceCount": 2076,
+          "loopholeCount": 116
+        },
+        {
+          "logo": "Schneider Electric",
+          "deviceCount": 1131,
+          "loopholeCount": 226
+        },
+        {
+          "logo": "Omron Corporation",
+          "deviceCount": 822,
+          "loopholeCount": 51
+        },
+        {
+          "logo": "Siemens",
+          "deviceCount": 321,
+          "loopholeCount": 282
+        }
+      ]
+    }
+  },
+  "exposedIndustrialControlSystemDetail": {
+    "code": 0,
+    "data": {
+      "原材料工业": {
+        "钢铁": {
+          "companyTotal": 1236,
+          "aboveScaleCompanyTotal": 98
+        },
+        "有色金属": {
+          "companyTotal": 3265,
+          "aboveScaleCompanyTotal": 76
+        },
+        "石油化工": {
+          "companyTotal": 187,
+          "aboveScaleCompanyTotal": 112
+        },
+        "建材": {
+          "companyTotal": 2569,
+          "aboveScaleCompanyTotal": 67
+        }
+      },
+      "装备工业": {
+        "机械": {
+          "companyTotal": 234,
+          "aboveScaleCompanyTotal": 2568
+        },
+        "汽车": {
+          "companyTotal": 187,
+          "aboveScaleCompanyTotal": 123
+        },
+        "船舶": {
+          "companyTotal": 76,
+          "aboveScaleCompanyTotal": 45
+        },
+        "航空航天": {
+          "companyTotal": 43,
+          "aboveScaleCompanyTotal": 28
+        }
+      },
+      "消费品工业": {
+        "轻工": {
+          "companyTotal": 345,
+          "aboveScaleCompanyTotal": 234
+        },
+        "纺织": {
+          "companyTotal": 287,
+          "aboveScaleCompanyTotal": 187
+        },
+        "食品": {
+          "companyTotal": 198,
+          "aboveScaleCompanyTotal": 123
+        },
+        "医药": {
+          "companyTotal": 156,
+          "aboveScaleCompanyTotal": 98
+        }
+      },
+      "电子信息制造业": {
+        "电子": {
+          "companyTotal": 432,
+          "aboveScaleCompanyTotal": 345
+        },
+        "通信": {
+          "companyTotal": 345,
+          "aboveScaleCompanyTotal": 276
+        },
+        "计算机": {
+          "companyTotal": 287,
+          "aboveScaleCompanyTotal": 234
+        },
+        "软件": {
+          "companyTotal": 198,
+          "aboveScaleCompanyTotal": 156
+        }
+      }
+    }
+  },
+  "exposedIndustrialControlSystemDetail2": {
+    "code": 0,
+    "data": [
+      {
+        "key": "工业企业",
+        "companyTotal": 3452,
+        "coverageTotal": 2345
+      },
+      {
+        "key": "平台企业",
+        "companyTotal": 876,
+        "coverageTotal": 234
+      },
+      {
+        "key": "标识解析企业",
+        "companyTotal": 543,
+        "coverageTotal": 156
+      }
+    ]
+  },
+  "internalAttackSource": {
+    "code": 0,
+    "data": [
+      {
+        "ip": "114.114.114.114",
+        "total": 1234,
+        "province": "北京"
+      },
+      {
+        "ip": "223.5.5.5",
+        "total": 987,
+        "province": "上海"
+      },
+      {
+        "ip": "119.29.29.29",
+        "total": 876,
+        "province": "广东"
+      },
+      {
+        "ip": "180.76.76.76",
+        "total": 765,
+        "province": "浙江"
+      },
+      {
+        "ip": "1.2.4.8",
+        "total": 654,
+        "province": "江苏"
+      }
+    ]
+  },
+  "foreignAttackSource": {
+    "code": 0,
+    "data": [
+      {
+        "ip": "8.8.8.8",
+        "total": 1876,
+        "country": "美国"
+      },
+      {
+        "ip": "1.1.1.1",
+        "total": 1543,
+        "country": "美国"
+      },
+      {
+        "ip": "208.67.222.222",
+        "total": 1234,
+        "country": "美国"
+      },
+      {
+        "ip": "77.88.8.8",
+        "total": 987,
+        "country": "俄罗斯"
+      },
+      {
+        "ip": "64.6.64.6",
+        "total": 876,
+        "country": "德国"
+      }
+    ]
+  },
+  "attackedCompany": {
+    "code": 0,
+    "data": [
+      {
+        "company": "华为技术有限公司",
+        "total": 876,
+        "province": "广东省"
+      },
+      {
+        "company": "中国石化集团",
+        "total": 765,
+        "province": "北京市"
+      },
+      {
+        "company": "中国移动通信集团",
+        "total": 654,
+        "province": "北京市"
+      },
+      {
+        "company": "中国电信集团",
+        "total": 543,
+        "province": "北京市"
+      },
+      {
+        "company": "联想集团",
+        "total": 432,
+        "province": "北京市"
+      }
+    ]
+  }
+}

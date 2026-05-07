@@ -1,0 +1,238 @@
+{
+  "taskDetail": {
+    "msg": "success",
+    "code": 0,
+    "data": {
+      "riskEvent": "13次",
+      "taskName": "关键基础设置安全预防联合演练",
+      "monitor": "7个重点行业单位，包括能源、金融、交通等",
+      "time": "2025-09-07 至 2025-09-27",
+      "desc": "本次演练旨在评估重点行业关键信息基础设\n施在面对模拟APT攻击时的防御能力、应急\n响应机制及信息共享效率，提升跨部门协同\n防御水平。"
+    }
+  },
+  "map": {
+    "msg": "success",
+    "code": 0,
+    "data": {
+      "riskList": [
+        { "number": 7800, "province": "北京" },
+        { "number": 3600, "province": "天津" },
+        { "number": 8200, "province": "上海" },
+        { "number": 5400, "province": "重庆" },
+        { "number": 4100, "province": "河北" },
+        { "number": 2700, "province": "山西" },
+        { "number": 3900, "province": "辽宁" },
+        { "number": 2600, "province": "吉林" },
+        { "number": 3000, "province": "黑龙江" },
+        { "number": 7300, "province": "江苏" },
+        { "number": 7000, "province": "浙江" },
+        { "number": 3500, "province": "安徽" },
+        { "number": 4200, "province": "福建" },
+        { "number": 3200, "province": "江西" },
+        { "number": 6800, "province": "山东" },
+        { "number": 6200, "province": "河南" },
+        { "number": 5230, "province": "湖北" },
+        { "number": 8941, "province": "湖南" },
+        { "number": 6513, "province": "广东" },
+        { "number": 1800, "province": "海南" },
+        { "number": 5600, "province": "四川" },
+        { "number": 2400, "province": "贵州" },
+        { "number": 2600, "province": "云南" },
+        { "number": 800, "province": "西藏" },
+        { "number": 3300, "province": "陕西" },
+        { "number": 2100, "province": "甘肃" },
+        { "number": 900, "province": "青海" },
+        { "number": 1000, "province": "宁夏" },
+        { "number": 1900, "province": "内蒙古" },
+        { "number": 2200, "province": "新疆" },
+        { "number": 2800, "province": "广西" },
+        { "number": 1700, "province": "香港" },
+        { "number": 600, "province": "澳门" },
+        { "number": 3000, "province": "台湾" }
+      ],
+      "companyList": [
+        { "number": 140, "province": "北京" },
+        { "number": 50, "province": "天津" },
+        { "number": 150, "province": "上海" },
+        { "number": 90, "province": "重庆" },
+        { "number": 75, "province": "河北" },
+        { "number": 60, "province": "山西" },
+        { "number": 65, "province": "辽宁" },
+        { "number": 45, "province": "吉林" },
+        { "number": 55, "province": "黑龙江" },
+        { "number": 135, "province": "江苏" },
+        { "number": 130, "province": "浙江" },
+        { "number": 80, "province": "安徽" },
+        { "number": 90, "province": "福建" },
+        { "number": 70, "province": "江西" },
+        { "number": 120, "province": "山东" },
+        { "number": 110, "province": "河南" },
+        { "number": 50, "province": "湖北" },
+        { "number": 100, "province": "湖南" },
+        { "number": 60, "province": "广东" },
+        { "number": 30, "province": "海南" },
+        { "number": 110, "province": "四川" },
+        { "number": 45, "province": "贵州" },
+        { "number": 60, "province": "云南" },
+        { "number": 10, "province": "西藏" },
+        { "number": 80, "province": "陕西" },
+        { "number": 40, "province": "甘肃" },
+        { "number": 15, "province": "青海" },
+        { "number": 20, "province": "宁夏" },
+        { "number": 35, "province": "内蒙古" },
+        { "number": 50, "province": "新疆" },
+        { "number": 55, "province": "广西" },
+        { "number": 25, "province": "香港" },
+        { "number": 10, "province": "澳门" },
+        { "number": 70, "province": "台湾" }
+      ]
+    }
+  },
+  "networkAttackAnalysis": {
+    "msg": "success",
+    "code": 0,
+    "data": {
+      "Web攻击": {
+        "num": [0, 0, 41, 15, 10, 7, 2, 5, 9, 11, 5, 0, 2, 0, 5],
+        "time": [
+          "2025-09-08",
+          "2025-09-09",
+          "2025-09-10",
+          "2025-09-11",
+          "2025-09-12",
+          "2025-09-13",
+          "2025-09-14",
+          "2025-09-15",
+          "2025-09-16",
+          "2025-09-17",
+          "2025-09-18",
+          "2025-09-19",
+          "2025-09-20",
+          "2025-09-21",
+          "2025-12-19"
+        ]
+      },
+      "dailyNum": "15686",
+      "attackNum": "30641",
+      "漏洞利用": {
+        "num": [
+          1051, 731, 144, 2841, 1568, 70, 15686, 163, 182, 2387, 4810, 580, 104,
+          118, 0
+        ],
+        "time": [
+          "2025-09-08",
+          "2025-09-09",
+          "2025-09-10",
+          "2025-09-11",
+          "2025-09-12",
+          "2025-09-13",
+          "2025-09-14",
+          "2025-09-15",
+          "2025-09-16",
+          "2025-09-17",
+          "2025-09-18",
+          "2025-09-19",
+          "2025-09-20",
+          "2025-09-21",
+          "2025-12-19"
+        ]
+      }
+    }
+  },
+  "attackFeature": {
+    "msg": "success",
+    "code": 0,
+    "data": {
+      "eventList": [
+        {
+          "num": 123,
+          "label": "DDos",
+          "ratio": "23.3"
+        },
+        {
+          "num": 73,
+          "label": "SQL注入",
+          "ratio": "23.3"
+        },
+        {
+          "num": 43,
+          "label": "马桀病",
+          "ratio": "23.3"
+        }
+      ],
+      "ipList": [
+        {
+          "country": "中国",
+          "num": 334,
+          "label": "132.232.220.115"
+        },
+        {
+          "country": "美国",
+          "num": 245,
+          "label": "132.232.220.114"
+        },
+        {
+          "country": "俄罗斯",
+          "num": 206,
+          "label": "132.232.220.113"
+        }
+      ]
+    }
+  },
+  "holeRanking": {
+    "msg": "success",
+    "code": 0,
+    "data": {
+      "loopholeList": [
+        {
+          "num": 30,
+          "label": "Zimbra XXE注入",
+          "desc": "获取服务器控制权限"
+        },
+        {
+          "num": 30,
+          "label": "Log4j2 反序列化漏洞",
+          "desc": "获取服务器"
+        }
+      ]
+    }
+  },
+  "riskCompanyRanking": {
+    "msg": "success",
+    "code": 0,
+    "data": {
+      "companyList": [
+        {
+          "ipNum": "4",
+          "level": "中危",
+          "num": 20613,
+          "label": "齐鲁制药集团有限公司"
+        },
+        {
+          "ipNum": "3",
+          "level": "高危",
+          "num": 9816,
+          "label": "中国重型汽车集团有限公司"
+        },
+        {
+          "ipNum": "2",
+          "level": "低危",
+          "num": 112,
+          "label": "广西玉柴机器集团有限公司"
+        },
+        {
+          "ipNum": "1",
+          "level": "低危",
+          "num": 64,
+          "label": "云南白药集团股份有限公司"
+        },
+        {
+          "ipNum": "1",
+          "level": "低危",
+          "num": 36,
+          "label": "盛合晶微半导体（江阴）有限公司"
+        }
+      ]
+    }
+  }
+}

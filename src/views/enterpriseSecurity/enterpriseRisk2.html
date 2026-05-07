@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工业网络安全监测试验平台 - enterpriseRisk2</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  /* ===== 全局重置 ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000f28; }
+
+  /* ===== ScaleBox ===== */
+  #scale-box {
+    width: 3840px;
+    height: 1080px;
+    transform-origin: 0 0;
+    position: absolute;
+    top: 0; left: 0;
+    font-family: var(--font-family-body);
+  }
+
+  /* ===== Layout ===== */
+  .layout {
+    width: 3840px;
+    height: 1080px; 
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  header { display: none; }
+  header .titlebox {
+    font-family: 'YouSheBiaoTiHei', 'Microsoft YaHei', sans-serif;
+    font-size: var(--font-h2);
+    color: #fff;
+    letter-spacing: 4px;
+    text-align: center;
+  }
+  header .current-time {
+    position: absolute;
+    right: 200px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #00e5ff;
+    font-size: var(--font-body);
+    font-family: var(--font-family-num);
+  }
+
+  .page-container {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    padding: 10px 0;
+    gap: 0;
+  }
+
+  /* ===== 通用变量 ===== */
+  :root {
+  --font-family-title: 'YouSheBiaoTiHei', sans-serif;
+  --font-family-body: 'PingFang SC', 'Microsoft YaHei', 'SourceHanSansSC', sans-serif;
+  --font-family-num: 'DIN', 'SourceHanSansSC', sans-serif;
+  --font-h1: 38px;
+  --font-h2: 30px;
+  --font-h3: 24px;
+  --font-body: 20px;
+  --font-small: 18px;
+    --color-primary: #00e5ff;
+    --color-primary-glow: rgba(0,229,255,0.5);
+    --color-danger: #ff4d4f;
+    --color-danger-glow: rgba(255,77,79,0.5);
+    --color-warning: #faad14;
+    --color-success: #00e676;
+    --text-main: #00f3ff;
+    --text-normal: #a0c2e8;
+    --text-regular: #a0b8d8;
+    --text-muted: #5a7b9e;
+    --panel-bg: rgba(10, 20, 45, 0.65);
+    --border-color: rgba(0, 150, 255, 0.2);
+  }
+
+  /* ===== chart-box组件样式 ===== */
+  .chart-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  /* chartBox 组件标题栏（与源码一致：icon + 渐变标题 + 竖线 + 延伸线） */
+  .chart-box-header {
+    height: 42px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .chart-box-header .title-icon {
+    width: 39px;
+    height: 42px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .chart-box-header .box-title {
+    margin-top: 6px;
+    margin-left: -10px;
+    font-weight: 700;
+    font-family: var(--font-family-body);
+    font-size: var(--font-h3);
+    color: transparent;
+    letter-spacing: 2px;
+    /* 白→浅蓝→蓝 渐变文字 */
+    background-image: linear-gradient(
+      rgb(255, 255, 255),
+      rgb(210, 244, 252),
+      rgb(89, 181, 218)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+  /* 标题栏右侧竖线 */
+  .title-line {
+    display: inline-block;
+    width: 2px;
+    height: 16px;
+    background: #4dd5ff;
+    margin-right: 5px;
+    flex-shrink: 0;
+  }
+  /* 标题栏右侧延伸线容器 */
+  .title-linebox {
+    position: relative;
+    display: flex;
+    flex: 1;
+    margin-top: 19px;
+    height: 10px;
+    border-left: 2px solid #4dd5ff;
+    border-right: 2px solid rgba(46, 196, 255, 0.2);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .title-linebox .innerline {
+    position: relative;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(315deg, rgba(46, 196, 255, 0.2) 0%, rgba(77, 213, 255, 1) 100%);
+  }
+  .chart-wrapper {
+    flex: 1;
+    min-height: 0;
+    padding: 10px 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== fui-card ===== */
+  .fui-card {
+    background: rgba(10, 24, 50, 0.65);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    border-radius: 4px;
+    position: relative;
+    padding: 20px 20px 20px 30px;
+    box-shadow: inset 0 0 20px rgba(0, 210, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .fui-card::before, .fui-card::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-primary);
+    z-index: 5;
+    pointer-events: none;
+  }
+  .fui-card::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .fui-card::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+  /* ===== 通用标题 ===== */
+  .common-title {
+    font-size: var(--font-body);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  .common-title::before {
+    content: '▍';
+    margin-right: 6px;
+    color: var(--color-primary);
+  }
+  .block-title {
+    font-size: var(--font-body);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  .block-title::before {
+    content: '▍';
+    margin-right: 6px;
+    color: var(--color-primary);
+  }
+  .block-title svg { margin-right: 8px; color: var(--color-primary); vertical-align: middle; }
+
+  /* ===== chart-panel-plain ===== */
+  .chart-panel-plain {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  .chart-panel-plain .chart-body {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* ======================================================
+     LEFT 栏 (1060px)
+  ====================================================== */
+  .left-col {
+    width: 1060px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 50px;
+    padding-left: 20px;
+    flex-shrink: 0;
+  }
+
+  /* 上半部分 */
+  .left-flex-row {
+    height: 58%;
+    display: flex;
+    width: 100%;
+  }
+  .left-flex-row .unified-panel {
+    width: 100%;
+    height: 100%;
+  }
+  .flex-row-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+  }
+  .top-banner {
+    flex: 0.6;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(10, 24, 50, 0.9) 0%, rgba(255, 77, 79, 0.1) 100%);
+    border-color: rgba(255, 77, 79, 0.3);
+    padding: 0 30px;
+  }
+  .top-banner::before, .top-banner::after { border-color: var(--color-danger) !important; }
+
+  .banner-left {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .company-image-wrapper {
+    margin-left: 30px;
+    width: 120px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .company-image { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .company-info { display: flex; flex-direction: column; gap: 8px; }
+  .company-name {
+    font-size: var(--font-h1);
+    font-weight: bold;
+    color: var(--text-main);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .banner-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-right: 10px;
+    justify-content: center;
+  }
+  .risk-circle-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .risk-circle-spin {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    border: 3px dashed var(--color-danger);
+    box-shadow: 0 0 20px var(--color-danger-glow);
+    animation: rotateDash 8s linear infinite;
+  }
+  @keyframes rotateDash { 100% { transform: rotate(360deg); } }
+  .risk-text {
+    position: relative;
+    font-size: var(--font-h1);
+    font-weight: 900;
+    color: var(--color-danger);
+    text-shadow: 0 0 15px var(--color-danger);
+    z-index: 2;
+  }
+  .risk-label {
+    background: rgba(255, 77, 79, 0.15);
+    color: #ff7875;
+    font-size: var(--font-body);
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 77, 79, 0.5);
+    white-space: nowrap;
+  }
+
+  /* content-row (图表两列) */
+  .content-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    flex: 1.4;
+    min-height: 0;
+  }
+  .half-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .threat-levels {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 0;
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* 下半部分 left2 */
+  .left2 {
+    display: flex;
+    gap: 15px;
+    height: 40%;
+    min-height: 0;
+  }
+  .left2-content {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    height: 100%;
+  }
+  .left2-l, .left2-r {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    position: relative;
+  }
+  .night-anomaly-panel {
+    height: 100%;
+  }
+
+  /* ======================================================
+     CENTER 栏 (1750px)
+  ====================================================== */
+  .center-col {
+    width: 1750px;
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  /* 上方风险传导分析 */
+  .center-analysis-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -0.5%;
+    width: 1650px;
+    height: 62%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .analysis-chart-box {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* dashboard三列 */
+  .dashboard-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    padding: 10px 15px;
+  }
+  .fui-panel {
+    flex: 1;
+    min-width: 0;
+    background: rgba(8, 18, 42, 0.7);
+    border: 1px solid rgba(0, 210, 255, 0.25);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+  }
+  .fui-panel::before, .fui-panel::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--color-primary);
+    z-index: 5;
+    pointer-events: none;
+  }
+  .fui-panel::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .fui-panel::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+  .fui-panel-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    background: linear-gradient(90deg, rgba(0,210,255,0.08) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(0, 210, 255, 0.15);
+    flex-shrink: 0;
+  }
+  .fui-panel-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 15px;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .fui-grid-row {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* 安全风险识别 */
+  .risk-card {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 14px;
+    gap: 6px;
+  }
+  .risk-card.card-red { border-color: rgba(255,77,79,0.35); background: linear-gradient(135deg, rgba(255,77,79,0.08) 0%, transparent 100%); }
+  .risk-card.card-orange { border-color: rgba(250,140,22,0.35); background: linear-gradient(135deg, rgba(250,140,22,0.08) 0%, transparent 100%); }
+  .risk-card.card-yellow { border-color: rgba(250,173,20,0.35); background: linear-gradient(135deg, rgba(250,173,20,0.08) 0%, transparent 100%); }
+  .risk-card-header { display: flex; align-items: center; justify-content: space-between; }
+  .risk-card-title { font-size: var(--font-small); font-weight: bold; color: #fff; }
+  .risk-card-content { display: flex; align-items: center; gap: 15px; flex: 1; }
+  .risk-main { display: flex; align-items: baseline; gap: 4px; flex-shrink: 0; width: 100px; }
+  .risk-number { font-size: var(--font-h1); font-weight: bold; color: var(--color-primary); font-family: var(--font-family-num); }
+  .risk-number { font-size: var(--font-h1); font-weight: bold; color: var(--color-primary); font-family: var(--font-family-num); }
+  .risk-unit { font-size: var(--font-body); color: var(--text-regular); margin-left: 4px; }
+  .risk-list { list-style: none; display: flex; gap: 12px; align-items: center; flex: 1; }
+  .risk-list li { font-size: var(--font-body); color: #cde; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; background: rgba(255,255,255,0.04); white-space: nowrap; }
+  .risk-identification-body { justify-content: space-between; }
+
+  /* 影响范围分析 */
+  .impact-section {
+    width: 100%;
+    border-radius: 4px;
+    padding: 10px 14px;
+    background: rgba(0, 210, 255, 0.04);
+    border: 1px solid rgba(0, 210, 255, 0.1);
+  }
+  .section-label-top { font-size: var(--font-body); color: var(--text-regular); margin-bottom: 8px; }
+  .section-content { display: flex; align-items: center; gap: 14px; }
+  .content-left { display: flex; align-items: baseline; gap: 4px; flex-shrink: 0; width: 120px; }
+  .impact-number-glow { font-size: var(--font-h2); font-weight: bold; color: var(--color-primary); font-family: var(--font-family-num); text-shadow: 0 0 10px rgba(0,229,255,0.6); }
+  .impact-unit { font-size: var(--font-body); color: var(--text-regular); }
+  .divider-v { width: 1px; height: 50px; background: rgba(0,210,255,0.2); flex-shrink: 0; }
+  .content-right { flex: 1; min-width: 0; }
+  .info-box-yellow { font-size: var(--font-body); color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .progress-item { margin-bottom: 8px; }
+  .progress-item:last-child { margin-bottom: 0; }
+  .progress-header { display: flex; justify-content: space-between; font-size: var(--font-body); margin-bottom: 4px; }
+  .progress-header .label { color: var(--text-regular); }
+  .progress-header .value { color: #fff; font-weight: bold; }
+  .progress-bar-bg { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; }
+  .progress-fill.blue { background: linear-gradient(90deg, #0088ff, #00d2ff); }
+  .progress-fill.cyan { background: linear-gradient(90deg, #00e5ff, rgba(0,229,255,0.5)); }
+
+  /* 危害后果评估 */
+  .sub-card { border-radius: 4px; overflow: hidden; padding: 10px 14px; flex: 1; }
+  .danger-card.extreme { background: linear-gradient(135deg, rgba(255,77,79,0.08) 0%, transparent 100%); border: 1px solid rgba(255,77,79,0.25); }
+  .danger-assessment-body { justify-content: space-between; }
+  .danger-header { margin-bottom: 8px; }
+  .danger-title { font-size: var(--font-body); display: flex; align-items: center; gap: 6px; }
+  .danger-tags { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .danger-tag { font-size: var(--font-body); color: rgba(255,255,255,0.8); padding: 3px 8px; background: rgba(255,77,79,0.08); border: 1px solid rgba(255,77,79,0.15); border-radius: 3px; }
+
+  /* 底部攻击链 */
+  .center-bottom {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1650px;
+    height: 28%;
+    background: rgba(13, 25, 50, 0.65);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    padding: 20px 40px;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+  .chain-panel { height: 100%; display: flex; flex-direction: column; position: relative; cursor: pointer; }
+  .chain-container { width: 100%; flex: 1; position: relative; margin-top: 10px; }
+  .zone-bg {
+    position: absolute; top: 10px; bottom: 10px; left: 0; right: 0;
+    display: flex; pointer-events: none; z-index: 1; padding: 0 20px; gap: 20px;
+  }
+  .zone {
+    flex: 1;
+    border: 1px dashed rgba(0, 229, 255, 0.3);
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(0, 229, 255, 0.05) 0%, transparent 100%);
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+    font-size: var(--font-body);
+    font-weight: bold;
+    color: #00e5ff;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+    opacity: 0.9;
+    height: 100%;
+  }
+  .zone-out { background: linear-gradient(180deg, rgba(0, 188, 212, 0.05) 0%, transparent 100%); border-color: rgba(0, 188, 212, 0.3); }
+  .zone-dmz { background: linear-gradient(180deg, rgba(0, 151, 167, 0.05) 0%, transparent 100%); border-color: rgba(0, 151, 167, 0.3); }
+  .zone-in  { background: linear-gradient(180deg, rgba(0, 96, 100, 0.05) 0%, transparent 100%); border-color: rgba(0, 96, 100, 0.3); }
+  .zone-c2  { background: linear-gradient(180deg, rgba(1, 87, 155, 0.05) 0%, transparent 100%); border-color: rgba(1, 87, 155, 0.3); }
+  #chainChart { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; }
+
+  /* ======================================================
+     RIGHT 栏 (1060px)
+  ====================================================== */
+  .right-col {
+    width: 1060px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .right-panel-container {
+    width: 100%;
+    height: 100%;
+    padding: 0 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .right-panel-container .chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 !important;
+  }
+  .right-content-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
+  }
+  .row-top {
+    display: flex;
+    gap: 20px;
+    height: 45%;
+    min-height: 0;
+  }
+  .row-bottom {
+    height: 50%;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .row-top .fui-card:first-child { flex: 0 0 auto; width: 480px; }
+  .row-top .fui-card:last-child { flex: 1; min-width: 0; }
+
+  /* 资产预警 */
+  .asset-risk-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 10px;
+    overflow: hidden;
+    padding-bottom: 2px;
+    flex: 1;
+    min-height: 0;
+  }
+  .asset-card {
+    flex: 1;
+    min-height: 0;
+    background: rgba(10, 20, 45, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 12px 15px 12px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .asset-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: #00e5ff;
+    border-radius: 0 4px 4px 0;
+  }
+  .asset-card.high { border-color: rgba(255, 77, 79, 0.3); }
+  .asset-card.medium { border-color: rgba(250, 173, 20, 0.3); }
+  .asset-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 5px; }
+  .asset-ip { font-size: var(--font-body); font-family: var(--font-family-num); font-weight: bold; color: #00e5ff; letter-spacing: 0.5px; white-space: nowrap; flex: 1; }
+  .asset-details-rows { display: flex; flex-direction: column; gap: 8px; }
+  .detail-row { font-size: var(--font-body); display: flex; align-items: center; }
+  .detail-row .label { color: #ffffff; margin-right: 5px; white-space: nowrap; }
+  .detail-row .value { font-weight: bold; font-family: var(--font-family-num); font-size: var(--font-body); white-space: nowrap; color: #ffffff; }
+  .highlight-ports { color: #fff !important; }
+  .highlight-vuln { color: #fff !important; }
+
+  /* 威胁情报 */
+  .intel-list {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    height: 100%;
+    min-height: 0;
+  }
+  .intel-track {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    animation: scrollUp 15s linear infinite;
+  }
+  .intel-track:hover { animation-play-state: paused; }
+  @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+  .intel-item { display: flex; align-items: flex-start; gap: 12px; }
+  .intel-icon {
+    width: 36px; height: 36px; min-width: 36px;
+    background: rgba(250, 173, 20, 0.15); border: 1px solid var(--color-warning); border-radius: 50%;
+    display: flex; justify-content: center; align-items: center; color: var(--color-warning); flex-shrink: 0;
+  }
+  .intel-content {
+    display: flex; flex-direction: column; gap: 4px;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+    padding-bottom: 10px; width: 100%;
+  }
+  .intel-tag-row { display: flex; align-items: center; margin-bottom: 5px; }
+  .intel-title-red { font-size: var(--font-small); color: #00e5ff; font-weight: bold; }
+  .intel-desc {
+    font-size: var(--font-body);
+    color: #fff;
+    line-height: 1.4;
+    word-wrap: break-word;
+    word-break: break-all;
+    width: 92%;
+  }
+
+  /* 安全事件预警与协同机制 */
+  .bottom-content-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+    overflow: hidden;
+    margin-top: 10px;
+    flex: 1;
+    min-height: 0;
+  }
+  .events-col {
+    flex: 0 0 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+  }
+  .notify-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+  }
+  .notify-info {
+    padding: 20px 19px;
+    background: linear-gradient(135deg, rgba(0, 210, 255, 0.08) 0%, transparent 100%);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    border-radius: 4px;
+    display: flex; flex-direction: column; gap: 6px; width: 100%;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+  }
+  .notify-title { font-size: var(--font-small); font-weight: bold; color: var(--color-primary); }
+  .notify-content-row { display: flex; align-items: center; gap: 30px; }
+  .report-thumb {
+    width: auto; height: auto; background: #fff; position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2); border-top-right-radius: 10px;
+    flex-shrink: 0; cursor: pointer; transition: all 0.3s ease; overflow: hidden;
+  }
+  .report-thumb:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 5px 20px rgba(255, 255, 255, 0.4); }
+  .report-thumb::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    border-width: 0 12px 12px 0; border-style: solid; border-color: transparent #ccc transparent transparent;
+  }
+  .report-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* 流程图 */
+  .diagram-col {
+    flex: 1;
+    position: relative;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 1px dashed rgba(255,255,255,0.1);
+    padding: 15px 0;
+    display: flex;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .diagram-svg-container {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none;
+  }
+  .flow-line { fill: none; stroke-width: 2; stroke-dasharray: 6 6; animation: flowMove 1.5s linear infinite; }
+  .flow-line.reverse { animation: flowMoveReverse 1.5s linear infinite; }
+  .flow-line.blue { stroke: var(--color-primary); }
+  .flow-line.warning { stroke: var(--color-primary); }
+  @keyframes flowMove { to { stroke-dashoffset: -24; } }
+  @keyframes flowMoveReverse { to { stroke-dashoffset: 24; } }
+
+  .safety-label {
+    position: absolute;
+    top: 60%;
+    left: 33.33%;
+    transform: translate(-50%, -50%);
+    margin-top: -12px;
+    font-size: var(--font-small);
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 2px;
+    background: rgba(0,0,0,0.8);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    z-index: 6;
+    white-space: nowrap;
+  }
+  .diagram-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 80px 1fr;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    padding: 0 15px;
+    position: relative;
+  }
+  .grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .lane-bg { margin: 0 12px; border-radius: 8px; z-index: 1; position: relative; }
+  .danger-lane, .primary-lane, .warning-lane {
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    background: linear-gradient(135deg, rgba(0, 210, 255, 0.08) 0%, transparent 100%);
+    border-radius: 4px;
+  }
+  .action-box {
+    width: 140px;
+    padding: 8px 0;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: var(--font-small);
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.6);
+    text-align: center;
+  }
+  .box-danger { color: var(--color-primary); border-color: var(--color-primary); box-shadow: inset 0 0 12px rgba(0, 210, 255, 0.2); }
+  .box-primary { color: var(--color-primary); border-color: var(--color-primary); box-shadow: inset 0 0 12px rgba(0, 210, 255, 0.2); }
+  .box-warning { color: var(--color-primary); border-color: var(--color-primary); box-shadow: inset 0 0 12px rgba(0, 210, 255, 0.2); }
+  .node {
+    background: rgba(10, 24, 50, 0.8);
+    border: 1px solid;
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    backdrop-filter: blur(5px);
+    text-align: center;
+    width: 140px;
+  }
+  .node-icon { font-size: var(--font-body); }
+  .node-text { font-size: var(--font-small); font-weight: bold; color: #fff; }
+  .node.target { border-color: var(--color-primary); padding: 15px; box-shadow: 0 0 20px rgba(0,210,255,0.3); }
+  .node.target .node-icon { color: var(--color-primary); }
+  .node.center-hub { border-color: var(--color-primary); padding: 15px; box-shadow: 0 0 20px rgba(0,210,255,0.3); }
+  .node.center-hub .node-icon { color: var(--color-primary); }
+  .node.partner { border-color: var(--color-primary); background: rgba(0, 210, 255, 0.05); padding: 8px 10px; }
+  .node.partner .node-icon { color: var(--color-primary); font-size: var(--font-body); }
+  .partner-group { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+
+  /* ===== BackgroundBar (攻击类型排名) ===== */
+  .bg-bar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 5px 0;
+  }
+  .bg-bar-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 10px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex: 1;
+    margin-bottom: 5px;
+    min-height: 32px;
+    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.02);
+    transition: all 0.3s ease;
+  }
+  .bg-bar-item:last-child { margin-bottom: 0; }
+  .bg-bar-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    z-index: 0;
+    border-radius: 6px;
+    transition: width 1s cubic-bezier(0.1, 0.7, 0.1, 1);
+  }
+  .bg-bar-rank {
+    width: 20px; height: 20px;
+    display: flex; justify-content: center; align-items: center;
+    font-size: var(--font-small); font-family: var(--font-family-num); font-weight: bold;
+    border-radius: 4px; border: 1px solid;
+    flex-shrink: 0; z-index: 1; margin-right: 8px;
+  }
+  .bg-bar-name { font-size: var(--font-body); font-weight: bold; color: #fff; z-index: 1; flex: 1; }
+  .bg-bar-value { font-size: var(--font-small); font-weight: bold; color: #fff; z-index: 1; font-family: var(--font-family-num); flex-shrink: 0; }
+
+  /* ===== 通用动画 ===== */
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes pulseText { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+  @keyframes spin-pulse {
+    0% { transform: rotate(0deg); box-shadow: 0 0 15px var(--color-danger-glow); }
+    50% { box-shadow: 0 0 30px var(--color-danger-glow); }
+    100% { transform: rotate(360deg); box-shadow: 0 0 15px var(--color-danger-glow); }
+  }
+</style>
+</head>
+<body>
+<div id="scale-box">
+  <div class="layout">
+    <!-- ===== HEADER ===== -->
+    <header>
+      <div class="titlebox">工业网络安全监测试验平台</div>
+      <div class="current-time" id="clock"></div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <div class="page-container">
+
+      <!-- ========== LEFT 栏 ========== -->
+      <div class="left-col">
+        <!-- 上：企业安全态势总览 -->
+        <div class="left-flex-row">
+          <div class="unified-panel chart-box">
+            <div class="chart-box-header">
+              <img class="title-icon" src="./imgs/icon.png" alt="">
+              <span class="box-title">企业安全态势总览</span>
+              <span class="title-line"></span>
+              <span class="title-line"></span>
+              <span class="title-line"></span>
+              <span class="title-line"></span>
+              <div class="title-linebox"><div class="innerline"></div></div>
+            </div>
+            <div class="chart-wrapper" style="padding:0 !important; margin-top:10px;">
+              <div class="flex-row-content">
+
+                <!-- 顶部横幅 -->
+                <div class="fui-card top-banner">
+                  <div class="banner-left">
+                    <div class="company-image-wrapper">
+                      <img src="./imgs/222.png" alt="企业Logo" class="company-image">
+                    </div>
+                    <div class="company-info">
+                      <div class="company-name">北方集成电路技术创新中心有限公司</div>
+                    </div>
+                  </div>
+                  <div class="banner-right">
+                    <div class="risk-circle-container">
+                      <div class="risk-circle-spin"></div>
+                      <div class="risk-text">高</div>
+                    </div>
+                    <div class="risk-label">资产受控 / 数据泄露</div>
+                  </div>
+                </div>
+
+                <!-- 图表两列 -->
+                <div class="content-row">
+                  <!-- 左：网络攻击趋势 -->
+                  <div class="half-col fui-card chart-panel-plain">
+                    <div class="common-title">网络攻击趋势</div>
+                    <div class="chart-body" style="height: calc(100% - 40px); position: relative;">
+                      <!-- 总数浮层 -->
+                      <div style="position:absolute;top:10px;left:15px;z-index:100;display:flex;flex-direction:row;align-items:center;gap:8px;pointer-events:none;">
+                        <span style="color:#fff;font-size: var(--font-small);letter-spacing:1px;">网络攻击总数</span>
+                        <span style="color:#00e5ff;font-size: var(--font-small);font-weight:bold;font-family: var(--font-family-num);text-shadow:0 0 10px rgba(0,229,255,0.5);">49,641</span>
+                        <span style="color:#fff;font-size: var(--font-small);">次</span>
+                      </div>
+                      <div id="attackTrendChart" style="width:100%;height:100%;"></div>
+                    </div>
+                  </div>
+                  <!-- 右：攻击类型排名 -->
+                  <div class="half-col fui-card chart-panel-plain">
+                    <div class="block-title">攻击类型排名</div>
+                    <div class="threat-levels" style="flex-direction:column;">
+                      <div class="bg-bar-container" id="bgBarContainer"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 下：漏洞 + 组件 -->
+        <div class="left2">
+          <div class="left2-content">
+            <!-- 左：漏洞年份分布 -->
+            <div class="left2-l">
+              <div class="fui-card chart-panel-plain night-anomaly-panel">
+                <div class="common-title">被利用漏洞披露年份分布</div>
+                <div class="chart-body" style="height:calc(100% - 40px);">
+                  <div style="height:100%;display:flex;flex-direction:column;">
+                    <div id="vulnTimeChart" style="flex:1;min-height:0;"></div>
+                    <div style="text-align:center;color:rgba(255,255,255,0.6);font-size: var(--font-body);padding:2px 0 5px 0;letter-spacing:1px;">
+                      企业存在的历史漏洞中，2019年披露的漏洞占比最高，建议优先修复近年高危漏洞。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 右：漏洞组件分布 -->
+            <div class="left2-r">
+              <div class="fui-card chart-panel-plain">
+                <div class="common-title">存在漏洞的组件/系统</div>
+                <div class="chart-body" style="height:calc(100% - 40px);">
+                  <div id="vulnComponentChart" style="width:100%;height:100%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /left-col -->
+
+      <!-- ========== CENTER 栏 ========== -->
+      <div class="center-col">
+
+        <!-- 上：风险传导分析 -->
+        <div class="center-analysis-container">
+          <div class="analysis-chart-box chart-box">
+            <div class="chart-box-header">
+              <img class="title-icon" src="./imgs/icon.png" alt="">
+              <span class="box-title">企业内网风险传导分析</span>
+              <span class="title-line"></span>
+              <span class="title-line"></span>
+              <span class="title-line"></span>
+              <span class="title-line"></span>
+              <div class="title-linebox"><div class="innerline"></div></div>
+            </div>
+            <div class="chart-wrapper" style="padding:0;flex:1;">
+              <div class="dashboard-container">
+
+                <!-- 列1：安全风险识别 -->
+                <div class="fui-panel">
+                  <div class="fui-panel-header">
+                    <svg viewBox="0 0 24 24" style="width:20px;height:20px;margin-right:10px;fill:var(--color-primary);"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    <span style="color:#fff;font-weight:bold;font-size: var(--font-small);">安全风险识别</span>
+                  </div>
+                  <div class="fui-panel-body risk-identification-body">
+                    <div class="fui-grid-row">
+                      <div class="risk-card card-red">
+                        <div class="risk-card-header"><span class="risk-card-title">未授权访问风险</span></div>
+                        <div class="risk-card-content">
+                          <div class="risk-main"><div class="risk-number">1<span class="risk-unit">类</span></div></div>
+                          <ul class="risk-list"><li>Redis漏洞</li><li>SSH Key免密</li></ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fui-grid-row">
+                      <div class="risk-card card-orange">
+                        <div class="risk-card-header"><span class="risk-card-title">弱口令利用风险</span></div>
+                        <div class="risk-card-content">
+                          <div class="risk-main"><div class="risk-number">2<span class="risk-unit">类</span></div></div>
+                          <ul class="risk-list"><li>数据库服务</li><li>应用系统</li></ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fui-grid-row">
+                      <div class="risk-card card-yellow">
+                        <div class="risk-card-header"><span class="risk-card-title">内网移动扩展风险</span></div>
+                        <div class="risk-card-content">
+                          <div class="risk-main"><div class="risk-number">2<span class="risk-unit">类</span></div></div>
+                          <ul class="risk-list"><li>域内扩展</li><li>SSH横向</li></ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 列2：影响范围分析 -->
+                <div class="fui-panel">
+                  <div class="fui-panel-header">
+                    <svg viewBox="0 0 24 24" style="width:20px;height:20px;margin-right:10px;fill:var(--color-primary);"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
+                    <span style="color:#fff;font-weight:bold;font-size: var(--font-small);">影响范围分析</span>
+                  </div>
+                  <div class="fui-panel-body impact-range-body" style="justify-content:space-between;">
+                    <div class="fui-grid-row">
+                      <div class="impact-section section-system">
+                        <div class="section-label-top">内网服务器受影响</div>
+                        <div class="section-content">
+                          <div class="content-left">
+                            <span class="impact-number-glow">53</span>
+                            <span class="impact-unit">台</span>
+                          </div>
+                          <div class="divider-v"></div>
+                          <div class="content-right">
+                            <div class="info-box-yellow">已获取SSH权限的服务器，攻击者利用变型爆破等方式成功登录。</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fui-grid-row">
+                      <div class="impact-section section-data">
+                        <div class="section-label-top">内网数据库总数</div>
+                        <div class="section-content">
+                          <div class="content-left">
+                            <span class="impact-number-glow">10</span>
+                            <span class="impact-unit">个</span>
+                          </div>
+                          <div class="divider-v"></div>
+                          <div class="content-right">
+                            <div class="progress-item">
+                              <div class="progress-header"><span class="label">Redis</span><span class="value">7 个</span></div>
+                              <div class="progress-bar-bg"><div class="progress-fill blue" style="width:70%;"></div></div>
+                            </div>
+                            <div class="progress-item">
+                              <div class="progress-header"><span class="label">Mysql</span><span class="value">3 个</span></div>
+                              <div class="progress-bar-bg"><div class="progress-fill cyan" style="width:30%;"></div></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fui-grid-row">
+                      <div class="impact-section section-car">
+                        <div class="section-label-top">受影响域内机器</div>
+                        <div class="section-content">
+                          <div class="content-left">
+                            <span class="impact-number-glow">1118</span>
+                            <span class="impact-unit">台</span>
+                          </div>
+                          <div class="divider-v"></div>
+                          <div class="content-right">
+                            <div class="progress-item">
+                              <div class="progress-header"><span class="label">邮件服务器</span><span class="value">216台</span></div>
+                              <div class="progress-bar-bg"><div class="progress-fill blue" style="width:21%;"></div></div>
+                            </div>
+                            <div class="progress-item">
+                              <div class="progress-header"><span class="label">普通域机器</span><span class="value">902台</span></div>
+                              <div class="progress-bar-bg"><div class="progress-fill cyan" style="width:79%;"></div></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 列3：危害后果评估 -->
+                <div class="fui-panel">
+                  <div class="fui-panel-header">
+                    <svg viewBox="0 0 24 24" style="width:20px;height:20px;margin-right:10px;fill:var(--color-primary);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    <span style="color:#fff;font-weight:bold;font-size: var(--font-small);">危害后果评估</span>
+                  </div>
+                  <div class="fui-panel-body danger-assessment-body">
+                    <div class="fui-grid-row">
+                      <div class="sub-card danger-card extreme">
+                        <div class="danger-header">
+                          <div class="danger-title" style="color:var(--color-danger);font-weight:bold;">
+                            <svg style="width:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            敏感数据泄露
+                          </div>
+                        </div>
+                        <div class="danger-tags">
+                          <div class="danger-tag">🚫 数据库凭证暴露</div>
+                          <div class="danger-tag">📄 内网数据库直连访问</div>
+                          <div class="danger-tag">📉 配置文件泄露</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fui-grid-row">
+                      <div class="sub-card danger-card extreme">
+                        <div class="danger-header">
+                          <div class="danger-title" style="color:var(--color-danger);font-weight:bold;">
+                            <svg style="width:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                            主机失陷
+                          </div>
+                        </div>
+                        <div class="danger-tags">
+                          <div class="danger-tag">⚖️ Webshell获取</div>
+                          <div class="danger-tag">👤 SSH密钥写入</div>
+                          <div class="danger-tag">💎 通用密码批量登录</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fui-grid-row">
+                      <div class="sub-card danger-card extreme">
+                        <div class="danger-header">
+                          <div class="danger-title" style="color:var(--color-danger);font-weight:bold;">
+                            <svg style="width:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/></svg>
+                            内网风险扩散
+                          </div>
+                        </div>
+                        <div class="danger-tags">
+                          <div class="danger-tag">🎮 域控服务器访问风险</div>
+                          <div class="danger-tag">☠️ 邮件服务器控制</div>
+                          <div class="danger-tag">🛡️ 跨系统横向移动</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div><!-- /dashboard-container -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 下：攻击过程分析 -->
+        <div class="center-bottom fui-panel">
+          <div class="chart-panel-plain chain-panel">
+            <div class="common-title">攻击过程分析</div>
+            <div class="chain-container" style="width:100%;height:calc(100% - 40px);position:relative;">
+              <div class="zone-bg">
+                <div class="zone zone-out">互联网攻击源</div>
+                <div class="zone zone-dmz">企业网边界</div>
+                <div class="zone zone-in">企业内网</div>
+                <div class="zone zone-c2">核心业务系统</div>
+              </div>
+              <div id="chainChart" style="width:100%;height:100%;"></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /center-col -->
+
+      <!-- ========== RIGHT 栏 ========== -->
+      <div class="right-col">
+        <div class="right-panel-container">
+          <div class="chart-box" style="height:100%;">
+            <div class="chart-box-header">
+              <img class="title-icon" src="./imgs/icon.png" alt="">
+              <span class="box-title">安全监测赋能服务</span>
+              <span class="title-line"></span>
+              <span class="title-line"></span>
+              <span class="title-line"></span>
+              <span class="title-line"></span>
+              <div class="title-linebox"><div class="innerline"></div></div>
+            </div>
+            <div class="chart-wrapper" style="padding:0 !important; flex:1; min-height:0; display:flex; flex-direction:column; gap:20px;">
+              <div class="right-content-layout">
+
+                <!-- 上行 -->
+                <div class="row-top">
+                  <!-- 暴露面资产预警 -->
+                  <div class="fui-card" style="flex:0 0 auto;width:480px;min-width:0;">
+                    <div class="block-title">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>
+                      </svg>
+                      暴露面资产预警
+                    </div>
+                    <div class="asset-risk-list">
+                      <div class="asset-card high">
+                        <div class="asset-header"><span class="asset-ip">核心数据库</span></div>
+                        <div class="asset-details-rows">
+                          <div class="detail-row"><span class="label">高危开放端口：</span><span class="value highlight-ports">3306, 6379</span></div>
+                          <div class="detail-row"><span class="label">存在风险：</span><span class="value highlight-vuln">弱口令</span></div>
+                        </div>
+                      </div>
+                      <div class="asset-card high">
+                        <div class="asset-header"><span class="asset-ip">Web服务器</span></div>
+                        <div class="asset-details-rows">
+                          <div class="detail-row"><span class="label">高危开放端口：</span><span class="value highlight-ports">8080, 22</span></div>
+                          <div class="detail-row"><span class="label">存在风险：</span><span class="value highlight-vuln">远程代码执行</span></div>
+                        </div>
+                      </div>
+                      <div class="asset-card medium">
+                        <div class="asset-header"><span class="asset-ip">办公系统</span></div>
+                        <div class="asset-details-rows">
+                          <div class="detail-row"><span class="label">开放端口：</span><span class="value highlight-ports">80, 443</span></div>
+                          <div class="detail-row"><span class="label">存在风险：</span><span class="value highlight-vuln">跨站脚本</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 威胁情报共享 -->
+                  <div class="fui-card" style="flex:1;min-width:0;">
+                    <div class="block-title">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                      </svg>
+                      威胁情报共享
+                    </div>
+                    <div class="intel-list" style="flex:1;min-height:0;">
+                      <div class="intel-track" id="intelTrack">
+                        <!-- 情报条目 x2 for 无缝滚动 -->
+                        <div class="intel-item">
+                          <div class="intel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg></div>
+                          <div class="intel-content">
+                            <div class="intel-tag-row"><span class="intel-title-red">新型勒索变种 IOCs</span></div>
+                            <div class="intel-desc">监测发现针对工业控制系统的勒索软件新变种，具备横向传播能力。建议企业加强生产网与核心数据库访问控制，防范内部扩散</div>
+                          </div>
+                        </div>
+                        <div class="intel-item">
+                          <div class="intel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg></div>
+                          <div class="intel-content">
+                            <div class="intel-tag-row"><span class="intel-title-red">定向钓鱼邮件预警</span></div>
+                            <div class="intel-desc">发现伪装为"供应链协同插件更新"的定向钓鱼邮件，附件包含木马程序。请各单位提醒员工勿运行来源不明的附件或程序。</div>
+                          </div>
+                        </div>
+                        <div class="intel-item">
+                          <div class="intel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg></div>
+                          <div class="intel-content">
+                            <div class="intel-tag-row"><span class="intel-title-red">高危漏洞预警</span></div>
+                            <div class="intel-desc">Apache HTTP Server存在越权访问漏洞，攻击者可能绕过认证获取管理权限。建议立即限制外网访问并尽快完成补丁升级。</div>
+                          </div>
+                        </div>
+                        <div class="intel-item">
+                          <div class="intel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg></div>
+                          <div class="intel-content">
+                            <div class="intel-tag-row"><span class="intel-title-red">APT32 组织近期活跃 IP</span></div>
+                            <div class="intel-desc">监测到与APT32相关的IP对重点企业开展扫描探测。建议及时封禁相关恶意IP并加强边界访问审计</div>
+                          </div>
+                        </div>
+                        <!-- 第二份（无缝滚动用） -->
+                        <div class="intel-item">
+                          <div class="intel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg></div>
+                          <div class="intel-content">
+                            <div class="intel-tag-row"><span class="intel-title-red">新型勒索变种 IOCs</span></div>
+                            <div class="intel-desc">监测发现针对工业控制系统的勒索软件新变种，具备横向传播能力。建议企业加强生产网与核心数据库访问控制，防范内部扩散</div>
+                          </div>
+                        </div>
+                        <div class="intel-item">
+                          <div class="intel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg></div>
+                          <div class="intel-content">
+                            <div class="intel-tag-row"><span class="intel-title-red">定向钓鱼邮件预警</span></div>
+                            <div class="intel-desc">发现伪装为"供应链协同插件更新"的定向钓鱼邮件，附件包含木马程序。请各单位提醒员工勿运行来源不明的附件或程序。</div>
+                          </div>
+                        </div>
+                        <div class="intel-item">
+                          <div class="intel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg></div>
+                          <div class="intel-content">
+                            <div class="intel-tag-row"><span class="intel-title-red">高危漏洞预警</span></div>
+                            <div class="intel-desc">Apache HTTP Server存在越权访问漏洞，攻击者可能绕过认证获取管理权限。建议立即限制外网访问并尽快完成补丁升级。</div>
+                          </div>
+                        </div>
+                        <div class="intel-item">
+                          <div class="intel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg></div>
+                          <div class="intel-content">
+                            <div class="intel-tag-row"><span class="intel-title-red">APT32 组织近期活跃 IP</span></div>
+                            <div class="intel-desc">监测到与APT32相关的IP对重点企业开展扫描探测。建议及时封禁相关恶意IP并加强边界访问审计</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /row-top -->
+
+                <!-- 下行：安全事件预警与协同机制 -->
+                <div class="row-bottom fui-card" style="display:flex;flex-direction:column;">
+                  <div class="block-title">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.19 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    安全事件预警与协同机制
+                  </div>
+                  <div class="bottom-content-wrapper">
+
+                    <!-- 左侧：事件列表 -->
+                    <div class="events-col">
+                      <div class="notify-item">
+                        <div class="notify-info">
+                          <span class="notify-title">未授权访问预警</span>
+                          <div class="notify-content-row">
+                            <div class="report-thumb">
+                              <img src="./imgs/report.png" style="width:75px;height:120px">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="notify-info">
+                          <span class="notify-title">弱口令预警</span>
+                          <div class="notify-content-row">
+                            <div class="report-thumb">
+                              <img src="./imgs/report.png" style="width:75px;height:120px">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- 右侧：流程图 -->
+                    <div class="diagram-col">
+                      <svg class="diagram-svg-container" viewBox="0 0 600 280" preserveAspectRatio="none">
+                        <defs>
+                          <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#00d2ff"/>
+                          </marker>
+                        </defs>
+                        <line x1="230" y1="40" x2="193" y2="40" class="flow-line blue" marker-end="url(#arrow-head)" />
+                        <line x1="370" y1="40" x2="407" y2="40" class="flow-line blue" marker-end="url(#arrow-head)" />
+                        <line x1="193" y1="180" x2="230" y2="180" class="flow-line warning reverse" />
+                        <path d="M 370 180 C 390 180, 390 110, 407 110" class="flow-line blue" fill="none" />
+                        <line x1="370" y1="180" x2="407" y2="180" class="flow-line blue" />
+                        <path d="M 370 180 C 390 180, 390 250, 407 250" class="flow-line blue" fill="none" />
+                      </svg>
+
+                      <div class="safety-label">安全监测</div>
+
+                      <div class="diagram-grid">
+                        <!-- 背景泳道 -->
+                        <div class="lane-bg danger-lane" style="grid-column:1;grid-row:1/3;"></div>
+                        <div class="lane-bg primary-lane" style="grid-column:2;grid-row:1/3;"></div>
+                        <div class="lane-bg warning-lane" style="grid-column:3;grid-row:1/3;"></div>
+
+                        <!-- 顶层行动指令 -->
+                        <div class="grid-item" style="grid-column:1;grid-row:1;"><div class="action-box box-danger">风险报告</div></div>
+                        <div class="grid-item" style="grid-column:2;grid-row:1;"><div class="action-box box-primary">研判分析</div></div>
+                        <div class="grid-item" style="grid-column:3;grid-row:1;"><div class="action-box box-warning">全网预警</div></div>
+
+                        <!-- 底层节点 -->
+                        <div class="grid-item" style="grid-column:1;grid-row:2;">
+                          <div class="node target">
+                            <span class="node-icon">
+                              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </span>
+                            <span class="node-text">长城汽车</span>
+                          </div>
+                        </div>
+                        <div class="grid-item" style="grid-column:2;grid-row:2;">
+                          <div class="node center-hub">
+                            <span class="node-icon">
+                              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                            </span>
+                            <span class="node-text">国家级平台</span>
+                          </div>
+                        </div>
+                        <div class="grid-item" style="grid-column:3;grid-row:2;flex-direction:column;gap:10px;align-items:center;">
+                          <div class="partner-group">
+                            <div class="node partner"><span class="node-icon">🔗</span><span class="node-text">上游供应商</span></div>
+                            <div class="node partner"><span class="node-icon">🚚</span><span class="node-text">下游服务商</span></div>
+                            <div class="node partner"><span class="node-icon">🌐</span><span class="node-text">同行业其他企业</span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /row-bottom -->
+
+              </div><!-- /right-content-layout -->
+            </div>
+          </div>
+        </div>
+      </div><!-- /right-col -->
+
+    </div><!-- /page-container -->
+  </div><!-- /layout -->
+</div><!-- /scale-box -->
+
+<script>
+/* ========================================================
+   ScaleBox 适配
+======================================================== */
+function fitScale() {
+  const el = document.getElementById('scale-box');
+  const W = 3840, H = 1080;
+  const scaleX = window.innerWidth / W;
+  const scaleY = window.innerHeight / H;
+  const scale = Math.min(scaleX, scaleY);
+  const offsetX = (window.innerWidth - W * scale) / 2;
+  const offsetY = (window.innerHeight - H * scale) / 2;
+  el.style.transform = `scale(${scale})`;
+  el.style.left = offsetX + 'px';
+  el.style.top = offsetY + 'px';
+}
+fitScale();
+window.addEventListener('resize', fitScale);
+
+/* ========================================================
+   实时时钟
+======================================================== */
+function updateClock() {
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const str = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  document.getElementById('clock').textContent = str;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+/* ========================================================
+   BackgroundBar (攻击类型排名)
+======================================================== */
+const bgBarData = [
+  { label: "漏洞利用", value: 7439 },
+  { label: "暴力破解", value: 5812 },
+  { label: "非法外联", value: 4608 },
+  { label: "命令执行", value: 3957 },
+  { label: "僵尸网络", value: 3573 },
+];
+const rankColors = [
+  { main: '#00c6ff', bg: 'rgba(0,198,255,0.35)', badgeBg: 'rgba(0,198,255,0.3)' },
+  { main: '#4facfe', bg: 'rgba(79,172,254,0.35)', badgeBg: 'rgba(79,172,254,0.3)' },
+  { main: '#56ccf2', bg: 'rgba(86,204,242,0.35)', badgeBg: 'rgba(86,204,242,0.3)' },
+  { main: '#1cb5e0', bg: 'rgba(28,181,224,0.35)', badgeBg: 'rgba(28,181,224,0.3)' },
+  { main: '#89f7fe', bg: 'rgba(137,247,254,0.35)', badgeBg: 'rgba(137,247,254,0.3)' }
+];
+const maxVal = Math.max(...bgBarData.map(d => d.value));
+const bgBarContainer = document.getElementById('bgBarContainer');
+bgBarData.forEach((item, idx) => {
+  const pct = (item.value / maxVal * 100).toFixed(1);
+  const c = rankColors[idx];
+  const div = document.createElement('div');
+  div.className = 'bg-bar-item';
+  div.innerHTML = `
+    <div class="bg-bar-fill" style="width:${pct}%;background:${c.bg};"></div>
+    <div class="bg-bar-rank" style="background:${c.badgeBg};border-color:${c.main};color:${c.main};">${idx+1}</div>
+    <div class="bg-bar-name">${item.label}</div>
+    <div class="bg-bar-value">${item.value.toLocaleString()}<span style="font-size: var(--font-small);margin-left:4px;opacity:0.8;color:#fff;">次</span></div>
+  `;
+  bgBarContainer.appendChild(div);
+});
+
+/* ========================================================
+   ECharts 初始化（500ms 延迟确保 DOM 渲染）
+======================================================== */
+setTimeout(() => {
+
+  /* --- 网络攻击趋势折线图 --- */
+  const attackTrendChart = echarts.init(document.getElementById('attackTrendChart'));
+  const xDates = [];
+  for (let d = 1; d <= 31; d++) xDates.push(`12-${String(d).padStart(2, '0')}`);
+  const rawAttack = [1523,1487,1621,1576,1438,1392,1456,1528,1473,1389,1421,1567,1498,1432,1387,1465,1529,1483,1396,1447,1512,1468,1583,1627,1543,1491,1435,1478,1564,1689,1724];
+  attackTrendChart.setOption({
+    grid: { top: 75, right: 25, bottom: 10, left: 10, containLabel: true },
+    xAxis: {
+      type: 'category', data: xDates,
+      axisLine: { lineStyle: { color: 'rgba(255,255,255,0.2)' } },
+      axisLabel: { color: 'rgba(255,255,255,0.8)', fontSize: 12, interval: 4, rotate: 45, margin: 12 },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value',
+      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.1)', type: 'dashed' } },
+      axisLabel: { color: 'rgba(255,255,255,0.8)', fontSize: 16 }
+    },
+    series: [{
+      type: 'line', data: rawAttack, smooth: true,
+      lineStyle: { color: '#00d2ff', width: 3, shadowColor: 'rgba(0,210,255,0.4)', shadowBlur: 10 },
+      areaStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: 'rgba(0,210,255,0.3)' },
+          { offset: 1, color: 'rgba(0,210,255,0.05)' }
+        ])
+      },
+      itemStyle: { color: '#00d2ff' },
+      symbol: 'circle', symbolSize: 6
+    }]
+  });
+
+  /* --- 漏洞年份柱状图 --- */
+  const vulnTimeChart = echarts.init(document.getElementById('vulnTimeChart'));
+  const vulnYears = ['2018','2019','2020','2021','2022','2023','2024','2025'];
+  const vulnData = [3,6,5,1,1,3,1,2];
+  vulnTimeChart.setOption({
+    grid: { top: 15, right: 10, bottom: 25, left: 40 },
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: '{b}年披露漏洞: {c}个' },
+    xAxis: {
+      type: 'category', data: vulnYears,
+      axisLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 14 },
+      axisLine: { lineStyle: { color: 'rgba(255,255,255,0.2)' } },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value', name: '漏洞数',
+      nameTextStyle: { color: 'rgba(255,255,255,0.6)', fontSize: 14 },
+      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.1)', type: 'solid' } },
+      axisLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 12 }
+    },
+    series: [{
+      type: 'bar', barWidth: '50%',
+      data: vulnData.map((val, idx) => ({
+        value: val,
+        itemStyle: {
+          color: idx === 1
+            ? new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#ff4d4f'},{offset:1,color:'rgba(255,77,79,0.4)'}])
+            : new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#00d2ff'},{offset:1,color:'rgba(0,210,255,0.4)'}])
+        }
+      }))
+    }]
+  });
+
+  /* --- 漏洞组件饼图 --- */
+  const vulnComponentChart = echarts.init(document.getElementById('vulnComponentChart'));
+  vulnComponentChart.setOption({
+    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
+    color: ['#00e5ff','#0088ff','#4facfe','#0000aa','#0044cc'],
+    series: [{
+      type: 'pie', radius: ['35%','65%'], center: ['50%','50%'],
+      itemStyle: { borderRadius: 4 },
+      label: { color: '#e0e6ed', formatter: '{b}\n{d}%', fontSize: 16 },
+      data: [
+        { value: 6, name: 'Redis' },
+        { value: 5, name: 'MySQL' },
+        { value: 4, name: 'Nginx' },
+        { value: 4, name: 'Tomcat' },
+        { value: 3, name: '其他' }
+      ]
+    }]
+  });
+
+  /* --- 攻击过程链式图 --- */
+  const chainChart = echarts.init(document.getElementById('chainChart'));
+  chainChart.setOption({
+    tooltip: { formatter: '{b}' },
+    xAxis: { type: 'value', min: 0, max: 1000, show: false },
+    yAxis: { type: 'value', min: 0, max: 100, show: false },
+    grid: { top: 0, bottom: 0, left: 0, right: 0 },
+    series: [
+      {
+        type: 'graph', coordinateSystem: 'cartesian2d', layout: 'none', symbol: 'circle',
+        edgeSymbol: ['none', 'arrow'], edgeSymbolSize: [0, 10],
+        data: [
+          {
+            name: '外部攻击源\n(发起探测入侵)', value: [125, 52], symbolSize: 50,
+            itemStyle: { color: new echarts.graphic.RadialGradient(0.5,0.5,1,[{offset:0,color:'#0097a7'},{offset:1,color:'#006064'}]) },
+            label: { show: true, position: 'bottom', distance: 8, fontSize: 14, color: '#fff', lineHeight: 18 }
+          },
+          {
+            name: '企业内网边界\n(Web系统 /Redis提权)', value: [375, 52], symbolSize: 50,
+            itemStyle: { color: new echarts.graphic.RadialGradient(0.5,0.5,1,[{offset:0,color:'#006064'},{offset:1,color:'#01579b'}]) },
+            label: { show: true, position: 'bottom', distance: 8, fontSize: 14, color: '#fff', lineHeight: 18 }
+          },
+          {
+            name: '横向移动感染\n(OA等1118台主机)', value: [625, 52], symbolSize: 50,
+            itemStyle: { color: new echarts.graphic.RadialGradient(0.5,0.5,1,[{offset:0,color:'#01579b'},{offset:1,color:'#0d47a1'}]) },
+            label: { show: true, position: 'bottom', distance: 8, fontSize: 14, color: '#fff', lineHeight: 18 }
+          },
+          {
+            name: '核心业务系统\n(UAT核心数据)', value: [875, 52], symbolSize: 50,
+            itemStyle: { color: new echarts.graphic.RadialGradient(0.5,0.5,1,[{offset:0,color:'#0d47a1'},{offset:1,color:'#002171'}]) },
+            label: { show: true, position: 'bottom', distance: 8, fontSize: 14, color: '#fff', lineHeight: 18 }
+          }
+        ],
+        links: [
+          { source: 0, target: 1, label: { show: false } },
+          { source: 1, target: 2, label: { show: false } },
+          { source: 2, target: 3, label: { show: false }, lineStyle: { type: 'dashed' } }
+        ],
+        lineStyle: { width: 2, curveness: 0.1, color: 'rgba(255,255,255,0.3)' }
+      },
+      {
+        type: 'lines', coordinateSystem: 'cartesian2d', zlevel: 1,
+        effect: { show: true, period: 4, trailLength: 0.1, color: '#fff', symbolSize: 4 },
+        lineStyle: { color: 'transparent', width: 0, curveness: 0.1 },
+        data: [
+          { coords: [[125,52],[375,52]], lineStyle: { color: '#ff4d4f' } },
+          { coords: [[375,52],[625,52]], lineStyle: { color: '#faad14' } },
+          { coords: [[625,52],[875,52]], lineStyle: { color: '#00e5ff' } }
+        ]
+      }
+    ]
+  });
+
+  /* 监听窗口大小 */
+  window.addEventListener('resize', () => {
+    attackTrendChart.resize();
+    vulnTimeChart.resize();
+    vulnComponentChart.resize();
+    chainChart.resize();
+  });
+
+}, 500);
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+{
+  "architecture": {
+    "code": 0,
+    "data": {
+      "atdReportNum": 3578,
+      "reportEnterpriseNum": 246,
+      "knowleageNum": 12568,
+      "gyEnterpiseNum": 187,
+      "monitorEnterpriseNum": 1245
+    }
+  },
+  "attackAlarm": {
+    "code": 0,
+    "data": {
+      "total": 256781234,
+      "yrarOnYear": "15.6%"
+    }
+  },
+  "dataAttackAlarm": {
+    "code": 0,
+    "data": {
+      "total": 18972336,
+      "yrarOnYear": "-8.3%"
+    }
+  },
+  "eventList": {
+    "code": 0,
+    "data": [
+      {
+        "id": "1001",
+        "eventName": "全国两会网络安全保障",
+        "startTimeStr": "2023-12-01",
+        "endTimeStr": "2023-12-15",
+        "eventStatus": 1,
+        "imgUrl": "assets/img/architecture/event1.png"
+      },
+      {
+        "id": "1002",
+        "eventName": "国家网络安全宣传周",
+        "startTimeStr": "2023-12-10",
+        "endTimeStr": "2023-12-17",
+        "eventStatus": 1,
+        "imgUrl": "assets/img/architecture/event2.png"
+      },
+      {
+        "id": "1003",
+        "eventName": "亚运会网络安全保障",
+        "startTimeStr": "2023-09-23",
+        "endTimeStr": "2023-10-08",
+        "eventStatus": 3,
+        "imgUrl": "assets/img/architecture/event3.png"
+      },
+      {
+        "id": "1004",
+        "eventName": "冬奥会网络安全保障",
+        "startTimeStr": "2022-02-04",
+        "endTimeStr": "2022-02-20",
+        "eventStatus": 3,
+        "imgUrl": "assets/img/architecture/event4.png"
+      }
+    ]
+  },
+  "special": {
+    "code": 0,
+    "data": [
+      {
+        "id": "2001",
+        "label": "集成电路产业链",
+        "count": 156,
+        "riskCount": 12,
+        "imgUrl": "assets/img/architecture/special1.png"
+      },
+      {
+        "id": "2002",
+        "label": "重点企业",
+        "count": 298,
+        "riskCount": 25,
+        "imgUrl": "assets/img/architecture/special2.png"
+      },
+      {
+        "id": "2003",
+        "label": "车联网",
+        "count": 87,
+        "riskCount": 8,
+        "imgUrl": "assets/img/architecture/special3.png"
+      },
+      {
+        "id": "2004",
+        "label": "船舶",
+        "count": 65,
+        "riskCount": 6,
+        "imgUrl": "assets/img/architecture/special4.png"
+      }
+    ]
+  },
+  "industryInternet": {
+    "code": 0,
+    "data": [
+      { "text1": "产业总产值", "text2": "1.5万亿元" },
+      { "text1": "工业5G项目", "text2": "1.85万个" },
+      { "text1": "带动经济增长", "text2": "3.5万亿元", "ratio": "11.8%" },
+      { "text1": "产业增加值超千亿", "text2": "17个省区市", "ratio": "0.6%" }
+    ]
+  },
+  "industryInternetSecurity": {
+    "code": 0,
+    "data": {
+      "time": ["2023", "2020", "2021", "2022"],
+      "attackedCount": ["8120", "15420", "10210", "18960"],
+      "attackedCompany": ["356", "489", "402", "518"]
+    }
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "keyMonitoringOverview": {
+    "code": 0,
+    "data": {
+      "companyTotal": 256,
+      "monitoringCompanyTotal": 198,
+      "riskCompanyTotal": 45,
+      "industryInfo": "重点行业企业网络安全态势整体良好，但仍存在一定风险。近期发现多起针对关键基础设施的网络攻击事件，建议加强防护措施。"
+    }
+  },
+  "networkAttackTotal": {
+    "code": 0,
+    "data": {
+      "total": 12568,
+      "chainRatio": "12.5%",
+      "yearOnYear": "-8.3%"
+    }
+  },
+  "foreignNetworkAttackTotal": {
+    "code": 0,
+    "data": {
+      "total": 5842,
+      "chainRatio": "15.2%",
+      "yearOnYear": "7.6%"
+    }
+  },
+  "attackIpTotal": {
+    "code": 0,
+    "data": {
+      "total": 3267,
+      "chainRatio": "-5.8%",
+      "yearOnYear": "-12.4%"
+    }
+  },
+  "overallSecuritySituation": {
+    "code": 0,
+    "data": "当前重点行业企业网络安全态势总体平稳，但仍面临较为严峻的网络安全挑战。境外攻击呈上升趋势，主要来源于美国、俄罗斯等国家，攻击类型以DDoS攻击、SQL注入和暴力破解为主。建议企业加强安全防护，定期进行安全评估和漏洞修复。"
+  },
+  "networkAttackTypeDistribution": {
+    "code": 0,
+    "data": [
+      { "key": "DDoS攻击", "doc_count": 3562 },
+      { "key": "SQL注入", "doc_count": 2845 },
+      { "key": "暴力破解", "doc_count": 2156 },
+      { "key": "XSS攻击", "doc_count": 1789 },
+      { "key": "端口扫描", "doc_count": 1245 },
+      { "key": "钓鱼攻击", "doc_count": 971 }
+    ]
+  },
+  "networkThreatLevelDistribution": {
+    "code": 0,
+    "data": [
+      {
+        "severityCn": "高危",
+        "doc_count": 12356,
+        "eventTypeIdCnList": ["DDoS攻击", "SQL注入", "远程代码执行"]
+      },
+      {
+        "severityCn": "中危",
+        "doc_count": 5782,
+        "eventTypeIdCnList": ["暴力破解", "XSS攻击", "信息泄露"]
+      },
+      {
+        "severityCn": "低危",
+        "doc_count": 4430,
+        "eventTypeIdCnList": ["端口扫描", "Cookie劫持", "敏感信息探测"]
+      }
+    ]
+  },
+  "networkAttackChangeTrend": {
+    "code": 0,
+    "data": {
+      "inList": [
+        { "key_as_string": "03-01", "doc_count": 245 },
+        { "key_as_string": "03-02", "doc_count": 278 },
+        { "key_as_string": "03-03", "doc_count": 312 },
+        { "key_as_string": "03-04", "doc_count": 298 },
+        { "key_as_string": "03-05", "doc_count": 325 },
+        { "key_as_string": "03-06", "doc_count": 356 },
+        { "key_as_string": "03-07", "doc_count": 387 }
+      ],
+      "overseasList": [
+        { "key_as_string": "03-01", "doc_count": 198 },
+        { "key_as_string": "03-02", "doc_count": 215 },
+        { "key_as_string": "03-03", "doc_count": 245 },
+        { "key_as_string": "03-04", "doc_count": 267 },
+        { "key_as_string": "03-05", "doc_count": 289 },
+        { "key_as_string": "03-06", "doc_count": 312 },
+        { "key_as_string": "03-07", "doc_count": 342 }
+      ]
+    }
+  },
+  "attackCountryRanking": {
+    "msg": "success",
+    "code": 0,
+    "data": [
+      {
+        "key": "中国",
+        "doc_count": 2897
+      },
+      {
+        "key": "美国",
+        "doc_count": 223
+      },
+      {
+        "key": "荷兰",
+        "doc_count": 28
+      },
+      {
+        "key": "丹麦",
+        "doc_count": 27
+      },
+      {
+        "key": "德国",
+        "doc_count": 22
+      },
+      {
+        "doc_count": 120,
+        "key": "其他"
+      }
+    ]
+  },
+  "attackSourceFeatureAnalysis": {
+    "code": 0,
+    "data": [
+      {
+        "attackIp": "45.67.89.123",
+        "attackTypeList": ["DDoS攻击", "暴力破解"],
+        "attackTotal": 356,
+        "attackCorpTotal": 12
+      },
+      {
+        "attackIp": "78.90.123.45",
+        "attackTypeList": ["SQL注入", "XSS攻击"],
+        "attackTotal": 289,
+        "attackCorpTotal": 8
+      },
+      {
+        "attackIp": "91.234.56.78",
+        "attackTypeList": ["端口扫描", "信息泄露"],
+        "attackTotal": 245,
+        "attackCorpTotal": 15
+      },
+      {
+        "attackIp": "123.45.67.89",
+        "attackTypeList": ["暴力破解", "钓鱼攻击"],
+        "attackTotal": 198,
+        "attackCorpTotal": 6
+      },
+      {
+        "attackIp": "34.56.78.90",
+        "attackTypeList": ["DDoS攻击", "远程代码执行"],
+        "attackTotal": 176,
+        "attackCorpTotal": 9
+      }
+    ]
+  },
+  "attackedEnterpriseAreaDistribution": {
+    "code": 0,
+    "data": {
+      "thermalMapList": [
+        { "key": "北京市", "doc_count": 1256 },
+        { "key": "上海市", "doc_count": 1089 },
+        { "key": "广东省", "doc_count": 978 },
+        { "key": "江苏省", "doc_count": 856 },
+        { "key": "浙江省", "doc_count": 745 },
+        { "key": "四川省", "doc_count": 623 },
+        { "key": "湖北省", "doc_count": 512 },
+        { "key": "山东省", "doc_count": 467 },
+        { "key": "河南省", "doc_count": 389 },
+        { "key": "福建省", "doc_count": 345 }
+      ],
+      "barChartList": [
+        { "key": "北京市", "doc_count": 1256 },
+        { "key": "上海市", "doc_count": 1089 },
+        { "key": "广东省", "doc_count": 978 },
+        { "key": "江苏省", "doc_count": 856 },
+        { "key": "浙江省", "doc_count": 745 }
+      ]
+    }
+  },
+  "realTimeAttackDynamics": {
+    "code": 0,
+    "data": [
+      {
+        "timestamp": "2024-03-20 15:30:25",
+        "attackIp": "45.67.89.123",
+        "attackCountry": "美国",
+        "attackProvince": "北京市",
+        "eventTypeIdCn": "DDoS攻击",
+        "attackedcorpname": "某科技有限公司",
+        "attackedIp": "192.168.1.100"
+      },
+      {
+        "timestamp": "2024-03-20 14:45:10",
+        "attackIp": "78.90.123.45",
+        "attackCountry": "俄罗斯",
+        "attackProvince": "上海市",
+        "eventTypeIdCn": "SQL注入",
+        "attackedcorpname": "某网络科技公司",
+        "attackedIp": "10.0.0.50"
+      },
+      {
+        "timestamp": "2024-03-20 13:20:33",
+        "attackIp": "91.234.56.78",
+        "attackCountry": "德国",
+        "attackProvince": "广东省",
+        "eventTypeIdCn": "端口扫描",
+        "attackedcorpname": "某信息技术公司",
+        "attackedIp": "172.16.0.25"
+      },
+      {
+        "timestamp": "2024-03-20 12:15:15",
+        "attackIp": "123.45.67.89",
+        "attackCountry": "巴西",
+        "attackProvince": "江苏省",
+        "eventTypeIdCn": "暴力破解",
+        "attackedcorpname": "某电子商务公司",
+        "attackedIp": "192.168.2.75"
+      },
+      {
+        "timestamp": "2024-03-20 11:05:42",
+        "attackIp": "45.67.89.123",
+        "attackCountry": "中国",
+        "attackProvince": "浙江省",
+        "eventTypeIdCn": "XSS攻击",
+        "attackedcorpname": "某金融科技公司",
+        "attackedIp": "10.0.1.30"
+      }
+    ]
+  },
+  "attackedEnterpriseRanking": {
+    "code": 0,
+    "data": [
+      {
+        "logo": "",
+        "attackedCorpname": "中芯国际集成电路制造有限公司",
+        "attackedTotal": 356,
+        "attackedIpTotal": 12,
+        "attackTypeList": ["DDoS攻击", "SQL注入", "暴力破解"]
+      },
+      {
+        "logo": "",
+        "attackedCorpname": "华为技术有限公司",
+        "attackedTotal": 289,
+        "attackedIpTotal": 15,
+        "attackTypeList": ["端口扫描", "XSS攻击", "钓鱼攻击"]
+      },
+      {
+        "logo": "",
+        "attackedCorpname": "腾讯科技有限公司",
+        "attackedTotal": 245,
+        "attackedIpTotal": 9,
+        "attackTypeList": ["DDoS攻击", "暴力破解", "远程代码执行"]
+      },
+      {
+        "logo": "",
+        "attackedCorpname": "阿里巴巴集团控股有限公司",
+        "attackedTotal": 198,
+        "attackedIpTotal": 8,
+        "attackTypeList": ["SQL注入", "信息泄露", "XSS攻击"]
+      },
+      {
+        "logo": "",
+        "attackedCorpname": "百度在线网络技术有限公司",
+        "attackedTotal": 176,
+        "attackedIpTotal": 7,
+        "attackTypeList": ["暴力破解", "端口扫描", "钓鱼攻击"]
+      }
+    ]
+  }
+}

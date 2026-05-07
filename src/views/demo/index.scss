@@ -1,0 +1,125 @@
+.networksecurity {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    .t {
+        border: 3px dashed red;
+    }
+    .left-box {
+        position: relative;
+        flex: 10;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        &-top {
+            position: relative;
+            flex: 1;
+            margin-bottom: 20px;
+            .total-box {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                &-t {
+                    flex: 1;
+                    margin-bottom: 10px;
+                    display: flex;
+                }
+                &-b {
+                    flex: 1;
+                    display: flex;
+                }
+                .total-card {
+                    flex: 1;
+                    margin-right: 10px;
+                    &:last-child {
+                        margin-right: 0px;
+                    }
+                }
+            }
+        }
+        &-center {
+            position: relative;
+            flex: 1;
+            margin-bottom: 20px;
+            display: flex;
+            .chart-card {
+                position: relative;
+                flex: 1;
+                margin-right: 10px;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+        &-bottom {
+            position: relative;
+            flex: 1;
+            display: flex;
+            .chart-card {
+                position: relative;
+                flex: 1;
+                margin-right: 10px;
+                &:last-child {
+                    margin-right: 0;
+                }
+                .progress-box {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    .pbox-top {
+                        flex: 3;
+                        display: flex;
+                        .pbox-top-item {
+                            position: relative;
+                            flex: 1;
+                            margin-right: 5px;
+                            &:last-child {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                    .pbox-bottom {
+                        flex: 2;
+                    }
+                }
+            }
+        }
+    }
+    .center-box {
+        position: relative;
+        flex: 17;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        .test {
+            flex: 1;
+            display: flex;
+            .xitem {
+                flex: 1;
+            }
+        }
+    }
+    .right-box {
+        position: relative;
+        flex: 10;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        &-top {
+            position: relative;
+            flex: 1;
+            margin-bottom: 20px;
+        }
+        &-bottom {
+            position: relative;
+            flex: 1;
+        }
+    }
+}

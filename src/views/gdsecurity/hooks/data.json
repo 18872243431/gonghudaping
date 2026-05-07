@@ -1,0 +1,353 @@
+{
+  "gdSecurityOverview": {
+    "code": 0,
+    "data": {
+      "aboveStandardIndustrialEnterprise": 3256,
+      "platformEnterprise": 1845,
+      "handleEnterprise": 762,
+      "enterpriseTotal": 5863,
+      "monitorAboveStandardEnterprise": 2987,
+      "rate": 50.9
+    }
+  },
+  "gdSecurityReport": {
+    "code": 0,
+    "data": {
+      "companyTotal": 3256,
+      "ipTotal": 12568
+    }
+  },
+  "gdSecurityDataReport": {
+    "code": 0,
+    "data": {
+      "lineList": [
+        { "key_as_string": "03-01", "doc_count": 245 },
+        { "key_as_string": "03-02", "doc_count": 278 },
+        { "key_as_string": "03-03", "doc_count": 312 },
+        { "key_as_string": "03-04", "doc_count": 298 },
+        { "key_as_string": "03-05", "doc_count": 325 },
+        { "key_as_string": "03-06", "doc_count": 356 },
+        { "key_as_string": "03-07", "doc_count": 387 }
+      ],
+      "totalNum": 2201,
+      "effectivenessNum": 1850
+    }
+  },
+  "gdSecurityPosture": {
+    "code": 0,
+    "data": "广东省网络安全态势总体平稳，但仍面临较为严峻的网络安全挑战。近期监测到的网络攻击主要集中在广州市、深圳市和佛山市等地区，攻击类型以DDoS攻击、SQL注入和暴力破解为主"
+  },
+  "gdSecurityAttackType": {
+    "code": 0,
+    "data": [
+      { "key": "DDoS攻击", "doc_count": 3562 },
+      { "key": "SQL注入", "doc_count": 2845 },
+      { "key": "暴力破解", "doc_count": 2156 },
+      { "key": "XSS攻击", "doc_count": 1789 },
+      { "key": "端口扫描", "doc_count": 1245 }
+    ]
+  },
+  "gdSecurityMap": {
+    "code": 0,
+    "data": [
+      {
+        "city": "广州市",
+        "attackedTotal": 3562,
+        "attackedCompanyTotal": 156,
+        "assetTtoal": 2345,
+        "loopholeTotal": 567
+      },
+      {
+        "city": "深圳市",
+        "attackedTotal": 2845,
+        "attackedCompanyTotal": 132,
+        "assetTtoal": 1987,
+        "loopholeTotal": 456
+      },
+      {
+        "city": "佛山市",
+        "attackedTotal": 2156,
+        "attackedCompanyTotal": 98,
+        "assetTtoal": 1567,
+        "loopholeTotal": 345
+      },
+      {
+        "city": "东莞市",
+        "attackedTotal": 1789,
+        "attackedCompanyTotal": 87,
+        "assetTtoal": 1345,
+        "loopholeTotal": 287
+      },
+      {
+        "city": "珠海市",
+        "attackedTotal": 1456,
+        "attackedCompanyTotal": 76,
+        "assetTtoal": 1123,
+        "loopholeTotal": 234
+      },
+      {
+        "city": "中山市",
+        "attackedTotal": 1245,
+        "attackedCompanyTotal": 65,
+        "assetTtoal": 987,
+        "loopholeTotal": 198
+      },
+      {
+        "city": "惠州市",
+        "attackedTotal": 1089,
+        "attackedCompanyTotal": 54,
+        "assetTtoal": 876,
+        "loopholeTotal": 176
+      },
+      {
+        "city": "江门市",
+        "attackedTotal": 956,
+        "attackedCompanyTotal": 48,
+        "assetTtoal": 765,
+        "loopholeTotal": 154
+      },
+      {
+        "city": "汕头市",
+        "attackedTotal": 845,
+        "attackedCompanyTotal": 42,
+        "assetTtoal": 654,
+        "loopholeTotal": 132
+      },
+      {
+        "city": "湛江市",
+        "attackedTotal": 734,
+        "attackedCompanyTotal": 36,
+        "assetTtoal": 543,
+        "loopholeTotal": 109
+      },
+      {
+        "city": "肇庆市",
+        "attackedTotal": 623,
+        "attackedCompanyTotal": 31,
+        "assetTtoal": 432,
+        "loopholeTotal": 87
+      },
+      {
+        "city": "茂名市",
+        "attackedTotal": 512,
+        "attackedCompanyTotal": 25,
+        "assetTtoal": 321,
+        "loopholeTotal": 65
+      },
+      {
+        "city": "韶关市",
+        "attackedTotal": 401,
+        "attackedCompanyTotal": 20,
+        "assetTtoal": 210,
+        "loopholeTotal": 43
+      },
+      {
+        "city": "梅州市",
+        "attackedTotal": 356,
+        "attackedCompanyTotal": 18,
+        "assetTtoal": 187,
+        "loopholeTotal": 38
+      },
+      {
+        "city": "汕尾市",
+        "attackedTotal": 289,
+        "attackedCompanyTotal": 14,
+        "assetTtoal": 156,
+        "loopholeTotal": 32
+      },
+      {
+        "city": "河源市",
+        "attackedTotal": 245,
+        "attackedCompanyTotal": 12,
+        "assetTtoal": 134,
+        "loopholeTotal": 27
+      },
+      {
+        "city": "阳江市",
+        "attackedTotal": 198,
+        "attackedCompanyTotal": 10,
+        "assetTtoal": 112,
+        "loopholeTotal": 23
+      },
+      {
+        "city": "清远市",
+        "attackedTotal": 176,
+        "attackedCompanyTotal": 9,
+        "assetTtoal": 98,
+        "loopholeTotal": 20
+      },
+      {
+        "city": "潮州市",
+        "attackedTotal": 154,
+        "attackedCompanyTotal": 8,
+        "assetTtoal": 87,
+        "loopholeTotal": 18
+      },
+      {
+        "city": "揭阳市",
+        "attackedTotal": 132,
+        "attackedCompanyTotal": 7,
+        "assetTtoal": 76,
+        "loopholeTotal": 15
+      },
+      {
+        "city": "云浮市",
+        "attackedTotal": 109,
+        "attackedCompanyTotal": 5,
+        "assetTtoal": 65,
+        "loopholeTotal": 13
+      }
+    ]
+  },
+  "gdSecurityAttackDynamic": {
+    "code": 0,
+    "data": [
+      {
+        "timestamp": "2024-03-20 15:30:25",
+        "eventTypeName": "DDoS攻击",
+        "killChainCn": "武器投递",
+        "attackIp": "45.67.89.123",
+        "attackedCountry": "美国",
+        "attackedCorpName": "某科技有限公司",
+        "attackedIp": "192.168.1.100",
+        "attackedProvince": "广州市"
+      },
+      {
+        "timestamp": "2024-03-20 14:45:10",
+        "eventTypeName": "SQL注入",
+        "killChainCn": "漏洞利用",
+        "attackIp": "78.90.123.45",
+        "attackedCountry": "俄罗斯",
+        "attackedCorpName": "某网络科技公司",
+        "attackedIp": "10.0.0.50",
+        "attackedProvince": "深圳市"
+      },
+      {
+        "timestamp": "2024-03-20 13:20:33",
+        "eventTypeName": "端口扫描",
+        "killChainCn": "侦察",
+        "attackIp": "91.234.56.78",
+        "attackedCountry": "德国",
+        "attackedCorpName": "某信息技术公司",
+        "attackedIp": "172.16.0.25",
+        "attackedProvince": "佛山市"
+      },
+      {
+        "timestamp": "2024-03-20 12:15:15",
+        "eventTypeName": "暴力破解",
+        "killChainCn": "漏洞利用",
+        "attackIp": "123.45.67.89",
+        "attackedCountry": "巴西",
+        "attackedCorpName": "某电子商务公司",
+        "attackedIp": "192.168.2.75",
+        "attackedProvince": "东莞市"
+      },
+      {
+        "timestamp": "2024-03-20 11:05:42",
+        "eventTypeName": "XSS攻击",
+        "killChainCn": "漏洞利用",
+        "attackIp": "45.67.89.123",
+        "attackedCountry": "中国",
+        "attackedCorpName": "某金融科技公司",
+        "attackedIp": "10.0.1.30",
+        "attackedProvince": "珠海市"
+      }
+    ]
+  },
+  "gdSecuritySystem": {
+    "code": 0,
+    "data": [
+      {
+        "deviceCount": 2654,
+        "vender": "Honeywell",
+        "loopholeCount": 14
+      },
+      {
+        "deviceCount": 90,
+        "vender": "Siemens",
+        "loopholeCount": 282
+      },
+      {
+        "deviceCount": 458,
+        "vender": "Moxa",
+        "loopholeCount": 25
+      },
+      {
+        "deviceCount": 185,
+        "vender": "Siemens",
+        "loopholeCount": 123
+      }
+    ]
+  },
+  "gdSecurityData": {
+    "code": 0,
+    "data": [
+      {
+        "deviceCount": 2654,
+        "deviceName": "ES",
+        "loopholeCount": 14
+      },
+      {
+        "deviceCount": 756,
+        "deviceName": "Oracle",
+        "loopholeCount": 45
+      },
+      {
+        "deviceCount": 458,
+        "deviceName": "Mysql",
+        "loopholeCount": 25
+      },
+      {
+        "deviceCount": 185,
+        "deviceName": "PostgreSQL",
+        "loopholeCount": 123
+      }
+    ]
+  },
+  "gdSecurityRank": {
+    "code": 0,
+    "data": [
+      {
+        "attackedIndustry": "化学原料和化学制品制造业",
+        "attackedTotal": 172850,
+        "companyTotal": 19554,
+        "monitorCompanyTotal": 358
+      },
+      {
+        "attackedIndustry": "铁路、船舶、航空航天和其他运输设备制造业",
+        "attackedTotal": 105698,
+        "companyTotal": 4572,
+        "monitorCompanyTotal": 57
+      },
+      {
+        "attackedIndustry": "计算机、通信和其他电子设备制造业",
+        "attackedTotal": 90276,
+        "companyTotal": 5863,
+        "monitorCompanyTotal": 124
+      },
+      {
+        "attackedIndustry": "通用设备制造业",
+        "attackedTotal": 82724,
+        "companyTotal": 91351,
+        "monitorCompanyTotal": 304
+      }
+    ]
+  },
+  "gdSecurityReportHandle": {
+    "code": 0,
+    "data": {
+      "total": 32156,
+      "companyTotal": 1145,
+      "disposalTotal": 312
+    }
+  },
+  "gdSecurityOverall": {
+    "code": 0,
+    "data": {
+      "total": 23230,
+      "outsideAttackIpTotal": 12330,
+      "attackedCorpTotal": 1330,
+      "insideAttackIpTotal": 10900
+    }
+  }
+}

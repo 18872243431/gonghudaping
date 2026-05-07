@@ -1,0 +1,258 @@
+{
+  "item1": {
+    "code": 0,
+    "data": {
+      "actualNum": 845,
+      "cleanNum": 1243,
+      "standardNum": 1876,
+      "originalNum": 2452
+    }
+  },
+  "overview": {
+    "code": 0,
+    "data": {
+      "totalNum": 1874,
+      "noticeEnterpriseNum": 632,
+      "disposalNum": 1526,
+      "ratio": 81.4
+    }
+  },
+  "eventType": {
+    "code": 0,
+    "data": [
+      { "label": "网络攻击", "value": 432 },
+      { "label": "系统漏洞", "value": 321 },
+      { "label": "数据泄露", "value": 287 },
+      { "label": "恶意代码", "value": 245 },
+      { "label": "未授权访问", "value": 198 },
+      { "label": "钓鱼攻击", "value": 187 },
+      { "label": "勒索软件", "value": 134 },
+      { "label": "其他", "value": 70 }
+    ]
+  },
+  "industryRank": {
+    "msg": "success",
+    "code": 0,
+    "data": [
+      {
+        "enterpriseNum": "437",
+        "reportCount": 532,
+        "label": "通用设备制造业"
+      },
+      {
+        "enterpriseNum": "365",
+        "reportCount": 517,
+        "label": "汽车制造业"
+      },
+      {
+        "enterpriseNum": "352",
+        "reportCount": 489,
+        "label": "计算机、通信和其他电子设备制造业"
+      },
+      {
+        "enterpriseNum": "313",
+        "reportCount": 365,
+        "label": "专用设备制造业"
+      },
+      {
+        "enterpriseNum": "210",
+        "reportCount": 288,
+        "label": "化学原料和化学制品制造业"
+      },
+      {
+        "enterpriseNum": "215",
+        "reportCount": 286,
+        "label": "电气机械和器材制造业"
+      },
+      {
+        "enterpriseNum": "179",
+        "reportCount": 261,
+        "label": "医药制造业"
+      },
+      {
+        "enterpriseNum": "158",
+        "reportCount": 201,
+        "label": "金属制品业"
+      },
+      {
+        "enterpriseNum": "126",
+        "reportCount": 155,
+        "label": "仪器仪表制造业"
+      },
+      {
+        "enterpriseNum": "100",
+        "reportCount": 134,
+        "label": "非金属矿物制品业"
+      },
+      {
+        "enterpriseNum": "98",
+        "reportCount": 127,
+        "label": "电力、热力生产和供应业"
+      },
+      {
+        "enterpriseNum": "88",
+        "reportCount": 118,
+        "label": "其他制造业"
+      },
+      {
+        "enterpriseNum": "76",
+        "reportCount": 101,
+        "label": "橡胶和塑料制品业"
+      },
+      {
+        "enterpriseNum": "61",
+        "reportCount": 87,
+        "label": "食品制造业"
+      },
+      {
+        "enterpriseNum": "46",
+        "reportCount": 72,
+        "label": "农副食品加工业"
+      },
+      {
+        "enterpriseNum": "46",
+        "reportCount": 67,
+        "label": "铁路、船舶、航空航天和其他运输设备制造业"
+      },
+      {
+        "enterpriseNum": "44",
+        "reportCount": 56,
+        "label": "酒、饮料和精制茶制造业"
+      },
+      {
+        "enterpriseNum": "42",
+        "reportCount": 54,
+        "label": "纺织业"
+      },
+      {
+        "enterpriseNum": "41",
+        "reportCount": 54,
+        "label": "黑色金属冶炼和压延加工业"
+      },
+      {
+        "enterpriseNum": "36",
+        "reportCount": 47,
+        "label": "有色金属冶炼和压延加工业"
+      },
+      {
+        "enterpriseNum": "26",
+        "reportCount": 36,
+        "label": "水的生产和供应业"
+      },
+      {
+        "enterpriseNum": "29",
+        "reportCount": 36,
+        "label": "家具制造业"
+      },
+      {
+        "enterpriseNum": "24",
+        "reportCount": 33,
+        "label": "燃气生产和供应业"
+      },
+      {
+        "enterpriseNum": "21",
+        "reportCount": 29,
+        "label": "造纸和纸制品业"
+      },
+      {
+        "enterpriseNum": "25",
+        "reportCount": 27,
+        "label": "石油、煤炭及其他燃料加工业"
+      },
+      {
+        "enterpriseNum": "11",
+        "reportCount": 23,
+        "label": "煤炭开采和洗选业"
+      },
+      {
+        "enterpriseNum": "18",
+        "reportCount": 23,
+        "label": "文教、工美、体育和娱乐用品制造业"
+      },
+      {
+        "enterpriseNum": "17",
+        "reportCount": 23,
+        "label": "纺织服装、服饰业"
+      },
+      {
+        "enterpriseNum": "13",
+        "reportCount": 20,
+        "label": "皮革、毛皮、羽毛及其制品和制鞋业"
+      },
+      {
+        "enterpriseNum": "14",
+        "reportCount": 14,
+        "label": "化学纤维制造业"
+      },
+      {
+        "enterpriseNum": "10",
+        "reportCount": 11,
+        "label": "木材加工和木、竹、藤、棕、草制品业"
+      },
+      {
+        "enterpriseNum": "8",
+        "reportCount": 10,
+        "label": "有色金属矿采选业"
+      },
+      {
+        "enterpriseNum": "3",
+        "reportCount": 9,
+        "label": "非金属矿采选业"
+      },
+      {
+        "enterpriseNum": "5",
+        "reportCount": 8,
+        "label": "印刷和记录媒介复制业"
+      },
+      {
+        "enterpriseNum": "3",
+        "reportCount": 8,
+        "label": "烟草制品业"
+      },
+      {
+        "enterpriseNum": "5",
+        "reportCount": 6,
+        "label": "金属制品、机械和设备修理业"
+      },
+      {
+        "enterpriseNum": "5",
+        "reportCount": 5,
+        "label": "黑色金属矿采选业"
+      },
+      {
+        "enterpriseNum": "1",
+        "reportCount": 1,
+        "label": "废弃资源综合利用业"
+      }
+    ]
+  },
+  "provinceRank": {
+    "code": 0,
+    "data": {
+      "label": [
+        "广东",
+        "北京",
+        "上海",
+        "江苏",
+        "浙江",
+        "湖北",
+        "四川",
+        "山东",
+        "河南",
+        "福建"
+      ],
+      "reportNum": [235, 187, 162, 152, 143, 128, 117, 109, 92, 85],
+      "disposalNum": [218, 165, 148, 131, 128, 110, 102, 91, 76, 72],
+      "ratioNum": [92.8, 88.2, 91.4, 86.2, 89.5, 85.9, 87.2, 83.5, 82.6, 84.7]
+    }
+  },
+  "disposal": {
+    "code": 0,
+    "data": {
+      "disposalBeforeNum": 1874,
+      "disposalAfterNum": 348,
+      "disposalRatio": 81.4,
+      "enterpriseNum": 632
+    }
+  }
+}

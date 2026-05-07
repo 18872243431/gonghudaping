@@ -1,0 +1,48 @@
+/*
+ * @Author: cxm
+ * @LastEditors: cxm
+ * @Date: 2021-10-25 10:18:34
+ * @LastEditTime: 2021-10-29 15:44:21
+ * @Description: 
+ */
+export default {
+  '--color-primary': '#2253D4',
+  warning: '#e6a23c',
+  error: '#ca435b',
+  success: '#2BC048',
+  info: 'rgba(255, 255, 255, 0.55)',
+  transition: 'all .3s ease-in-out', // 过渡效果
+  loginBg: '#0E1827',
+  loginBorder: '#333742',
+  headerHeight: '60px',
+  headerBg: '#272F3E',
+  logoColor: '#4898CD',
+  sidebarWidth: '200px',
+  menuColor: '#ADB0B8',
+  menuHover: '#ffffff',
+
+  headerHover: '#14243E',
+  grey1: '#000',
+  grey2: '#262626',
+  grey3: '#595959',
+  grey4: '#8c8c8c',
+  grey5: '#bfbfbf',
+  grey6: '#d9d9d9',
+  grey7: '#e8e8e8',
+  grey8: '#f5f5f5', // containerBg
+  grey9: '#f9f9f9',
+  grey10: '#ffffff',
+  '--el-color-primary': 'yellow',
+
+  // Font family variables
+  'font-family-title': '"PingFang SC", "Microsoft YaHei", "SourceHanSansSC", sans-serif',
+  'font-family-body': '"PingFang SC", "Microsoft YaHei", "SourceHanSansSC", sans-serif',
+  'font-family-num': '"PingFang SC", "Microsoft YaHei", "SourceHanSansSC", sans-serif',
+
+  // Font size variables (32:9)
+  'font-size-h1': '24px',
+  'font-size-h2': '22px',
+  'font-size-h3': '20px',
+  'font-size-body': '20px',
+  'font-size-small': '16px'
+}

@@ -1,0 +1,185 @@
+{
+  "companyInfo": {
+    "所属行业": "互联网科技",
+    "注册省市": "北京市",
+    "公司类型": "有限责任公司",
+    "注册资金": "5000万",
+    "企业是否重点": "是",
+    "近7天整体安全状态": "中危"
+  },
+  "overview": [
+    { "key": "高危", "doc_count": 40413 },
+    { "key": "中危", "doc_count": 59047 },
+    { "key": "低危", "doc_count": 173116 }
+  ],
+  "attackType": [
+    { "key": "网络扫描", "doc_count": 12245 },
+    { "key": "暴力破解", "doc_count": 31187 },
+    { "key": "漏洞利用", "doc_count": 8156 },
+    { "key": "DDoS攻击", "doc_count": 7132 },
+    { "key": "钓鱼攻击", "doc_count": 6798 },
+    { "key": "其他", "doc_count": 2183 }
+  ],
+  "attackStage": [
+    { "key": "侦察", "doc_count": 320 },
+    { "key": "武器构建", "doc_count": 180 },
+    { "key": "部署", "doc_count": 240 },
+    { "key": "漏洞利用", "doc_count": 290 },
+    { "key": "安装", "doc_count": 150 },
+    { "key": "命令控制", "doc_count": 210 },
+    { "key": "行动", "doc_count": 270 }
+  ],
+  "securitySituation": "该企业近期遭受了多次网络攻击，主要集中在网络扫描和暴力破解方面。检测到多个高危漏洞，建议及时进行安全加固和系统更新。",
+  "dynamicAlarm": [
+    {
+      "startTime": "2023-07-15 08:23:15",
+      "endTime": "2023-07-15 09:45:32",
+      "attackedIp": "192.168.1.105",
+      "category": "暴力破解",
+      "attackIp": "45.134.26.178",
+      "attackNum": 10
+    },
+    {
+      "startTime": "2023-07-15 10:12:45",
+      "endTime": "2023-07-15 10:35:21",
+      "attackedIp": "192.168.1.107",
+      "category": "网络扫描",
+      "attackIp": "103.45.78.92",
+      "attackNum": 5
+    },
+    {
+      "startTime": "2023-07-15 13:45:32",
+      "endTime": "2023-07-15 14:12:18",
+      "attackedIp": "192.168.1.110",
+      "category": "漏洞利用",
+      "attackIp": "78.156.32.45",
+      "attackNum": 3
+    },
+    {
+      "startTime": "2023-07-15 16:23:45",
+      "endTime": "2023-07-15 16:56:12",
+      "attackedIp": "192.168.1.112",
+      "category": "DDoS攻击",
+      "attackIp": "125.67.89.32",
+      "attackNum": 1000
+    },
+    {
+      "startTime": "2023-07-15 10:12:45",
+      "endTime": "2023-07-15 10:35:21",
+      "attackedIp": "192.168.1.107",
+      "category": "网络扫描",
+      "attackIp": "103.45.78.92",
+      "attackNum": 5
+    }
+  ],
+  "attackTotal": {
+    "total": 10021,
+    "yearOnYear": "+15.6%",
+    "chainRatio": "+5.8%",
+    "trendRes": [
+      { "key_as_string": "07-10", "doc_count": 120 },
+      { "key_as_string": "07-11", "doc_count": 145 },
+      { "key_as_string": "07-12", "doc_count": 132 },
+      { "key_as_string": "07-13", "doc_count": 156 },
+      { "key_as_string": "07-14", "doc_count": 178 },
+      { "key_as_string": "07-15", "doc_count": 142 },
+      { "key_as_string": "07-16", "doc_count": 128 }
+    ]
+  },
+  "attackSource": {
+    "total": 3278,
+    "yearOnYear": "+12.3%",
+    "chainRatio": "+3.5%",
+    "trendRes": [
+      { "key_as_string": "07-10", "doc_count": 8 },
+      { "key_as_string": "07-11", "doc_count": 10 },
+      { "key_as_string": "07-12", "doc_count": 12 },
+      { "key_as_string": "07-13", "doc_count": 15 },
+      { "key_as_string": "07-14", "doc_count": 14 },
+      { "key_as_string": "07-15", "doc_count": 11 },
+      { "key_as_string": "07-16", "doc_count": 8 }
+    ]
+  },
+  "attackIp": {
+    "total": 23222,
+    "yearOnYear": "+8.5%",
+    "chainRatio": "+2.1%",
+    "trendRes": [
+      { "key_as_string": "07-10", "doc_count": 3 },
+      { "key_as_string": "07-11", "doc_count": 4 },
+      { "key_as_string": "07-12", "doc_count": 3 },
+      { "key_as_string": "07-13", "doc_count": 5 },
+      { "key_as_string": "07-14", "doc_count": 4 },
+      { "key_as_string": "07-15", "doc_count": 3 },
+      { "key_as_string": "07-16", "doc_count": 1 }
+    ]
+  },
+  "vulnerabilityInfo": {
+    "riskIp": [
+      { "ip": "192.168.1.105", "info": "" },
+      { "ip": "192.168.1.107", "info": "" }
+    ],
+    "ip": [
+      {
+        "ip": "192.168.1.105",
+        "asset": "Web服务器",
+        "loopholeType": "SQL注入"
+      },
+      {
+        "ip": "192.168.1.107",
+        "asset": "应用服务器",
+        "loopholeType": "XSS跨站脚本"
+      },
+      {
+        "ip": "192.168.1.110",
+        "asset": "数据库服务器",
+        "loopholeType": "未授权访问"
+      },
+      {
+        "ip": "192.168.1.112",
+        "asset": "文件服务器",
+        "loopholeType": "弱口令"
+      },
+      {
+        "ip": "192.168.1.115",
+        "asset": "邮件服务器",
+        "loopholeType": "配置错误"
+      }
+    ],
+    "ipTotal": 2335,
+    "portNum": 1536,
+    "riskIpTotal": 3543
+  },
+  "attackRank": [
+    { "country": "俄罗斯", "ip": "45.134.26.178", "doc_count": 245 },
+    { "country": "美国", "ip": "103.45.78.92", "doc_count": 187 },
+    { "country": "中国", "ip": "78.156.32.45", "doc_count": 156 },
+    { "country": "印度", "ip": "125.67.89.32", "doc_count": 132 },
+    { "country": "巴西", "ip": "67.89.123.45", "doc_count": 98 }
+  ],
+  "attackTime": [
+    { "key_as_string": "00:00", "doc_count": 12 },
+    { "key_as_string": "02:00", "doc_count": 8 },
+    { "key_as_string": "04:00", "doc_count": 5 },
+    { "key_as_string": "06:00", "doc_count": 10 },
+    { "key_as_string": "08:00", "doc_count": 25 },
+    { "key_as_string": "10:00", "doc_count": 32 },
+    { "key_as_string": "12:00", "doc_count": 28 },
+    { "key_as_string": "14:00", "doc_count": 35 },
+    { "key_as_string": "16:00", "doc_count": 30 },
+    { "key_as_string": "18:00", "doc_count": 22 },
+    { "key_as_string": "20:00", "doc_count": 18 },
+    { "key_as_string": "22:00", "doc_count": 15 }
+  ],
+  "highRiskIp": [
+    {
+      "attackIpTotal": 90000,
+      "province": "北京",
+      "eventTypeList": ["网络嗅探", "暴力破解"],
+      "city": "北京",
+      "attackedTotal": 9000,
+      "ip": "58.243.184.30",
+      "status": "对外攻击"
+    }
+  ]
+}

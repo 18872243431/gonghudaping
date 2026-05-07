@@ -1,0 +1,131 @@
+.bar-tooltip-box {
+  width: 420px;
+  border: none !important;
+  padding: 0px !important;
+  box-shadow: none !important;
+  .tooltip-box {
+    padding: 10px;
+    background: url(~assets/img/overall/tooltip/bg.png) no-repeat center / 100% 100%;
+    .title-box {
+      width: 100%;
+      margin: 0 auto;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: url(~assets/img/overall/tooltip/title-bg.png) no-repeat center / 100% 100%;
+      &::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        width: 52px;
+        height: 40px;
+        background: url(~assets/img/overall/tooltip/title-icon.png) no-repeat center / 100% 100%;
+      }
+      .title-name {
+        padding-left: 60px;
+        font-size: 14px;
+        font-family: "SourceHanSansCN-Regular", "PingFangSC-Regular","Microsoft YaHei", sans-serif;
+        font-weight: 700;
+        width: 70%;
+        text-align: center;
+        color: #d0deee;
+        line-height: 17px;
+        letter-spacing: 1.4px;
+        text-shadow: 0px 0px 4px rgba(0,0,0,0.50);
+      }
+      .title-value {
+        font-size: 22px;
+        font-family: DIN, DIN-Bold;
+        font-weight: 700;
+        color: #eaa141;
+        line-height: 20px;
+        text-shadow: 0px 0px 4px rgba(0,0,0,0.50); 
+      }
+    }
+    .rank-list {
+      display: flex;
+      padding: 10px;
+      .rank-l {
+        width: 150px;
+        .bar-bg {
+          .bar {
+            background: linear-gradient(55deg,rgba(253,172,66,0.00) 10%, #fdac42 84%, #fff 100%);
+          }
+        }
+        .name,
+        .value {
+          color: #f3ac41;
+        }
+        .name {
+          width: 50px;
+        }
+      }
+      .rank-r {
+        width: calc(100% - 150px);
+        .bar-bg {
+          .bar {
+            background: linear-gradient(55deg,rgba(253,172,66,0.00) 10%, #13C2FF 84%, #fff 100%);
+          }
+        }
+        .name,
+        .value {
+          color: #D0DEEE;
+        }
+        .name {
+          width: 105px !important;
+        }
+      }
+      .list {
+        .title {
+          padding-left: 20px;
+          line-height: 20px;
+          font-size: 14px;
+          background: linear-gradient(180deg, #fafefe 32%, #71e2e3);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          position: relative;
+          &::after {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: url(~assets/img/overall/tooltip/icon.png) no-repeat center / 100% 100%;
+          }
+        }
+        ul {
+          padding: 10px 0px;
+          li {
+            margin-bottom: 4px;
+            display: flex;
+            padding-left: 10px;
+            align-items: center;
+            .bar-bg {
+              width: 60px;
+              height: 4px;
+              .bar {
+                height: 4px;
+              }
+            }
+            .name,
+            .value {
+              font-size: 12px;
+              font-family: "SourceHanSansCN-Regular", "PingFangSC-Regular","Microsoft YaHei", sans-serif;
+              line-height: 18px;
+            }
+            .name {
+              padding-right: 5px;
+            }
+            .value {
+              padding-left:5px;
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+}

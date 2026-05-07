@@ -1,0 +1,390 @@
+.targetMonitor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  .left-box {
+    width: 500px;
+    height: calc(100% - 50px);
+    margin-right: 20px;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: inset 0 0 40px rgba(0, 123, 255, 0.45);
+    &-title {
+      position: relative;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(40, 129, 250, 0.15);
+      box-shadow: 0px 0px 24px 4px rgba(40, 123, 250, 0.35) inset;
+      span {
+        font-size: 25px;
+        font-weight: 400;
+        color: #fff;
+        letter-spacing: 2px;
+        font-family: "YouSheBiaoTiHei";
+      }
+    }
+    &-content {
+      position: relative;
+      width: 100%;
+      height: calc(100% - 50px);
+      padding: 15px;
+      overflow-y: auto;
+      :deep(.el-timeline-item__tail) {
+        border-left: 2px solid #007bff;
+        display: block !important;
+      }
+      :deep(.el-timeline-item__timestamp.is-top) {
+        background: linear-gradient(
+          to right,
+          rgba(168, 103, 70, 1),
+          transparent
+        );
+        border-left: 5px solid rgba(239, 136, 58, 1);
+        border-top: none;
+        border-right: none;
+        border-bottom: none;
+        padding: 6px 0px 6px 6px;
+      }
+      :deep(.el-timeline-item__timestamp) {
+        font-size: 20px;
+        color: #fff;
+      }
+      .custom-card {
+        display: flex;
+        align-items: center;
+        background: linear-gradient(
+          to right,
+          rgba(10, 92, 188, 0.65),
+          transparent
+        );
+        padding: 10px;
+        margin-bottom: 10px;
+        position: relative;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+      .vertical-line {
+        width: 4px;
+        background-color: rgba(10, 190, 255, 1);
+        height: 100%;
+        position: absolute;
+        left: -10px;
+      }
+      .month {
+        padding-top: 10px;
+        .month-title {
+          width: 200px;
+          height: 29px;
+          font-family: SourceHanSansSC, SourceHanSansSC;
+          font-weight: bold;
+          font-size: 18px;
+          color: #ffffff;
+          line-height: 29px;
+          text-align: left;
+          font-style: normal;
+          margin-bottom: 10px;
+          position: relative;
+          &::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            background-color: #28b2ff;
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            left: -27px;
+          }
+          &::after {
+            content: "";
+            width: 18px;
+            height: 18px;
+            border: 1px solid #1abcff;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: -32px;
+          }
+        }
+      }
+      .card-content {
+        h4 {
+          color: #00fbfc;
+          font-size: 20px;
+          margin: 0;
+        }
+        p {
+          color: #fff;
+          font-size: 18px;
+          margin: 0;
+        }
+      }
+    }
+  }
+  .right-box {
+    width: calc(100% - 500px);
+    height: calc(100% - 50px);
+    position: relative;
+    &-top {
+      position: relative;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      .title {
+        width: 410px;
+        height: 74px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 10px;
+        position: relative;
+        &::before {
+          content: "";
+          top: 0;
+          left: 0;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0.5;
+          z-index: -1;
+          background: url(./imgs/title-bg.png) no-repeat center / 100% 100%;
+        }
+        .label {
+          font-size: 25px;
+          font-weight: 700;
+          font-family: sans-serif;
+          letter-spacing: 2px;
+          background-image: linear-gradient(
+            rgb(255, 255, 255),
+            rgb(210, 244, 252),
+            rgb(89, 181, 218)
+          );
+          color: transparent;
+          background-clip: text;
+        }
+        .value {
+          font-size: 25px;
+          font-family: sans-serif;
+          letter-spacing: 2px;
+          color: rgb(4, 250, 254);
+          text-shadow: rgba(0, 20, 58, 0.5) 0px 5px 5px;
+        }
+      }
+      .subtitle-list {
+        display: flex;
+        .subtitle {
+          width: 404px;
+          height: 57px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.5;
+            z-index: -1;
+            background: url(./imgs/subtitle-bg1.png) no-repeat center / 100%;
+          }
+          &::before {
+            content: "";
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            background: url(./imgs/icon1.png) no-repeat center / 100%;
+            top: 4px;
+            left: 50px;
+          }
+          .label {
+            font-size: 20px;
+            font-weight: bolder;
+            font-family: SourceHanSansCN;
+            letter-spacing: 2px;
+            color: rgb(255, 255, 255);
+            text-shadow: rgba(0, 20, 58, 0.5) 0px 5px 5px;
+            margin-right: 20px;
+          }
+          .value {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: SourceHanSansCN;
+            letter-spacing: 2px;
+            color: rgb(250, 212, 0);
+            text-shadow: rgba(0, 20, 58, 0.5) 0px 5px 5px;
+          }
+          &.subtitle2 {
+            &::after {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0.5;
+              z-index: -1;
+              background-image: url(./imgs/subtitle-bg2.png);
+            }
+            &::before {
+              background-image: url(./imgs/icon2.png);
+            }
+            .value {
+              color: rgb(6, 247, 255);
+            }
+          }
+          &.subtitle3 {
+            background-image: url(./imgs/subtitle-bg3.png);
+            &::before {
+              background-image: url(./imgs/icon3.png);
+            }
+            .value {
+              color: rgb(205, 241, 242);
+            }
+          }
+        }
+      }
+    }
+    &-bottom {
+      position: relative;
+      width: 100%;
+      height: calc(100% - 100px);
+      display: flex;
+      flex-direction: column;
+      :deep(.el-card) {
+        background-color: transparent;
+        box-shadow: inset 0 0 40px rgba(0, 123, 255, 0.45);
+        border-color: rgba(0, 123, 255, 0.45);
+      }
+      :deep(.el-card__header) {
+        border-bottom: none;
+        .title {
+          font-size: 25px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          background: linear-gradient(180deg, #fafefe 45%, #1296f9 100%);
+          text-align: center;
+          color: transparent;
+          text-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+          background-clip: text; // 裁剪背景到文字区域
+          -webkit-background-clip: text; // 兼容 WebKit 浏览
+        }
+      }
+      .box-card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .rbb-top {
+        position: relative;
+        height: 100%;
+      }
+      .card-header {
+        position: relative;
+      }
+      .view {
+        margin-top: -40px;
+        height: 730px;
+        overflow-y: auto;
+      }
+      .list {
+        display: flex;
+        flex-wrap: wrap;
+        .item {
+          margin: 10px;
+          width: 410px;
+          &:last-child {
+            margin-right: 0;
+          }
+          .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .title {
+              font-family: SourceHanSansSC, SourceHanSansSC;
+              font-weight: bold;
+              font-size: 20px;
+              color: #00ffff;
+              line-height: 29px;
+              margin-bottom: 10px;
+              display: inline-block;
+              width: 300px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            .status-icon {
+              width: 91px;
+              height: 24px;
+            }
+          }
+          img {
+            width: 100%;
+            height: 195px;
+          }
+          .content {
+            height: 109px;
+            background: rgba(0, 19, 57, 0.29);
+            padding: 7px 14px;
+            width: 100%;
+            margin-top: -5px;
+            .date {
+              font-family: SourceHanSansSC, SourceHanSansSC;
+              font-weight: bold;
+              font-size: 16px;
+              color: rgba(255, 255, 255, 0.8);
+              line-height: 27px;
+              position: relative;
+              padding-left: 35px;
+              &::before {
+                content: "";
+                width: 32px;
+                height: 25px;
+                background: url(./imgs/date-icon.png) no-repeat center / 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+              }
+            }
+            .info {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-between;
+              padding: 0 10px;
+              .info-item {
+                width: 50%;
+                margin: 5px 0;
+                .label {
+                  font-family: SourceHanSansSC, SourceHanSansSC;
+                  font-weight: bold;
+                  font-size: 16px;
+                  color: rgba(255, 255, 255, 0.8);
+                  line-height: 27px;
+                  text-align: right;
+                  font-style: normal;
+                }
+                .value {
+                  font-family: SourceHanSansSC, SourceHanSansSC;
+                  font-weight: bold;
+                  font-size: 16px;
+                  color: #00ffff;
+                  line-height: 27px;
+                  text-align: right;
+                  font-style: normal;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

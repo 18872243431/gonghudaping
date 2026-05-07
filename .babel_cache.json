@@ -1,0 +1,152 @@
+{
+  "{\"filename\":\"E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/src/config/index.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],{\"loose\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/src/config\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.3": {
+    "metadata": {
+      "usedHelpers": [],
+      "marked": [],
+      "modules": {
+        "imports": [],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/src/config/index.js",
+      "filenameRelative": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/src/config/index.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          {
+            "loose": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "index.js",
+      "sourceFileName": "index.js",
+      "sourceRoot": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/src/config",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/src/config",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "index"
+    },
+    "ignored": false,
+    "code": "\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n/*\r\n * @Author: cxm\r\n * @LastEditors: cxm\r\n * @Date: 2022-09-27 10:29:48\r\n * @LastEditTime: 2022-11-22 10:29:51\r\n */\nconst isDev = process.env.NODE_ENV === \"development\";\nconst baseurl = \"/ministry\";\nconst targetIpPort = \"https://10.128.13.59:8443\";\n\nexports.default = {\n  isDev,\n  // 项目名称\n  name: \"国家级工业互联网安全监测与态势感知平台\",\n  baseurl: baseurl,\n  proxy: {\n    // \"/jsgj\": {\n    //   target: \"http://172.31.131.131:18187\",\n    //   secure: false,\n    //   changeOrigin: true,\n    //   ws: true,\n    // },\n    \"/ministry\": {\n      target: targetIpPort,\n      secure: false,\n      changeOrigin: true,\n      ws: true,\n      pathRewrite: {\n        \"^/ministry\": \"/act-gateway/api/ads-ministry-monitor-service/ministry\"\n      }\n    },\n    \"/restApi/ads/upc\": {\n      target: targetIpPort,\n      changeOrigin: true,\n      secure: false,\n      pathRewrite: { \"^/restApi/ads/upc\": \"/act-gateway/api/act-upc\" }\n    }\n  }\n};\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sIm5hbWVzIjpbImlzRGV2IiwicHJvY2VzcyIsImVudiIsIk5PREVfRU5WIiwiYmFzZXVybCIsInRhcmdldElwUG9ydCIsIm5hbWUiLCJwcm94eSIsInRhcmdldCIsInNlY3VyZSIsImNoYW5nZU9yaWdpbiIsIndzIiwicGF0aFJld3JpdGUiXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUE7Ozs7OztBQU1BLE1BQU1BLFFBQVFDLFFBQVFDLEdBQVIsQ0FBWUMsUUFBWixLQUF5QixhQUF2QztBQUNBLE1BQU1DLFVBQVUsV0FBaEI7QUFDQSxNQUFNQyxlQUFlLDJCQUFyQjs7a0JBRWU7QUFDYkwsT0FEYTtBQUViO0FBQ0FNLFFBQU0scUJBSE87QUFJYkYsV0FBU0EsT0FKSTtBQUtiRyxTQUFPO0FBQ0w7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsaUJBQWE7QUFDWEMsY0FBUUgsWUFERztBQUVYSSxjQUFRLEtBRkc7QUFHWEMsb0JBQWMsSUFISDtBQUlYQyxVQUFJLElBSk87QUFLWEMsbUJBQWE7QUFDWCxzQkFBYztBQURIO0FBTEYsS0FQUjtBQWdCTCx3QkFBb0I7QUFDbEJKLGNBQVFILFlBRFU7QUFFbEJLLG9CQUFjLElBRkk7QUFHbEJELGNBQVEsS0FIVTtBQUlsQkcsbUJBQWEsRUFBRSxxQkFBcUIsMEJBQXZCO0FBSks7QUFoQmY7QUFMTSxDIiwiZmlsZSI6ImluZGV4LmpzIiwic291cmNlUm9vdCI6IkU6L3dlYnByb2plY3QyMDI1L2NkMjMwODI2NF9iZ2hzal9xZChnb25naHVkYXBpbmcpL3NyYy9jb25maWciLCJzb3VyY2VzQ29udGVudCI6WyIvKlxyXG4gKiBAQXV0aG9yOiBjeG1cclxuICogQExhc3RFZGl0b3JzOiBjeG1cclxuICogQERhdGU6IDIwMjItMDktMjcgMTA6Mjk6NDhcclxuICogQExhc3RFZGl0VGltZTogMjAyMi0xMS0yMiAxMDoyOTo1MVxyXG4gKi9cclxuY29uc3QgaXNEZXYgPSBwcm9jZXNzLmVudi5OT0RFX0VOViA9PT0gXCJkZXZlbG9wbWVudFwiO1xyXG5jb25zdCBiYXNldXJsID0gXCIvbWluaXN0cnlcIjtcclxuY29uc3QgdGFyZ2V0SXBQb3J0ID0gXCJodHRwczovLzEwLjEyOC4xMy41OTo4NDQzXCI7XHJcblxyXG5leHBvcnQgZGVmYXVsdCB7XHJcbiAgaXNEZXYsXHJcbiAgLy8g6aG555uu5ZCN56ewXHJcbiAgbmFtZTogXCLlm73lrrbnuqflt6XkuJrkupLogZTnvZHlronlhajnm5HmtYvkuI7mgIHlir/mhJ/nn6XlubPlj7BcIixcclxuICBiYXNldXJsOiBiYXNldXJsLFxyXG4gIHByb3h5OiB7XHJcbiAgICAvLyBcIi9qc2dqXCI6IHtcclxuICAgIC8vICAgdGFyZ2V0OiBcImh0dHA6Ly8xNzIuMzEuMTMxLjEzMToxODE4N1wiLFxyXG4gICAgLy8gICBzZWN1cmU6IGZhbHNlLFxyXG4gICAgLy8gICBjaGFuZ2VPcmlnaW46IHRydWUsXHJcbiAgICAvLyAgIHdzOiB0cnVlLFxyXG4gICAgLy8gfSxcclxuICAgIFwiL21pbmlzdHJ5XCI6IHtcclxuICAgICAgdGFyZ2V0OiB0YXJnZXRJcFBvcnQsXHJcbiAgICAgIHNlY3VyZTogZmFsc2UsXHJcbiAgICAgIGNoYW5nZU9yaWdpbjogdHJ1ZSxcclxuICAgICAgd3M6IHRydWUsXHJcbiAgICAgIHBhdGhSZXdyaXRlOiB7XHJcbiAgICAgICAgXCJeL21pbmlzdHJ5XCI6IFwiL2FjdC1nYXRld2F5L2FwaS9hZHMtbWluaXN0cnktbW9uaXRvci1zZXJ2aWNlL21pbmlzdHJ5XCIsXHJcbiAgICAgIH0sXHJcbiAgICB9LFxyXG4gICAgXCIvcmVzdEFwaS9hZHMvdXBjXCI6IHtcclxuICAgICAgdGFyZ2V0OiB0YXJnZXRJcFBvcnQsXHJcbiAgICAgIGNoYW5nZU9yaWdpbjogdHJ1ZSxcclxuICAgICAgc2VjdXJlOiBmYWxzZSxcclxuICAgICAgcGF0aFJld3JpdGU6IHsgXCJeL3Jlc3RBcGkvYWRzL3VwY1wiOiBcIi9hY3QtZ2F0ZXdheS9hcGkvYWN0LXVwY1wiIH0sXHJcbiAgICB9LFxyXG4gIH0sXHJcbn07XHJcbiJdfQ==",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "index.js"
+      ],
+      "names": [
+        "isDev",
+        "process",
+        "env",
+        "NODE_ENV",
+        "baseurl",
+        "targetIpPort",
+        "name",
+        "proxy",
+        "target",
+        "secure",
+        "changeOrigin",
+        "ws",
+        "pathRewrite"
+      ],
+      "mappings": ";;;;;AAAA;;;;;;AAMA,MAAMA,QAAQC,QAAQC,GAAR,CAAYC,QAAZ,KAAyB,aAAvC;AACA,MAAMC,UAAU,WAAhB;AACA,MAAMC,eAAe,2BAArB;;kBAEe;AACbL,OADa;AAEb;AACAM,QAAM,qBAHO;AAIbF,WAASA,OAJI;AAKbG,SAAO;AACL;AACA;AACA;AACA;AACA;AACA;AACA,iBAAa;AACXC,cAAQH,YADG;AAEXI,cAAQ,KAFG;AAGXC,oBAAc,IAHH;AAIXC,UAAI,IAJO;AAKXC,mBAAa;AACX,sBAAc;AADH;AALF,KAPR;AAgBL,wBAAoB;AAClBJ,cAAQH,YADU;AAElBK,oBAAc,IAFI;AAGlBD,cAAQ,KAHU;AAIlBG,mBAAa,EAAE,qBAAqB,0BAAvB;AAJK;AAhBf;AALM,C",
+      "file": "index.js",
+      "sourceRoot": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/src/config",
+      "sourcesContent": [
+        "/*\r\n * @Author: cxm\r\n * @LastEditors: cxm\r\n * @Date: 2022-09-27 10:29:48\r\n * @LastEditTime: 2022-11-22 10:29:51\r\n */\r\nconst isDev = process.env.NODE_ENV === \"development\";\r\nconst baseurl = \"/ministry\";\r\nconst targetIpPort = \"https://10.128.13.59:8443\";\r\n\r\nexport default {\r\n  isDev,\r\n  // 项目名称\r\n  name: \"国家级工业互联网安全监测与态势感知平台\",\r\n  baseurl: baseurl,\r\n  proxy: {\r\n    // \"/jsgj\": {\r\n    //   target: \"http://172.31.131.131:18187\",\r\n    //   secure: false,\r\n    //   changeOrigin: true,\r\n    //   ws: true,\r\n    // },\r\n    \"/ministry\": {\r\n      target: targetIpPort,\r\n      secure: false,\r\n      changeOrigin: true,\r\n      ws: true,\r\n      pathRewrite: {\r\n        \"^/ministry\": \"/act-gateway/api/ads-ministry-monitor-service/ministry\",\r\n      },\r\n    },\r\n    \"/restApi/ads/upc\": {\r\n      target: targetIpPort,\r\n      changeOrigin: true,\r\n      secure: false,\r\n      pathRewrite: { \"^/restApi/ads/upc\": \"/act-gateway/api/act-upc\" },\r\n    },\r\n  },\r\n};\r\n"
+      ]
+    },
+    "mtime": 1765933411123
+  },
+  "{\"filename\":\"E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/babel.config.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],{\"loose\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.3": {
+    "metadata": {
+      "usedHelpers": [],
+      "marked": [],
+      "modules": {
+        "imports": [],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/babel.config.js",
+      "filenameRelative": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)/babel.config.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          {
+            "loose": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "babel.config.js",
+      "sourceFileName": "babel.config.js",
+      "sourceRoot": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "babel.config"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nmodule.exports = {\n  presets: ['@vue/cli-plugin-babel/preset']\n};\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJhYmVsLmNvbmZpZy5qcyJdLCJuYW1lcyI6WyJtb2R1bGUiLCJleHBvcnRzIiwicHJlc2V0cyJdLCJtYXBwaW5ncyI6Ijs7QUFBQUEsT0FBT0MsT0FBUCxHQUFpQjtBQUNmQyxXQUFTLENBQ1AsOEJBRE87QUFETSxDQUFqQiIsImZpbGUiOiJiYWJlbC5jb25maWcuanMiLCJzb3VyY2VSb290IjoiRTovd2VicHJvamVjdDIwMjUvY2QyMzA4MjY0X2JnaHNqX3FkKGdvbmdodWRhcGluZykiLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IHtcclxuICBwcmVzZXRzOiBbXHJcbiAgICAnQHZ1ZS9jbGktcGx1Z2luLWJhYmVsL3ByZXNldCdcclxuICBdXHJcbn1cclxuIl19",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "babel.config.js"
+      ],
+      "names": [
+        "module",
+        "exports",
+        "presets"
+      ],
+      "mappings": ";;AAAAA,OAAOC,OAAP,GAAiB;AACfC,WAAS,CACP,8BADO;AADM,CAAjB",
+      "file": "babel.config.js",
+      "sourceRoot": "E:/webproject2025/cd2308264_bghsj_qd(gonghudaping)",
+      "sourcesContent": [
+        "module.exports = {\r\n  presets: [\r\n    '@vue/cli-plugin-babel/preset'\r\n  ]\r\n}\r\n"
+      ]
+    },
+    "mtime": 1765933410086
+  }
+}

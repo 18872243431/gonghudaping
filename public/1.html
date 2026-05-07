@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>典型重保任务案例 - 演示系统</title>
+    <style>
+        :root {
+            --bg-color: #000c1a;
+            --card-bg: linear-gradient(135deg, #012b4d, #001a33);
+            --card-border: #1a5c8d;
+            --card-glow: rgba(0, 162, 255, 0.4);
+            --text-white: #ffffff;
+            --text-label: #9dbbd1;
+            --text-value: #00eaff;
+            --text-warn: #ffd700;
+            --btn-blue: #0056b3;
+            --modal-overlay: rgba(0, 0, 0, 0.9);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-title {
+            align-self: flex-start;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            font-style: italic;
+        }
+
+        .main-title::before {
+            content: "»";
+            color: #ffd700;
+            margin-right: 12px;
+            font-size: 30px;
+        }
+
+        .container {
+            display: flex;
+            gap: 25px;
+            max-width: 1200px;
+        }
+
+        /* 外部卡片样式 */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 25px;
+            width: 320px;
+            box-shadow: 0 0 15px var(--card-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--text-value);
+            box-shadow: 0 0 25px var(--text-value);
+        }
+
+        .card-header { font-size: 18px; font-weight: bold; margin-bottom: 15px; min-height: 50px; }
+        .status-badge { background-color: var(--btn-blue); color: white; padding: 4px 15px; border-radius: 20px; font-size: 13px; display: inline-block; margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; margin-bottom: 20px; }
+        .stat-item { font-size: 14px; }
+        .label { color: var(--text-label); }
+        .value { color: var(--text-value); margin-left: 5px; }
+        .risk-info { font-size: 14px; line-height: 1.8; margin-bottom: 25px; }
+        .card-footer { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 15px; color: var(--text-label); font-size: 13px; }
+
+        /* 通用弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-overlay);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #02162b;
+            width: 85%;
+            max-width: 1100px;
+            max-height: 90vh;
+            border: 1px solid #1a5c8d;
+            border-radius: 10px;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-btn { position: absolute; right: 25px; top: 20px; color: var(--text-label); font-size: 35px; cursor: pointer; transition: 0.2s; z-index: 10;}
+        .close-btn:hover { color: #fff; }
+
+        /* 第一个弹窗专用样式 */
+        .modal-h1 { border-left: 5px solid var(--text-value); padding-left: 15px; font-size: 24px; margin-bottom: 30px; color: #fff; }
+        .info-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px; background: rgba(0, 0, 0, 0.2); padding: 30px; border-radius: 4px; margin-bottom: 35px; border: 1px solid rgba(26, 92, 141, 0.3); }
+        .info-box { display: flex; flex-direction: column; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
+        .info-box h4 { margin: 0 0 12px 0; color: var(--text-label); font-size: 14px; font-weight: normal; }
+        .info-box p { margin: 0; font-size: 16px; color: #ffffff; font-weight: normal; line-height: 1.5; }
+        .monitoring-scope-wrap { white-space: nowrap; }
+        .log-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+        .log-table th { background: rgba(0, 234, 255, 0.1); color: #ffffff; text-align: left; padding: 12px; border-bottom: 1px solid var(--card-border); }
+        .log-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #d1d1d1; }
+        .tag-conclusion { color: #00ff88; background: rgba(0,255,136,0.1); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(0,255,136,0.2); }
+        .result-summary { margin-top: 35px; padding: 25px; border-radius: 8px; background: linear-gradient(90deg, rgba(0, 234, 255, 0.05) 0%, rgba(0, 20, 40, 0) 100%); border-left: 4px solid #00ff88; }
+        .result-summary h3 { margin-top: 0; color: #00ff88; font-size: 18px; display: flex; align-items: center; gap: 10px; }
+        .result-summary p { line-height: 1.8; color: #bedaf0; margin-bottom: 0; }
+        .highlight-blue { color: var(--text-value); font-weight: bold; }
+
+        /* 第二个弹窗样式 */
+        .analysis-modal-bg {
+            background-color: #010e1d !important;
+            border: 1px solid #1a5c8d !important;
+            box-shadow: 0 0 40px rgba(0, 162, 255, 0.3) !important;
+        }
+        .analysis-header { text-align: center; font-size: 24px; font-weight: bold; color: #ffffff; margin-bottom: 30px; position: relative; letter-spacing: 2px; }
+        .analysis-header::before, .analysis-header::after { content: ""; position: absolute; top: 50%; width: 28%; height: 2px; background: linear-gradient(to right, transparent, #00eaff, transparent); }
+        .analysis-header::before { left: 50px; transform: skewX(-45deg); }
+        .analysis-header::after { right: 50px; transform: skewX(45deg); }
+        .analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 0 10px; }
+        .analysis-col { background: rgba(4, 34, 60, 0.3); border: 1px solid #1a5c8d; border-radius: 6px; padding: 20px; box-shadow: inset 0 0 15px rgba(0, 162, 255, 0.1); }
+        .col-title { font-size: 18px; color: #ffffff; text-align: center; margin-bottom: 25px; font-weight: bold; }
+        .sub-header { display: flex; align-items: center; font-size: 14px; color: #ffffff; margin: 20px 0 12px 0; font-weight: bold; }
+        .sub-header span { margin-right: 8px; font-size: 16px; }
+        .scan-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .scan-table th { background: #0b2d4b; color: #9dbbd1; padding: 8px; font-weight: normal; }
+        .scan-table td { color: #ffffff; padding: 10px 5px; text-align: center; border-bottom: 1px solid rgba(26, 92, 141, 0.4); }
+        .feature-list { list-style: none; padding: 0; margin: 0; }
+        .feature-list li { position: relative; padding-left: 20px; margin-bottom: 12px; font-size: 13px; color: #d1d1d1; line-height: 1.6; }
+        .feature-list li::before { content: "●"; position: absolute; left: 0; color: #ff4d4f; font-size: 14px; }
+        .info-label { color: #00eaff; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
+        .info-content { color: #ffffff; font-size: 13px; line-height: 2; margin-bottom: 15px; padding-left: 10px; }
+        .tag-group { display: flex; gap: 10px; margin: 15px 0; }
+        .tag-pill { flex: 1; text-align: center; padding: 4px 0; border-radius: 15px; border: 1px solid #1a5c8d; background: rgba(26, 92, 141, 0.2); color: #ffca80; font-size: 12px; }
+        .tool-pill { display: inline-block; width: 70%; margin: 10px auto; padding: 6px 0; border-radius: 20px; border: 1px solid #ff4d4f; background: rgba(255, 77, 79, 0.1); color: #ff4d4f; text-align: center; }
+        .risk-green { color: #52c41a; font-weight: bold; margin-left: 5px; }
+        .harm-box-red { border: 1px solid #ff4d4f; border-radius: 4px; padding: 15px; background: rgba(255, 77, 79, 0.05); box-shadow: 0 0 10px rgba(255, 77, 79, 0.3); font-size: 13px; color: #d1d1d1; line-height: 1.6; margin-top: 15px; }
+        .report-txt { color: #d1d1d1; font-size: 13px; line-height: 2; margin-bottom: 20px; }
+        .advice-txt { color: #d1d1d1; font-size: 13px; line-height: 1.8; }
+        .footer-btns { display: flex; justify-content: center; gap: 15px; margin-top: 40px; }
+        .btn-glass { padding: 8px 25px; border-radius: 4px; border: none; color: #ffffff; font-size: 13px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .btn-glass-blue { background: linear-gradient(to right, #0056b3, #00eaff); }
+        .btn-glass-red { background: linear-gradient(to right, #800000, #ff4d4f); }
+
+        /* 新增：数实融合演练弹窗样式 */
+        .drill-modal-content { background: #000c1a !important; border: 1px solid #00eaff !important; padding: 30px !important; }
+        .drill-header { display: flex; align-items: center; gap: 10px; margin-bottom: 25px; }
+        .drill-header-bar { width: 4px; height: 24px; background: #00eaff; }
+        .drill-header-title { font-size: 22px; font-weight: bold; color: #fff; }
+        
+        .drill-summary { background: rgba(0, 234, 255, 0.05); border: 1px solid rgba(0, 234, 255, 0.2); padding: 20px; border-radius: 4px; margin-bottom: 30px; }
+        .drill-summary p { margin: 0; font-size: 14px; line-height: 1.6; color: #d1d1d1; }
+        .drill-summary b { color: #fff; }
+
+        .drill-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border: 1px solid rgba(26, 92, 141, 0.5); padding: 25px; border-radius: 4px; margin-bottom: 30px; }
+        .drill-info-item { display: flex; flex-direction: column; gap: 10px; }
+        .drill-info-label { font-size: 13px; color: #9dbbd1; }
+        .drill-info-val { font-size: 16px; color: #fff; }
+
+        .drill-layout { display: flex; gap: 20px; }
+        .drill-left-panel, .drill-right-panel { flex: 1; border: 1px solid rgba(26, 92, 141, 0.5); border-radius: 4px; padding: 20px; }
+        
+        .drill-panel-title { display: flex; align-items: center; gap: 8px; font-size: 16px; color: #00eaff; font-weight: bold; margin-bottom: 20px; }
+        .drill-stats-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .drill-stat-box .drill-num { font-size: 32px; font-weight: bold; display: block; }
+        .drill-stat-box .drill-desc { font-size: 12px; color: #9dbbd1; }
+        .color-yellow { color: #ffca80; }
+        .color-red { color: #ff4d4f; }
+
+        .drill-feature-item { background: rgba(255,255,255,0.03); border-radius: 4px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .drill-feature-name { font-size: 14px; }
+        .drill-feature-tag { background: rgba(0, 234, 255, 0.1); border: 1px solid rgba(0, 234, 255, 0.3); color: #00eaff; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+        .drill-feature-tag.risk { border-color: #ff4d4f; color: #ff4d4f; background: rgba(255, 77, 79, 0.1); }
+
+        .drill-table { width: 100%; border-collapse: collapse; }
+        .drill-table tr { height: 45px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .drill-table td { font-size: 14px; }
+        .drill-level-tag { padding: 2px 10px; border-radius: 4px; font-size: 12px; }
+        .level-high { background: rgba(255, 77, 79, 0.1); border: 1px solid #ff4d4f; color: #ff4d4f; }
+        .level-mid { background: rgba(255, 202, 128, 0.1); border: 1px solid #ffca80; color: #ffca80; }
+        .level-low { background: rgba(82, 196, 26, 0.1); border: 1px solid #52c41a; color: #52c41a; }
+        .drill-table .drill-val { text-align: right; color: #00eaff; }
+        .drill-table .drill-val.red-text { color: #ff4d4f; }
+        .drill-table .drill-val.white-text { color: #fff; }
+
+        /* 新增样式 */
+        .drill-sub-desc { font-size: 12px; color: #9dbbd1; margin-top: 5px; line-height: 1.4; opacity: 0.8; }
+        .drill-feature-item-complex { background: rgba(255,255,255,0.03); border-radius: 4px; padding: 12px 15px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px; }
+        .df-row-1 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .df-desc { font-size: 12px; color: #9dbbd1; }
+        .df-result { font-size: 12px; color: #00ff88; }
+        .drill-note { font-size: 12px; color: #9dbbd1; margin-top: 15px; font-style: italic; opacity: 0.8; text-align: center; }
+        .action-title { color: #00eaff; font-size: 14px; font-weight: bold; margin-bottom: 5px; }
+        .action-desc { color: #d1d1d1; font-size: 13px; line-height: 1.5; }
+
+        /* 数字展示优化样式 */
+        .num-tag-container {
+            background: rgba(0, 234, 255, 0.1);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            border-radius: 4px;
+            padding: 4px 12px;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 3px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            line-height: 1;
+        }
+        .num-val {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00eaff;
+        }
+        .num-unit {
+            font-size: 14px;
+            color: rgba(0, 234, 255, 0.7);
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-title">典型重保任务案例</div>
+
+    <div class="container">
+        <!-- 第一个卡片 -->
+        <div class="card" onclick="openModal()">
+            <div class="card-header">中华人民共和国第十五届运动会</div>
+            <div class="status-badge">已结束</div>
+            <div class="stats-grid">
+                <div class="stat-item"><span class="label">监测对象:</span> <span class="value">12</span></div>
+                <div class="stat-item"><span class="label">监测IP:</span> <span class="value">45</span></div>
+                <div class="stat-item"><span class="label">监测域名:</span> <span class="value">10</span></div>
+                <div class="stat-item"><span class="label">攻击总数:</span> <span class="value">150</span></div>
+            </div>
+            <div class="risk-info">
+                <div><span class="label">风险类型:</span> <span class="value">无</span></div>
+                <div><span class="label">危害:</span> <span class="value">无</span></div>
+            </div>
+            <div class="card-footer">📅 2024-01-01 - 2024-01-15</div>
+        </div>
+
+        <!-- 第二个卡片 -->
+        <div class="card" onclick="openDrillModal()">
+            <div class="card-header">数实融合演练</div>
+            <div class="status-badge">已结束</div>
+            <div class="stats-grid">
+                <div class="stat-item"><span class="label">监测对象:</span> <span class="value">56</span></div>
+                <div class="stat-item"><span class="label">监测IP:</span> <span class="value">128</span></div>
+                <div class="stat-item"><span class="label">监测域名:</span> <span class="value">25</span></div>
+                <div class="stat-item"><span class="label">攻击总数:</span> <span class="value">3.1万+</span></div>
+            </div>
+            <div class="risk-info">
+                <div><span class="label">风险类型:</span> <span class="risk-value">勒索病毒、漏洞利用</span></div>
+                <div><span class="label">危害:</span> <span class="risk-value">远程控制、敏感信息泄露</span></div>
+            </div>
+            <div class="card-footer">📅 2025-09-09 - 2025-09-21</div>
+        </div>
+
+        <!-- 第三个卡片 -->
+        <div class="card" onclick="openAnalysisModal()">
+            <div class="card-header">十四届全国人大三次会议</div>
+            <div class="status-badge">已结束</div>
+            <div class="stats-grid">
+                <div class="stat-item"><span class="label">监测对象:</span> <span class="value">89</span></div>
+                <div class="stat-item"><span class="label">监测IP:</span> <span class="value">210</span></div>
+                <div class="stat-item"><span class="label">监测域名:</span> <span class="value">50</span></div>
+                <div class="stat-item"><span class="label">攻击总数:</span> <span class="value">0</span></div>
+            </div>
+            <div class="risk-info">
+                <div><span class="label">风险类型:</span> <span class="risk-value">漏洞利用</span></div>
+                <div><span class="label">危害:</span> <span class="risk-value">远程控制、敏感信息泄露</span></div>
+            </div>
+            <div class="card-footer">📅 2024-05-01 - 2024-05-05</div>
+        </div>
+    </div>
+
+    <!-- 弹窗1（全运会重保详情） -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-h1">第十五届运动会重保总体情况</div>
+            <div class="info-section">
+                <div class="info-box" style="grid-column: span 2;">
+                    <h4>保障背景</h4>
+                    <p>围绕第十五届全运会重点活动保障要求，本次重保期间构建了“监测—发现—研判—通报—验证”的网络安全监管闭环。保障期间，平台依托持续态势监测能力，对网络访问行为进行动态分析研判，及时发现并通报潜在安全风险。</p>
+                </div>
+                <div class="info-box">
+                    <h4>保障周期</h4>
+                    <p>2024.01.01 – 2024.01.15（全周期 7×24 小时运行保障）</p>
+                </div>
+                <div class="info-box">
+                    <h4>保障范围</h4>
+                    <p class="monitoring-scope-wrap">覆盖 12 家重点参会单位、45 个重要网络资产</p>
+                </div>
+            </div>
+            <h4 style="margin: 0 0 15px 0; color: #9dbbd1; font-size: 14px; font-weight: normal;">研判示例</h4>
+            <table class="log-table">
+                <thead><tr><th>时间</th><th>风险来源</th><th>行为特征</th><th>涉及对象</th><th>研判结论</th></tr></thead>
+                <tbody>
+                    <tr><td>2024-01-14 22:15:03</td><td>124.89.xx.xx (陕西西安)</td><td>异常参数访问行为</td><td>赛事报名数据库服务</td><td><span class="tag-conclusion">尝试攻击，未造成实际影响</span></td></tr>
+                    <tr><td>2024-01-14 19:12:12</td><td>45.12.xx.xx (境外)</td><td>非常规路径访问行为</td><td>核心API接口集群</td><td><span class="tag-conclusion">尝试攻击，未造成实际影响</span></td></tr>
+                    <tr><td>2024-01-14 14:30:45</td><td>183.15.xx.xx (广东深圳)</td><td>权限边界外访问请求</td><td>静态资源分发节点</td><td><span class="tag-conclusion">正常业务访问行为</span></td></tr>
+                </tbody>
+            </table>
+            <!-- 如下部分已按照要求修改 -->
+            <div class="result-summary">
+                <h3>🛡️ 任务保障总结</h3>
+                <p>本次重点活动保障期间，平台对重保对象网络流量开展持续监测与分析研判，累计发现异常网络攻击行为316次，主要涉及<span style="color: #ff4d4f; font-weight: bold;">网络扫描、异常访问</span>等行为。经进一步分析研判，相关行为<span style="color: #00ff88; font-weight: bold;">均未对业务系统稳定运行造成实际影响</span>。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗2（数实融合演练） -->
+    <div id="drillModal" class="modal">
+        <div class="modal-content drill-modal-content">
+            <span class="close-btn" onclick="closeDrillModal()">&times;</span>
+            <div class="drill-header">
+                <div class="drill-header-bar"></div>
+                <div class="drill-header-title">数实融合演练重保总体情况</div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-box" style="grid-column: span 2;">
+                    <h4>任务概要</h4>
+                    <p>在专项保障期间，数实融合平台围绕重点行业关键业务系统，持续开展网络安全监测与威胁情报汇聚分析工作，对异常访问、漏洞利用行为进行集中研判，并通过情报共享与协同处置机制，支撑相关单位开展风险防范与加固，提升整体保障期间的安全可控能力。</p>
+                </div>
+                <div class="info-box">
+                    <h4>演练起止时间</h4>
+                    <p>2025-09-09 至 2025-09-21</p>
+                </div>
+                <div class="info-box">
+                    <h4>监测对象范围</h4>
+                    <p>7个重点行业单位（装备制造、医药制造等）</p>
+                </div>
+            </div>
+
+            <div class="drill-layout" style="flex-direction: column; gap: 20px;">
+                <div class="drill-left-panel" style="width: 100%; box-sizing: border-box;">
+                    <div class="drill-panel-title">⚔️ 典型风险行为及影响分析</div>
+                    <div style="display: flex; gap: 20px;">
+                        <div class="drill-feature-item-complex" style="flex: 1; margin-bottom: 0;">
+                            <div class="df-row-1">
+                                <span class="drill-feature-name">Log4j2 漏洞利用</span>
+                                <div class="num-tag-container">
+                                    <span class="num-val">1.2万</span><span class="num-unit">次</span>
+                                </div>
+                            </div>
+                            <div class="df-desc">👉 针对已知高危漏洞的自动化利用行为，可能导致远程代码执行风险</div>
+                            <div class="df-result">👉 研判结果：尝试攻击，未造成实际影响</div>
+                        </div>
+
+                        <div class="drill-feature-item-complex" style="flex: 1; margin-bottom: 0;">
+                            <div class="df-row-1">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span class="drill-feature-name">Nacos 未授权访问尝试</span>
+                                    <span style="background: rgba(255, 77, 79, 0.15); border: 1px solid #ff4d4f; color: #ff4d4f; font-size: 11px; padding: 2px 6px; border-radius: 4px; display: flex; align-items: center; gap: 4px;">
+                                        <span style="display: inline-flex; justify-content: center; align-items: center; width: 12px; height: 12px; background: #ff4d4f; color: white; border-radius: 50%; font-size: 10px; font-weight: bold;">!</span>
+                                        高风险
+                                    </span>
+                                </div>
+                                <div class="num-tag-container">
+                                    <span class="num-val">809</span><span class="num-unit">次</span>
+                                </div>
+                            </div>
+                            <div class="df-desc">👉 针对配置管理组件的未授权访问行为，存在配置泄露隐患</div>
+                            <div class="df-result">👉 研判结果纳入高风险关注并推送加固建议</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-summary">
+                <h3>🛡️ 保障任务总结</h3>
+                <p>数实融合平台在专项保障期间实现了对重点行业网络态势的持续感知与风险可控管理。保障期间，平台累计推送安全情报 <span style="color: #ff4d4f; font-weight: bold;">156 次</span>，覆盖 <span style="color: #ff4d4f; font-weight: bold;">42 类</span>新型漏洞特征与 <span style="color: #ff4d4f; font-weight: bold;">24 个</span>高危 IOC，有效支撑相关企业开展防护策略调整与漏洞加固。经持续监测与回溯验证，<span style="font-weight: bold; color: #00ff88;">未发现监测到同类异常行为持续发生</span>。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗3（人大安全事件分析） -->
+    <div id="analysisModal" class="modal">
+        <div class="modal-content analysis-modal-bg">
+            <span class="close-btn" onclick="closeAnalysisModal()">&times;</span>
+            <div class="modal-h1">十四届全国人大三次会议重保总体情况</div>
+            
+            <!-- 🟥 第一块：事件身份 -->
+            <div style="margin-bottom: 25px; padding: 20px; border: 1px solid rgba(0, 234, 255, 0.3); background: rgba(0, 12, 26, 0.4); border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+                    <div><span class="label">涉及单位：</span> <span class="value" style="color: #fff;">人民日报社新媒体中心</span></div>
+                    <div><span class="label">涉及系统：</span> <span class="value" style="color: #fff;">人民日报视频中文客户端</span></div>
+                    <div><span class="label">事件时间：</span> <span class="value" style="color: #fff;">2025-03-04</span></div>
+                    <div><span class="label">事件性质：</span> <span class="value" style="color: #ffca80;">对外异常漏洞扫描行为</span></div>
+                </div>
+                <div class="status-badge" style="margin: 0; background: rgba(0, 255, 136, 0.2); color: #00ff88; border: 1px solid #00ff88; white-space: nowrap; flex-shrink: 0; margin-left: 20px; padding: 8px 25px; font-size: 16px; font-weight: bold; border-radius: 30px; box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);">已通报处置</div>
+            </div>
+
+            <div class="analysis-grid">
+                <!-- 🟥 第二块：平台监测发现 -->
+                <div class="analysis-col">
+                    <div class="col-title" style="color: #00eaff;">监测发现</div>
+                    <div class="info-content" style="text-indent: 0; padding: 0; line-height: 1.8; margin-bottom: 20px;">
+                        两会期间，平台监测发现重点单位所属 IP 出现异常对外访问行为，在较短时间内对多个外部目标发起高频漏洞探测请求，行为模式明显偏离正常业务访问。
+                    </div>
+                    <div>
+                        <div class="drill-feature-item" style="padding: 8px 12px; align-items: center;">
+                            <span class="drill-feature-name" style="color: #9dbbd1; white-space: nowrap;">异常频率</span>
+                            <span style="color: #ffca80; text-align: right; font-size: 12px; flex: 1; margin-left: 10px;">高 <span style="opacity: 0.8; font-size: 11px;">（2小时177次）</span></span>
+                        </div>
+                        <div class="drill-feature-item" style="padding: 8px 12px; align-items: center;">
+                            <span class="drill-feature-name" style="color: #9dbbd1; white-space: nowrap;">行为特征</span>
+                            <span style="color: #00eaff; text-align: right; font-size: 12px; flex: 1; margin-left: 10px;">自动化扫描 <span style="opacity: 0.8; font-size: 11px;">（秒级间隔）</span></span>
+                        </div>
+                        <div class="drill-feature-item" style="padding: 8px 12px; align-items: center;">
+                            <span class="drill-feature-name" style="color: #9dbbd1; white-space: nowrap;">持续时间</span>
+                            <span style="color: #fff; text-align: right; font-size: 12px; flex: 1; margin-left: 10px;">约1小时48分钟</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 🟥 第三块：事件研判结论 -->
+                <div class="analysis-col">
+                    <div class="col-title" style="color: #ffca80;">事件研判</div>
+                    <div class="harm-box-red" style="border-color: #ffca80; background: rgba(255, 202, 128, 0.05); color: #ffffff; margin-top: 0; font-size: 14px;">
+                        <p style="margin: 0 0 15px 0;">经分析，该行为符合自动化漏洞扫描特征，扫描过程中尝试利用多类已公开历史漏洞，主要集中于 Web 服务组件及配置读取、远程代码执行类漏洞。</p>
+                        <p style="margin: 0;">综合判断，该单位相关主机存在<span style="color: #fff; font-weight: bold;">被异常控制或工具误用</span>的风险，但未发现造成实际入侵或数据泄露的证据。</p>
+                    </div>
+                </div>
+
+                <!-- 🟥 第四块：重保处置情况 -->
+                <div class="analysis-col">
+                    <div class="col-title" style="color: #00ff88;">通报预警</div>
+                    <div class="timeline-box" style="margin-top: 15px; padding-left: 10px;">
+                        <!-- Item 1 -->
+                        <div style="position: relative; padding-left: 20px; border-left: 1px dashed rgba(0, 255, 136, 0.3); padding-bottom: 20px;">
+                            <div style="position: absolute; left: -5px; top: 0; width: 9px; height: 9px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 8px rgba(0,255,136,0.5);"></div>
+                            <div style="font-size: 12px; color: #00ff88; font-weight: bold; margin-bottom: 4px;">2025-03-04</div>
+                            <div style="font-size: 13px; color: #fff; line-height: 1.4;">
+                                <span style="color: #9dbbd1;">发现研判：</span>监测发现异常行为并完成分析研判
+                            </div>
+                        </div>
+                        <!-- Item 2 -->
+                        <div style="position: relative; padding-left: 20px; border-left: 1px dashed rgba(0, 255, 136, 0.3); padding-bottom: 20px;">
+                            <div style="position: absolute; left: -5px; top: 0; width: 9px; height: 9px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 8px rgba(0,255,136,0.5);"></div>
+                            <div style="font-size: 12px; color: #00ff88; font-weight: bold; margin-bottom: 4px;">2025-03-05</div>
+                            <div style="font-size: 13px; color: #fff; line-height: 1.4;">
+                                <span style="color: #9dbbd1;">通报下发：</span>形成通报并提出处置建议
+                            </div>
+                        </div>
+                        <!-- Item 3 -->
+                        <div style="position: relative; padding-left: 20px; border-left: 1px dashed rgba(0, 255, 136, 0.3); padding-bottom: 20px;">
+                            <div style="position: absolute; left: -5px; top: 0; width: 9px; height: 9px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 8px rgba(0,255,136,0.5);"></div>
+                            <div style="font-size: 12px; color: #00ff88; font-weight: bold; margin-bottom: 4px;">2025-03-05</div>
+                            <div style="font-size: 13px; color: #fff; line-height: 1.4;">
+                                <span style="color: #9dbbd1;">持续跟踪：</span>持续监测对外通信及行为变化
+                            </div>
+                        </div>
+                        <!-- Item 5 -->
+                        <div style="position: relative; padding-left: 20px; border-left: 1px dashed rgba(0, 255, 136, 0); padding-bottom: 0;">
+                            <div style="position: absolute; left: -5px; top: 0; width: 9px; height: 9px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 8px rgba(0,255,136,0.5);"></div>
+                            <div style="font-size: 12px; color: #00ff88; font-weight: bold; margin-bottom: 4px;">2025-03-12</div>
+                            <div style="font-size: 13px; color: #fff; line-height: 1.4;">
+                                <span style="color: #9dbbd1;">当前状态：</span>未再发现同类异常行为
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🟥 第五块：重保结论 -->
+            <div class="result-summary">
+                <h3>🛡️ 保障任务总结</h3>
+                <p>两会保障期间，平台累计监测发现异常网络攻击行为 <span style="color: #ff4d4f; font-weight: bold;">316 次</span>，主要为网络扫描、异常访问等行为。针对重点单位发现的异常对外访问情况，平台<span style="font-weight: bold;">第一时间</span>完成监测研判并下发通报，明确风险提示与处置建议。经持续跟踪验证，相关异常行为未再发生，重点单位<span style="color: #00ff88; font-weight: bold;">系统运行总体平稳</span>。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() { document.getElementById('detailModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('detailModal').style.display = 'none'; }
+        
+        function openDrillModal() { document.getElementById('drillModal').style.display = 'flex'; }
+        function closeDrillModal() { document.getElementById('drillModal').style.display = 'none'; }
+
+        function openAnalysisModal() { document.getElementById('analysisModal').style.display = 'flex'; }
+        function closeAnalysisModal() { document.getElementById('analysisModal').style.display = 'none'; }
+
+        window.onclick = function(event) {
+            var m1 = document.getElementById('detailModal');
+            var m2 = document.getElementById('analysisModal');
+            var m3 = document.getElementById('drillModal');
+            if (event.target == m1) m1.style.display = "none";
+            if (event.target == m2) m2.style.display = "none";
+            if (event.target == m3) m3.style.display = "none";
+        }
+    </script>
+</body>
+</html>

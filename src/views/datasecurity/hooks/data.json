@@ -1,0 +1,652 @@
+{
+  "overview": {
+    "code": 0,
+    "data": "截至目前，工业企业数据安全风险告警达到 23,456 次，跨境风险告警 8,765 次，暴露数据资产 5,432 个，共有 376 家企业存在数据安全风险。主要风险包括数据泄露、未授权访问、数据篡改等。"
+  },
+  "securityOverview": {
+    "code": 0,
+    "data": {
+      "数据安全风险告警": 23456,
+      "跨境风险告警": 8765,
+      "暴露数据资产": 5432,
+      "风险企业数量": 376
+    }
+  },
+  "countryIpTop3": {
+    "code": 0,
+    "data": [
+      { "key": "192.168.1.100", "doc_count": 1234 },
+      { "key": "192.168.2.200", "doc_count": 987 },
+      { "key": "192.168.3.300", "doc_count": 765 }
+    ]
+  },
+  "realTimeDataSecurityEvents": {
+    "code": 0,
+    "data": [
+      {
+        "timestamp": "2023-06-19 15:23:45",
+        "severityCn": "高危",
+        "eventTypeName": "数据泄露",
+        "categoryCn": "敏感信息泄露",
+        "attackedCorpName": "华为技术有限公司",
+        "attackedIp": "203.145.267.819",
+        "attackIp": "192.168.122.100",
+        "attackCountry": "美国"
+      },
+      {
+        "timestamp": "2023-06-19 15:10:23",
+        "severityCn": "中危",
+        "eventTypeName": "未授权访问",
+        "categoryCn": "越权访问",
+        "attackedCorpName": "中国石化集团",
+        "attackedIp": "114.67.89.123",
+        "attackIp": "45.78.123.45",
+        "attackCountry": "荷兰"
+      },
+      {
+        "timestamp": "2023-06-19 14:58:12",
+        "severityCn": "高危",
+        "eventTypeName": "数据篡改",
+        "categoryCn": "数据库篡改",
+        "attackedCorpName": "中国移动通信集团",
+        "attackedIp": "120.78.156.234",
+        "attackIp": "78.45.123.67",
+        "attackCountry": "俄罗斯"
+      },
+      {
+        "timestamp": "2023-06-19 14:45:36",
+        "severityCn": "低危",
+        "eventTypeName": "数据窃取",
+        "categoryCn": "数据窃取",
+        "attackedCorpName": "中国电信集团",
+        "attackedIp": "58.67.89.123",
+        "attackIp": "123.45.67.89",
+        "attackCountry": "中国"
+      },
+      {
+        "timestamp": "2023-06-19 14:32:18",
+        "severityCn": "中危",
+        "eventTypeName": "数据加密",
+        "categoryCn": "勒索软件",
+        "attackedCorpName": "联想集团",
+        "attackedIp": "45.67.89.123",
+        "attackIp": "67.89.123.45",
+        "attackCountry": "德国"
+      }
+    ]
+  },
+  "dataFlowDynamic": {
+    "code": 0,
+     "data": [
+        {
+            "key": "希腊",
+            "doc_count": 8242,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 8242
+                    }
+                ]
+            }
+        },
+        {
+            "key": "美国",
+            "doc_count": 7532,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 7532
+                    }
+                ]
+            }
+        },
+        {
+            "key": "中国",
+            "doc_count": 3818,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 95,
+                "buckets": [
+                    {
+                        "key": "美国",
+                        "doc_count": 1855
+                    },
+                    {
+                        "key": "罗马尼亚",
+                        "doc_count": 569
+                    },
+                    {
+                        "key": "英国",
+                        "doc_count": 148
+                    },
+                    {
+                        "key": "荷兰",
+                        "doc_count": 138
+                    },
+                    {
+                        "key": "乌克兰",
+                        "doc_count": 137
+                    },
+                    {
+                        "key": "德国",
+                        "doc_count": 133
+                    },
+                    {
+                        "key": "日本",
+                        "doc_count": 106
+                    },
+                    {
+                        "key": "西班牙",
+                        "doc_count": 101
+                    },
+                    {
+                        "key": "印度",
+                        "doc_count": 83
+                    },
+                    {
+                        "key": "摩尔多瓦",
+                        "doc_count": 77
+                    },
+                    {
+                        "key": "乌拉圭",
+                        "doc_count": 70
+                    },
+                    {
+                        "key": "法国",
+                        "doc_count": 56
+                    },
+                    {
+                        "key": "波兰",
+                        "doc_count": 47
+                    },
+                    {
+                        "key": "瑞士",
+                        "doc_count": 35
+                    },
+                    {
+                        "key": "俄罗斯",
+                        "doc_count": 32
+                    },
+                    {
+                        "key": "新加坡",
+                        "doc_count": 32
+                    },
+                    {
+                        "key": "保加利亚",
+                        "doc_count": 28
+                    },
+                    {
+                        "key": "加拿大",
+                        "doc_count": 27
+                    },
+                    {
+                        "key": "希腊",
+                        "doc_count": 25
+                    },
+                    {
+                        "key": "比利时",
+                        "doc_count": 24
+                    }
+                ]
+            }
+        },
+        {
+            "key": "新加坡",
+            "doc_count": 3265,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 3265
+                    }
+                ]
+            }
+        },
+        {
+            "key": "芬兰",
+            "doc_count": 2679,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 2679
+                    }
+                ]
+            }
+        },
+        {
+            "key": "卢森堡",
+            "doc_count": 2448,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 2448
+                    }
+                ]
+            }
+        },
+        {
+            "key": "俄罗斯",
+            "doc_count": 2235,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 2235
+                    }
+                ]
+            }
+        },
+        {
+            "key": "加拿大",
+            "doc_count": 1402,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 1402
+                    }
+                ]
+            }
+        },
+        {
+            "key": "英国",
+            "doc_count": 1322,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 1322
+                    }
+                ]
+            }
+        },
+        {
+            "key": "荷兰",
+            "doc_count": 975,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 975
+                    }
+                ]
+            }
+        },
+        {
+            "key": "罗马尼亚",
+            "doc_count": 516,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 516
+                    }
+                ]
+            }
+        },
+        {
+            "key": "澳大利亚",
+            "doc_count": 435,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 435
+                    }
+                ]
+            }
+        },
+        {
+            "key": "科特迪瓦",
+            "doc_count": 433,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 433
+                    }
+                ]
+            }
+        },
+        {
+            "key": "法国",
+            "doc_count": 411,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 411
+                    }
+                ]
+            }
+        },
+        {
+            "key": "瑞士",
+            "doc_count": 379,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 379
+                    }
+                ]
+            }
+        },
+        {
+            "key": "克罗地亚",
+            "doc_count": 259,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 259
+                    }
+                ]
+            }
+        },
+        {
+            "key": "德国",
+            "doc_count": 258,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 258
+                    }
+                ]
+            }
+        },
+        {
+            "key": "印度",
+            "doc_count": 241,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 241
+                    }
+                ]
+            }
+        },
+        {
+            "key": "瑞典",
+            "doc_count": 238,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 238
+                    }
+                ]
+            }
+        },
+        {
+            "key": "葡萄牙",
+            "doc_count": 141,
+            "by_srcIpCountry": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "中国",
+                        "doc_count": 141
+                    }
+                ]
+            }
+        }
+    ]
+
+  },
+  "countryIpRank": {
+    "code": 0,
+    "data": [
+      { "key": "美国", "doc_count": 1104 },
+      { "key": "荷兰", "doc_count": 876 },
+      { "key": "俄罗斯", "doc_count": 765 },
+      { "key": "德国", "doc_count": 654 },
+      { "key": "英国", "doc_count": 543 },
+      { "key": "日本", "doc_count": 432 },
+      { "key": "韩国", "doc_count": 321 },
+      { "key": "法国", "doc_count": 298 },
+      { "key": "加拿大", "doc_count": 276 },
+      { "key": "澳大利亚", "doc_count": 254 },
+      { "key": "印度", "doc_count": 243 },
+      { "key": "巴西", "doc_count": 231 },
+      { "key": "意大利", "doc_count": 219 },
+      { "key": "西班牙", "doc_count": 208 },
+      { "key": "瑞典", "doc_count": 196 },
+      { "key": "新加坡", "doc_count": 185 },
+      { "key": "瑞士", "doc_count": 174 },
+      { "key": "墨西哥", "doc_count": 163 },
+      { "key": "挪威", "doc_count": 152 },
+      { "key": "芬兰", "doc_count": 141 }
+    ]
+  },
+  "dataSecurityEvents": {
+    "code": 0,
+    "data": [
+      { "key": "数据泄露", "doc_count": 8765 },
+      { "key": "未授权访问", "doc_count": 6543 },
+      { "key": "数据篡改", "doc_count": 4321 },
+      { "key": "数据窃取", "doc_count": 3456 },
+      { "key": "数据加密", "doc_count": 2345 }
+    ]
+  },
+  "exposedDataAssets": {
+    "code": 0,
+    "data": [
+      { "key": "数据库", "doc_count": 2345 },
+      { "key": "文件服务器", "doc_count": 1234 },
+      { "key": "云存储", "doc_count": 987 },
+      { "key": "API接口", "doc_count": 765 },
+      { "key": "备份系统", "doc_count": 543 }
+    ]
+  },
+  "riskEnterpriseRanking": {
+    "code": 0,
+    "data": [
+      {
+        "corpname": "华为技术有限公司",
+        "attackedTotal": 876,
+        "ipTotal": 23,
+        "categoryCnList": ["数据泄露", "未授权访问", "数据篡改"]
+      },
+      {
+        "corpname": "中国石化集团",
+        "attackedTotal": 765,
+        "ipTotal": 18,
+        "categoryCnList": ["数据窃取", "数据加密", "未授权访问"]
+      },
+      {
+        "corpname": "中国移动通信集团",
+        "attackedTotal": 654,
+        "ipTotal": 15,
+        "categoryCnList": ["数据泄露", "数据窃取", "数据篡改"]
+      },
+      {
+        "corpname": "中国电信集团",
+        "attackedTotal": 543,
+        "ipTotal": 12,
+        "categoryCnList": ["未授权访问", "数据加密", "数据泄露"]
+      },
+      {
+        "corpname": "联想集团",
+        "attackedTotal": 432,
+        "ipTotal": 10,
+        "categoryCnList": ["数据篡改", "数据窃取", "未授权访问"]
+      }
+    ]
+  },
+  "industrialInternetMonitoring": {
+    "code": 0,
+    "data": [
+      {
+        "key": "工业企业",
+        "companyTotal": 3452,
+        "coverageTotal": 2345
+      },
+      {
+        "key": "平台企业",
+        "companyTotal": 876,
+        "coverageTotal": 234
+      },
+      {
+        "key": "标识解析企业",
+        "companyTotal": 543,
+        "coverageTotal": 156
+      }
+    ]
+  },
+  "industrialInternetMonitoringDetail": {
+    "code": 0,
+    "data": {
+      "原材料工业": {
+        "钢铁": {
+          "companyTotal": 12569,
+          "aboveScaleCompanyTotal": 98
+        },
+        "有色金属": {
+          "companyTotal": 123,
+          "aboveScaleCompanyTotal": 76
+        },
+        "石油化工": {
+          "companyTotal": 187,
+          "aboveScaleCompanyTotal": 112
+        },
+        "建材": {
+          "companyTotal": 98,
+          "aboveScaleCompanyTotal": 67
+        }
+      },
+      "装备工业": {
+        "机械": {
+          "companyTotal": 234,
+          "aboveScaleCompanyTotal": 145
+        },
+        "汽车": {
+          "companyTotal": 187,
+          "aboveScaleCompanyTotal": 123
+        },
+        "船舶": {
+          "companyTotal": 76,
+          "aboveScaleCompanyTotal": 45
+        },
+        "航空航天": {
+          "companyTotal": 43,
+          "aboveScaleCompanyTotal": 28
+        }
+      },
+      "消费品工业": {
+        "轻工": {
+          "companyTotal": 345,
+          "aboveScaleCompanyTotal": 234
+        },
+        "纺织": {
+          "companyTotal": 287,
+          "aboveScaleCompanyTotal": 187
+        },
+        "食品": {
+          "companyTotal": 198,
+          "aboveScaleCompanyTotal": 123
+        },
+        "医药": {
+          "companyTotal": 156,
+          "aboveScaleCompanyTotal": 98
+        }
+      },
+      "电子信息制造业": {
+        "电子": {
+          "companyTotal": 432,
+          "aboveScaleCompanyTotal": 345
+        },
+        "通信": {
+          "companyTotal": 345,
+          "aboveScaleCompanyTotal": 276
+        },
+        "计算机": {
+          "companyTotal": 287,
+          "aboveScaleCompanyTotal": 234
+        },
+        "软件": {
+          "companyTotal": 198,
+          "aboveScaleCompanyTotal": 156
+        }
+      }
+    }
+  },
+  "darkWebMonitor": {
+    "code": 0,
+    "data": [
+      {
+        "corpName": "华为技术有限公司",
+        "dataType": "用户信息",
+        "dataVolume": "12,345 条",
+        "monitorTime": "2025-03-31"
+      },
+      {
+        "corpName": "中兴通讯股份有限公司",
+        "dataType": "订单数据",
+        "dataVolume": "8,567 条",
+        "monitorTime": "2025-03-31"
+      },
+      {
+        "corpName": "中国移动通信集团",
+        "dataType": "通话记录",
+        "dataVolume": "23,456 条",
+        "monitorTime": "2025-03-31"
+      },
+      {
+        "corpName": "中国电信集团",
+        "dataType": "客户资料",
+        "dataVolume": "15,678 条",
+        "monitorTime": "2025-03-31"
+      },
+      {
+        "corpName": "联想集团",
+        "dataType": "产品信息",
+        "dataVolume": "5,432 条",
+        "monitorTime": "2025-03-31"
+      }
+    ]
+  }
+}

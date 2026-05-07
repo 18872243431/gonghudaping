@@ -1,0 +1,168 @@
+{
+  "tabsList": [
+    { "label": "24小时", "value": "1" },
+    { "label": "近7天", "value": "2" },
+    { "label": "近30天", "value": "3" }
+  ],
+  "overviewData1": [
+    {
+      "name": "风险企业数量",
+      "value": "3.6",
+      "unit": "万家",
+      "icon": "icon1"
+    },
+    {
+      "name": "重点产业链企业",
+      "value": "1,303",
+      "unit": "家",
+      "icon": "icon2"
+    },
+    {
+      "name": "参与演练企业",
+      "value": "19",
+      "unit": "家",
+      "icon": "icon3"
+    },
+    {
+      "name": "通报处置企业",
+      "value": "637",
+      "unit": "家",
+      "icon": "icon4"
+    }
+  ],
+  "barLineData": [
+    {
+      "name": "受攻击企业数（家）",
+      "key": "attackedCompany",
+      "list": [
+        { "label": "2025-01", "value": 10008 },
+        { "label": "2025-02", "value": 11044 },
+        { "label": "2025-03", "value": 11012 },
+        { "label": "2025-04", "value": 11863 },
+        { "label": "2025-05", "value": 10989 },
+        { "label": "2025-06", "value": 11589 },
+        { "label": "2025-07", "value": 12165 },
+        { "label": "2025-08", "value": 11065 },
+        { "label": "2025-09", "value": 12936 },
+        { "label": "2025-10", "value": 15079 },
+        { "label": "2025-11", "value": 15831 },
+        { "label": "2025-12", "value": 11598 }
+      ]
+    },
+    {
+      "name": "攻击次数（万次）",
+      "key": "attackedCount",
+      "list": [
+        { "label": "2025-01", "value": 1130.8 },
+        { "label": "2025-02", "value": 920.7 },
+        { "label": "2025-03", "value": 1065.1 },
+        { "label": "2025-04", "value": 1105 },
+        { "label": "2025-05", "value": 914.5 },
+        { "label": "2025-06", "value": 848 },
+        { "label": "2025-07", "value": 675.5 },
+        { "label": "2025-08", "value": 772.8 },
+        { "label": "2025-09", "value": 846.6 },
+        { "label": "2025-10", "value": 855.8 },
+        { "label": "2025-11", "value": 838.4 },
+        { "label": "2025-12", "value": 794 }
+      ]
+    }
+  ],
+  "bottomLeftData": [
+    { "name": "境外IP攻击", "value": "3,923.8", "unit": "万次" },
+    { "name": "境外IP地址", "value": 79.3, "unit": "万个" },
+    { "name": "被攻击企业", "value": 2.4, "unit": "万家" }
+  ],
+  "bottomChartData": [
+    { "name": "1月", "value1": 721.5, "value2": 627.6 },
+    { "name": "2月", "value1": 653.5, "value2": 381.1 },
+    { "name": "3月", "value1": 467.7, "value2": 500.9 },
+    { "name": "4月", "value1": 413.2, "value2": 480.5 },
+    { "name": "5月", "value1": 531.6, "value2": 301.4 },
+    { "name": "6月", "value1": 491.7, "value2": 306 },
+    { "name": "7月", "value1": 571.4, "value2": 134.3 },
+    { "name": "8月", "value1": 569.5, "value2": 234.7 },
+    { "name": "9月", "value1": 396.3, "value2": 257 },
+    { "name": "10月", "value1": 387.5, "value2": 243.8 },
+    { "name": "11月", "value1": 184.6, "value2": 247.9 },
+    { "name": "12月", "value1": 280.6, "value2": 208.7 }
+  ],
+  "topPhaseData": [
+    { "name": "阶段1", "title": "初始突破阶段", "value": 41.3 },
+    { "name": "阶段2", "title": "持久化潜伏阶段", "value": 26.3 },
+    { "name": "阶段3", "title": "目标达成阶段", "value": 32.4 }
+  ],
+  "topBarData": [
+    {
+      "name": "",
+      "list": [
+        { "label": "扫描探测", "value": 2052.4 },
+        { "label": "暴力破解", "value": 605.7 },
+        { "label": "暴力破解", "value": 605.7 }
+      ]
+    },
+    {
+      "name": "",
+      "list": [
+        { "label": "命令执行", "value": 1014.2 },
+        { "label": "漏洞利用", "value": 508.7 },
+        { "label": "暴力破解", "value": 605.7 }
+      ]
+    },
+    {
+      "name": "",
+      "list": [
+        { "label": "非法外联", "value": 1122.4 },
+        { "label": "僵尸网络", "value": 491.2 },
+        { "label": "暴力破解", "value": 605.7 }
+      ]
+    }
+  ],
+  "caseData": [
+    {
+      "id": 1,
+      "name": "长城汽车股份有限公司",
+      "icon": "case1"
+    },
+    {
+      "id": 2,
+      "name": "北方集成电路技术创新中心有限公司",
+      "icon": "case2"
+    }
+  ],
+  "industryRiskBarData": [
+    {
+      "name": "行业风险分布",
+      "list": [
+        { "label": "石油化工", "value": 737.5 },
+        { "label": "建筑材料", "value": 518.3 },
+        { "label": "钢铁", "value": 199.0 },
+        { "label": "有色金属", "value": 197.7 },
+        { "label": "新材料", "value": 96.6 }
+      ]
+    }
+  ],
+  "industryRiskCardData": [
+    {
+      "title": "石化化工领域",
+      "tag": "攻击总量最高",
+      "tagClass": "tag-blue",
+      "cardClass": "card-blue",
+      "descHtml": "累计涉及企业4671家。其中，化学原料和化学制品制造业是受攻击最集中的领域，占比近七成。"  
+    },
+    {
+      "title": "建筑材料领域",
+      "tag": "攻击相对均匀",
+      "tagClass": "tag-blue",
+      "cardClass": "card-blue",
+      "descHtml": "攻击量占总数29.6%，受影响企业数占比29.8%，表明行业内风险分布较为均匀。"
+    },
+    {
+      "title": "钢铁与有色金属领域",
+      "tag": "攻击强度突出",
+      "tagClass": "tag-blue",
+      "cardClass": "card-blue",
+      "descHtml": "累计遭受攻击396.7万次，涉及企业1415家。平均每家企业遭受攻击远超其他领域。"
+    }
+  ]
+}

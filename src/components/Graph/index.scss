@@ -1,0 +1,123 @@
+.graph-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  .system-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .icon {
+      width: 200px;
+      height: 125px;
+    }
+    .title {
+      width: 200px;
+      height: 38px;
+      font-size: 18px;
+      font-family: "SourceHanSansCN-Regular", "PingFangSC-Regular","Microsoft YaHei", sans-serif;
+      font-weight: bold;
+      text-align: center;
+      color: #ecffff;
+      line-height: 38px;
+      letter-spacing: 0.01px;
+      background: url(~assets/img/graph/system-title-bg.png) no-repeat center /
+        100% 100%;
+    }
+    .bottom {
+      width: 780px;
+      height: 52px;
+      margin-top: -40px;
+    }
+  }
+  .lines {
+    position: relative;
+    height: 136px;
+    margin-top: -10px;
+    .line-left {
+      width: 279px;
+      height: 150px;
+      background: url(~assets/img/graph/line-side.png) no-repeat center / 100%
+        100%;
+      position: absolute;
+      top: 0;
+      left: 194px;
+    }
+    .line-center {
+      width: 32px;
+      height: 150px;
+      background: url(~assets/img/graph/line-center.png) no-repeat center / 100%
+        100%;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .line-right {
+      width: 279px;
+      height: 150px;
+      background: url(~assets/img/graph/line-side.png) no-repeat center / 100%
+        100%;
+      position: absolute;
+      top: 0;
+      right: 194px;
+      transform: rotateY(180deg);
+    }
+  }
+  .operators {
+    display: flex;
+    width: 780px;
+    justify-content: space-between;
+    margin: 0 auto;
+    .operator {
+      width: 137px;
+      height: 126px;
+      background: url(~assets/img/graph/operator-img.png) no-repeat center /
+        100% 100%;
+      cursor: pointer;
+      &:hover {
+        .operator-icon {
+          transform: scale(0.9);
+        }
+        background-image: url(~assets/img/graph/operator-active-img.png);
+      }
+      position: relative;
+      z-index: 99;
+      .operator-icon {
+        position: absolute;
+        width: 76px;
+        height: 68px;
+        top: 0;
+        left: 30px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .operator-name {
+        width: 65px;
+        height: 23px;
+        font-size: 16px;
+        font-family: "SourceHanSansCN-Regular", "PingFangSC-Regular","Microsoft YaHei", sans-serif;
+        font-weight: bold;
+        text-align: center;
+        color: #ecffff;
+        line-height: 23px;
+        letter-spacing: 0px;
+        position: absolute;
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+  .big-bottom {
+    width: 1008px;
+    height: 144px;
+    background: url(~assets/img/graph/big-bottom-img.png) no-repeat center /
+      100% 100%;
+    position: absolute;
+    bottom: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

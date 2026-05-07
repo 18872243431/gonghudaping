@@ -1,0 +1,111 @@
+{
+  "enterprise": {
+    "code": 0,
+    "data": {
+      "enterpriseNum": 25467,
+      "gsEnterpriseNum": 15243,
+      "ipNum": 182456,
+      "domainNum": 92154
+    }
+  },
+  "industry": {
+    "code": 0,
+    "data": [
+      { "label": "制造业", "value": 6542 },
+      { "label": "金融业", "value": 4587 },
+      { "label": "互联网行业", "value": 3762 },
+      { "label": "能源行业", "value": 2985 },
+      { "label": "交通运输业", "value": 2467 },
+      { "label": "医疗健康", "value": 1854 },
+      { "label": "教育行业", "value": 1623 },
+      { "label": "其他行业", "value": 1647 }
+    ]
+  },
+  "device": {
+    "code": 0,
+    "data": {
+      "protoFingerNum": 56243,
+      "deviceFingerNum": 87621,
+      "deviceNum": 142568
+    }
+  },
+  "deviceType": {
+    "code": 0,
+    "data": [
+      { "label": "工业设备网络设备", "value": 38652 },
+      { "label": "网络设备网络设备", "value": 32458 },
+      { "label": "安全设备网络设备", "value": 28745 },
+      { "label": "服务器网络设备", "value": 24563 },
+      { "label": "终端设备", "value": 18150 }
+    ]
+  },
+  "safeKnowledge": {
+    "code": 0,
+    "data": {
+      "threatNum": 156428,
+      "ruleMaliceIp": 45267,
+      "ruleMaliceDomain": 38465,
+      "ruleMaliceProgram": 24876,
+      "shareMaliceIp": 1238943,
+      "shareMaliceDomain": 1325843,
+      "shareMaliceProgram": 1323034
+    }
+  },
+  "rule": {
+    "code": 0,
+    "data": {
+      "count": 124657,
+      "echart": [
+        { "familyOrg": "Trojan", "num": 36584 },
+        { "familyOrg": "Ransomware", "num": 24563 },
+        { "familyOrg": "Botnet", "num": 21548 },
+        { "familyOrg": "Rootkit", "num": 16547 },
+        { "familyOrg": "Worm", "num": 14289 },
+        { "familyOrg": "Backdoor", "num": 11126 }
+      ]
+    }
+  },
+  "family": {
+    "code": 0,
+    "data": [
+      { "key": "scanner", "doc_count": 562 },
+      { "key": "Puppet;scanner;spam", "doc_count": 415 },
+      { "key": "scanner(2022HW)", "doc_count": 148 },
+      { "key": "digiccy", "doc_count": 143 },
+      { "key": "tor", "doc_count": 112 },
+      { "key": "malware", "doc_count": 98 },
+      { "key": "exploit", "doc_count": 87 },
+      { "key": "phishing", "doc_count": 76 }
+    ]
+  },
+  "threatShare": {
+    "code": 0,
+    "data": [
+      {
+        "type": "warning",
+        "title": "高危漏洞预警",
+        "detail": "Apache HTTP Server存在越权访问漏洞，攻击者可能绕过认证获取管理权限。建议立即限制外网访问并尽快完成补丁升级。"
+      },
+      {
+        "type": "danger",
+        "title": "APT32 组织近期活跃 IP",
+        "detail": "监测到与APT32相关的IP对重点企业开展扫描探测，建议及时封锁相关恶意IP并加强边界访问审计"
+      },
+      {
+        "type": "virus",
+        "title": "新型勒索变种 IOCs",
+        "detail": "监测发现针对工业控制系统的勒索软件新变种，具备横向传播能力，建议及时更新防护策略"
+      },
+      {
+        "type": "warning",
+        "title": "钓鱼邮件预警",
+        "detail": "发现伪装为\"供应链协同邮件\"的定向钓鱼邮件，附件包含木马程序。请各单位提醒员工勿运行来源不明的附件或程序。"
+      },
+      {
+        "type": "danger",
+        "title": "恶意软件家族活跃",
+        "detail": "近期监测到多个恶意软件家族活动频繁，主要针对工业控制系统进行渗透攻击，建议加强终端安全防护。"
+      }
+    ]
+  }
+}

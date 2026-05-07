@@ -1,0 +1,306 @@
+{
+  "atdStatistics": {
+    "code": 0,
+    "data": {
+      "atdNum": 2932000,
+      "atdHbRatio": 12.5,
+      "atdTbRatio": -8.3
+    }
+  },
+  "companyStatistics": {
+    "code": 0,
+    "data": {
+      "companyNum": 1382,
+      "companyHbRatio": -5.2,
+      "companyTbRatio": 7.6
+    }
+  },
+  "severity": {
+    "code": 0,
+    "data": {
+      "high": 2356,
+      "middle": 5782,
+      "low": 4430
+    }
+  },
+  "atdStatisticsTrend": {
+    "code": 0,
+    "data": {
+      "timeList": [
+        "1月",
+        "2月",
+        "3月",
+        "4月",
+        "5月",
+        "6月",
+        "7月",
+        "8月",
+        "9月",
+        "10月",
+        "11月",
+        "12月"
+      ],
+      "dataList": [10, 20, 30, 42, 21, 50, 60, 70, 80, 90, 100, 110]
+    }
+  },
+  "companyStatisticsTrend": {
+    "code": 0,
+    "data": {
+      "timeList": [
+        "1月",
+        "2月",
+        "3月",
+        "4月",
+        "5月",
+        "6月",
+        "7月",
+        "8月",
+        "9月",
+        "10月",
+        "11月",
+        "12月"
+      ],
+      "dataList": [100, 230, 130, 142, 221, 150, 260, 170, 180, 190, 130, 160]
+    }
+  },
+  "provinceMap": {
+    "code": 0,
+    "data": [
+      { "key": "北京市", "doc_count": 1256 },
+      { "key": "上海市", "doc_count": 1089 },
+      { "key": "广东省", "doc_count": 978 },
+      { "key": "江苏省", "doc_count": 856 },
+      { "key": "浙江省", "doc_count": 745 },
+      { "key": "四川省", "doc_count": 623 },
+      { "key": "湖北省", "doc_count": 512 },
+      { "key": "山东省", "doc_count": 467 },
+      { "key": "河南省", "doc_count": 389 },
+      { "key": "福建省", "doc_count": 345 }
+    ]
+  },
+  "industryCount": {
+    "code": 0,
+    "data": 28
+  },
+  "industryTop4": {
+    "code": 0,
+    "data": [
+      {
+        "key": "医药制造业",
+        "doc_count": 177115,
+        "companyCount": 280
+      },
+      {
+        "key": "专用设备制造业",
+        "doc_count": 124543,
+        "companyCount": 152
+      },
+      {
+        "key": "电气机械和器材制造业",
+        "doc_count": 68260,
+        "companyCount": 78
+      },
+      {
+        "key": "计算机、通信和其他电子设备制造业",
+        "doc_count": 66247,
+        "companyCount": 149
+      },
+      {
+        "key": "汽车制造业",
+        "doc_count": 58930,
+        "companyCount": 125
+      },
+      {
+        "key": "化学原料和化学制品制造业",
+        "doc_count": 52680,
+        "companyCount": 110
+      },
+      {
+        "key": "通用设备制造业",
+        "doc_count": 47520,
+        "companyCount": 98
+      },
+      {
+        "key": "非金属矿物制品业",
+        "doc_count": 45780,
+        "companyCount": 87
+      },
+      {
+        "key": "食品制造业",
+        "doc_count": 42350,
+        "companyCount": 76
+      },
+      {
+        "key": "金属制品业",
+        "doc_count": 38920,
+        "companyCount": 65
+      },
+      {
+        "key": "酒、饮料和精制茶制造业",
+        "doc_count": 35670,
+        "companyCount": 58
+      },
+      {
+        "key": "农副食品加工业",
+        "doc_count": 32450,
+        "companyCount": 52
+      }
+    ]
+  },
+  "attackIP": {
+    "code": 0,
+    "data": {
+      "attackIPList": [
+        "45.67.89.123",
+        "78.90.123.45",
+        "91.234.56.78",
+        "123.45.67.89",
+        "34.56.78.90"
+      ],
+      "dataList": [282, 231, 185, 130, 98]
+    }
+  },
+  "familyTop": {
+    "code": 0,
+    "data": {
+      "familyList": [
+        "Trojan.Win32",
+        "Backdoor.Win64",
+        "Ransomware.Crypto",
+        "Worm.Win32",
+        "Rootkit.Linux"
+      ],
+      "dataList": [356, 289, 245, 198, 176]
+    }
+  },
+  "alarmInfo": {
+    "code": 0,
+    "data": [
+      {
+        "province": "北京市",
+        "timestamp": "2024-03-20 15:30:25",
+        "attackIp": "45.67.89.123",
+        "attackCountry": "美国",
+        "eventTypeIdCn": "DDoS攻击",
+        "attackedcorpname": "某科技有限公司",
+        "attackedIp": "192.168.1.100"
+      },
+      {
+        "province": "上海市",
+        "timestamp": "2024-03-20 14:45:10",
+        "attackIp": "78.90.123.45",
+        "attackCountry": "俄罗斯",
+        "eventTypeIdCn": "SQL注入",
+        "attackedcorpname": "某网络科技公司",
+        "attackedIp": "10.0.0.50"
+      },
+      {
+        "province": "广东省",
+        "timestamp": "2024-03-20 13:20:33",
+        "attackIp": "91.234.56.78",
+        "attackCountry": "德国",
+        "eventTypeIdCn": "端口扫描",
+        "attackedcorpname": "某信息技术公司",
+        "attackedIp": "172.16.0.25"
+      },
+      {
+        "province": "江苏省",
+        "timestamp": "2024-03-20 12:15:15",
+        "attackIp": "123.45.67.89",
+        "attackCountry": "巴西",
+        "eventTypeIdCn": "暴力破解",
+        "attackedcorpname": "某电子商务公司",
+        "attackedIp": "192.168.2.75"
+      },
+      {
+        "province": "浙江省",
+        "timestamp": "2024-03-20 11:05:42",
+        "attackIp": "45.67.89.123",
+        "attackCountry": "中国",
+        "eventTypeIdCn": "XSS攻击",
+        "attackedcorpname": "某金融科技公司",
+        "attackedIp": "10.0.1.30"
+      },
+      {
+        "province": "北京市",
+        "timestamp": "2024-03-20 10:15:33",
+        "attackIp": "78.90.123.45",
+        "attackCountry": "俄罗斯",
+        "eventTypeIdCn": "SQL注入",
+        "attackedcorpname": "某互联网公司",
+        "attackedIp": "192.168.3.50"
+      },
+      {
+        "province": "上海市",
+        "timestamp": "2024-03-20 09:30:21",
+        "attackIp": "91.234.56.78",
+        "attackCountry": "德国",
+        "eventTypeIdCn": "端口扫描",
+        "attackedcorpname": "某软件开发公司",
+        "attackedIp": "10.0.2.75"
+      }
+    ]
+  },
+  "attackedComapnyTop": {
+    "code": 0,
+     "data": [
+        {
+            "atdNum": 427916,
+            "ipNum": 1,
+            "companyName": "靖江市恒生混凝土制造有限公司",
+            "eventTab": [
+                "木马后门"
+            ]
+        },
+        {
+            "atdNum": 415891,
+            "ipNum": 1,
+            "companyName": "南通创名电动工具有限公司",
+            "eventTab": [
+                "木马后门",
+                "网络嗅探"
+            ]
+        },
+        {
+            "atdNum": 15705,
+            "ipNum": 1,
+            "companyName": "青岛海纳生物科技有限公司",
+            "eventTab": [
+                "命令执行",
+                "网络嗅探",
+                "主机受控"
+            ]
+        },
+        {
+            "atdNum": 10567,
+            "ipNum": 1,
+            "companyName": "山田新材料集团有限公司",
+            "eventTab": [
+                "主机受控",
+                "僵尸网络",
+                "网络嗅探"
+            ]
+        },
+        {
+            "atdNum": 7756,
+            "ipNum": 1,
+            "companyName": "山东同大印制系统有限公司",
+            "eventTab": [
+                "主机受控",
+                "挖矿事件",
+                "网络嗅探"
+            ]
+        },
+        {
+            "atdNum": 5485,
+            "ipNum": 3,
+            "companyName": "青岛兴平热电有限公司",
+            "eventTab": [
+                "命令执行",
+                "网络嗅探",
+                "暴力破解"
+            ]
+        }
+    ]
+  }
+}

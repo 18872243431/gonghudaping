@@ -1,0 +1,376 @@
+.control-device {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  &-left {
+    width: 1100px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .item-box {
+      margin-bottom: 20px;
+      height: calc((100% - 260px) / 2);
+      &:first-child {
+        height: 200px;
+      }
+    }
+    .total1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .total-item {
+        width: 466px;
+        height: 116px;
+        display: flex;
+        background: url(~assets/img/controlDevice/total-bg.png) no-repeat center / 100% 100%;
+        &:first-child {
+          margin-right: 50px;
+        }
+        .icon-box {
+          width: 120px;
+          height: 80px;
+          margin-top: 25px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .val {
+          display: flex;
+          margin-top: 20px;
+          span {
+            display: inline-block;
+            width: 47px;
+            height: 51px;
+            margin-right: 10px;
+            background: url(~assets/img/controlDevice/number.png) no-repeat center / 100% 100%;
+            font-family: var(--font-family-title);
+            font-size: 38px;
+            color: #F0FAFF;
+            line-height: 49px;
+            text-align: center;
+            text-shadow: 0px 0px 10px #1995BF;
+          }
+        }
+        .label {
+          font-family: var(--font-family-body);
+          font-weight: bold;
+          font-size: 24px;
+          margin-top: 15px;
+          letter-spacing: 1px;
+          background-image: -webkit-linear-gradient(bottom, #FAFEFE, #4DD5FF);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          position: relative;
+          padding-left: 40px;
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 38px;
+            width: 34px;
+            background: url(~assets/img/controlDevice/icon0.png) no-repeat center / 100% 100%;
+            border-radius: 2px;
+          }
+        }
+      }
+    }
+    .total2-box {
+      display: flex;
+      align-items: center;
+    }
+    .total2 {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      height: 250px;
+      .total-item {
+        width: calc(50% - 10px);
+        display: flex;
+        margin-bottom: 20px;
+        &:nth-child(odd) {
+          margin-right: 20px;
+        }
+        .icon-box {
+          width: 137px;
+          height: 105px;
+          background: url(~assets/img/controlDevice/light-bg.png);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .label-val-box {
+          margin-left: 20px;
+          width: calc(100% - 160px);
+          position: relative;
+          display: flex;
+          padding: 10px 20px;
+          height: 105px;
+          background: linear-gradient( 180deg, rgb(0, 83, 153, 0.2) 0%, rgba(0, 118, 200, 0.2) 100%);
+          &::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            height: 3px;
+            width: 279px;
+            background: url(~assets/img/controlDevice/light.png) no-repeat center / 100% 100%;
+            border-radius: 2px;
+          }
+          .label-icon { 
+            width: 30px;
+            height: 33px;
+          }
+          .label-val {
+            width: calc(100% - 125px);
+            margin-left: 10px;
+            .label {
+              font-family: var(--font-family-body);
+              font-weight: bold;
+              font-size: 20px;
+              line-height: 29px;
+              letter-spacing: 1px;
+              background-image: -webkit-linear-gradient(bottom, #FAFEFE, #4DD5FF);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+            }
+            
+            .val {
+              font-family: var(--font-family-body);
+              font-weight: bold;
+              font-size: 26px;
+              line-height: 38px;
+              letter-spacing: 3px;
+              .unit {
+                font-family: var(--font-family-body);
+                font-weight: bold;
+                font-size: 18px;
+                line-height: 38px;
+                background-image: -webkit-linear-gradient(bottom, #FAFEFE, #4DD5FF);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+              }
+            }
+          }
+          .percentage {
+            width: 85px;
+            height: 85px;
+          }
+
+          &.box-type1 {
+            .label-icon {
+              background: url(~assets/img/controlDevice/icon1.png);
+            }
+            .val {
+              color: #FFBD43;
+            }
+          }
+          &.box-type2 {
+            .label-icon {
+              background: url(~assets/img/controlDevice/icon2.png);
+            }
+            .val {
+              color: #4BD2FD;
+            }
+          }
+        }
+      }
+    }
+  }
+  &-center {
+    width: calc(100% - 2200px);
+    display: flex;
+    flex-wrap: wrap;
+    .box {
+      width: 600px;
+      height: 400px;
+    }
+    .battery-bar {
+      width: 584px;
+      height: 100%;
+      overflow: auto;
+      .item {
+        width: 100%;
+        height: 40px;
+        margin-bottom: 10px;
+        display: flex;
+        .bar-box {
+          width: 100%;
+          height: 100%;
+          // background: rgba(0, 44, 92, 0.12);
+          // border: 1px solid rgba(109, 241, 255, 0.2);
+          display: flex;
+          align-items: center;
+          position: relative;
+          .bg {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 584px;
+            height: 40px;
+            background: url(~assets/img/echarts/bar2/bg.png) no-repeat center / 100% 100%;
+          }
+          .battery-chart-box {
+            width: 564px;
+            height: 40px;
+            position: absolute;
+            top: 5px;
+            left: 20px;
+          }
+        }
+        .access {
+          width: 70px;
+          background: rgba(0, 44, 92, 0.12);
+          border: 1px solid rgba(109, 241, 255, 0.2);
+          font-size: 20px;
+          font-family: var(--font-family-body);
+          text-align: center;
+          color: #fff;
+          line-height: 55px;
+          font-weight: 600;
+          text-shadow: 0px 2px 4px rgba(0, 84, 147, 0.5);
+          &:hover {
+            cursor: pointer;
+            background: linear-gradient(
+              270deg,
+              rgba(255, 207, 92, 0.7) 0%,
+              rgba(255, 207, 92, 0) 100%
+            );
+            border: 1px solid rgba(255, 207, 92, 0.7);
+          }
+        }
+      }
+    }
+  }
+  &-right {
+    width: 1100px;
+    display: flex;
+    flex-direction: column;
+    .item-box {
+      margin-bottom: 20px;
+      height: calc(50% - 40px);
+      &:first-child {
+        height: 50%;
+      }
+    }
+    .slider {
+      height: 100%;
+      .el-carousel {
+        height: 100%;
+        :deep(.el-carousel__container) {
+          height: 100%;
+          .el-carousel__arrow {
+            background-color: rgba(57, 122, 199, 0.2);
+            color: #1880b1;
+          }
+        }
+      }
+    }
+    .platform-list {
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      .list-item {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .item-box {
+          width: 300px;
+          height: 200px;
+          background: url(~assets/img/controlDevice/device-bg.png) no-repeat center / 100% 100%;
+          padding: 10px 15px;
+          margin: 0 auto;
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+        }
+        .img-box {
+          height: 90px;
+          width: 90px;
+          text-align: center;
+          img {
+            width: 100%;
+          }
+        }
+        .total-item-box {
+          height: 100px;
+          padding: 10px 0px;
+          .data-info {
+            position: relative;
+            padding-left: 30px;
+            line-height: 30px;
+            &::after {
+              content: '';
+              position: absolute;
+              left: 0px;
+              top: 4px;
+              height: 32px;
+              width: 31px;
+              background: url(~assets/img/controlDevice/icon3.png) no-repeat center / 100% 100%;
+              border-radius: 2px;
+            }
+            .label {
+              font-family: var(--font-family-body);
+              font-weight: 500;
+              font-size: 18px;
+              color: #FFFFFF;
+              text-shadow: 0px 0px 8px rgba(255,255,255,0.4);
+            }
+            .value {
+              font-family: var(--font-family-body);
+              font-weight: bold;
+              font-size: 26px;
+              letter-spacing: 3px;
+              &.value1 {
+                color: #4BD2FD;
+              }
+              &.value2 {
+                color: #FFBD43;
+              }
+            }
+            .unit {
+              font-family: var(--font-family-body);
+              font-weight: 500;
+              font-size: 15px;
+              color: #FFFFFF;
+            }
+          }
+        }
+        
+        .name {
+          font-size: 14px;
+          color: #9ffcff;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .data-info {
+          line-height: 16px;
+          .label {
+            font-size: 12px;
+            color: #96a8d9;
+          }
+          .value {
+            font-size: 18px;
+            color: #019afd;
+            font-family: var(--font-family-body);
+          }
+        }
+      }
+    }
+  }
+  .item-box {
+    display: flex;
+    width: 100%;
+    &-l {
+      width: 50%;
+    }
+    &-r {
+      width: 50%;
+    }
+  }
+}

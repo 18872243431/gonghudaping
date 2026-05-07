@@ -1,0 +1,404 @@
+@import "../theme/style-vars.scss";
+
+/** reset css start **/
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+  box-sizing: border-box;
+}
+
+* {
+  outline: none;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-body);
+}
+
+:root {
+  --font-family-title: #{$font-family-title};
+  --font-family-body: #{$font-family-body};
+  --font-family-num: #{$font-family-num};
+
+  --font-size-h1: #{$font-size-h1};
+  --font-size-h2: #{$font-size-h2};
+  --font-size-h3: #{$font-size-h3};
+  --font-size-body: #{$font-size-body};
+  --font-size-small: #{$font-size-small};
+}
+
+// 统一类名
+.text-h1 { font-family: var(--font-family-title); font-size: var(--font-size-h1); font-weight: bold; }
+.text-h2 { font-family: var(--font-family-title); font-size: var(--font-size-h2); }
+.text-h3 { font-family: var(--font-family-body); font-size: var(--font-size-h3); font-weight: bold; }
+.text-body { font-family: var(--font-family-body); font-size: var(--font-size-body); }
+.text-num { font-family: var(--font-family-num); }
+
+ul,
+li,
+dl,
+dt,
+dd,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 12px;
+  vertical-align: baseline;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+}
+
+* {
+  @include scrollbar($grey4);
+}
+
+// 深色背景的滚动条样式
+.dark-scrollbar {
+  @include scrollbar($grey8);
+}
+
+/** reset css end **/
+
+.iconfont[class*="icon-"] {
+  font-size: inherit;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.font-12,
+.font-12.iconfont {
+  font-size: 12px;
+}
+
+.font-14,
+.font-14.iconfont {
+  font-size: 14px;
+}
+
+.font-16,
+.font-16.iconfont {
+  font-size: 16px;
+}
+
+.font-18,
+.font-18.iconfont {
+  font-size: 18px;
+}
+
+.font-24,
+.font-24.iconfont {
+  font-size: 24px;
+}
+
+.clearfix {
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+.text-ellipsis {
+  @include textEllipsis;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.table-layout {
+  display: table;
+}
+
+.table-cell {
+  display: table-cell;
+}
+
+.pr {
+  position: relative;
+}
+// 垂直居中 父级需要添加 class="table-layout"
+.v-center {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.flex-layout {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// 定义flex-1 到 flex-24的class
+@for $i from 1 through 24 {
+  .flex-#{$i} {
+    flex: $i;
+  }
+}
+
+@include boxModel(p, padding);
+@include boxModel(pl, padding-left);
+@include boxModel(pr, padding-right);
+@include boxModel(pt, padding-top);
+@include boxModel(pb, padding-bottom);
+@include boxModel(m, margin);
+@include boxModel(ml, margin-left);
+@include boxModel(mr, margin-right);
+@include boxModel(mt, margin-top);
+@include boxModel(mb, margin-bottom);
+
+.error .height-100per {
+  height: 100%;
+}
+
+// 表格高度计算
+.table-content {
+  height: 100%;
+
+  .table-list {
+    height: calc(100% - 40px);
+    overflow: auto;
+  }
+}
+
+.pagerBox {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.full {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.full-block {
+  width: 100%;
+  height: 100%;
+}
+
+.warning {
+  color: $warning;
+}
+
+.el-tooltip__popper {
+  max-width: 400px;
+}
+
+.el-dialog {
+  background-color: $grey9;
+
+  .el-dialog__header {
+    border-bottom: 1px solid $grey6;
+
+    .el-dialog__title {
+      color: $grey2;
+      font-weight: 600;
+    }
+  }
+
+  .el-select {
+    width: 100%;
+  }
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.map-bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.cover-map {
+  position: relative;
+  z-index: 3;
+}
+.no-data {
+  color: #aaa;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.title-tab-box {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  cursor: pointer;
+  li {
+    width: 128px;
+    height: 36px;
+    text-align: center;
+    line-height: 36px;
+    background: rgba(19, 150, 249, 0.09);
+    border: 1px solid #1396f9;
+    box-shadow: 0px 0px 7px 0px rgba(0, 96, 255, 0.15) inset;
+    font-size: 14px;
+    font-family: "SourceHanSansCN-Regular", "PingFangSC-Regular","Microsoft YaHei", sans-serif;
+    font-weight: 400;
+    color: #d0deee;
+    &:hover,
+    &.active {
+      background: rgba(26, 66, 133, 0.3);
+      border-image: linear-gradient(180deg, #13c2ff, #3265ff) 0.81 0.81;
+      box-shadow: 0px 0px 7px 0px #13c2ff inset;
+      border: none;
+      color: #4dd5ff;
+      font-weight: 700;
+    }
+  }
+}
+
+.ratio111 {
+  height: 100%;
+  width: 100%;
+  .h-1 {
+    height: calc((100% - 20px) / 3) !important;
+  }
+}
+
+@-webkit-keyframes tracking-in-contract {
+  0% {
+    letter-spacing: 1em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    letter-spacing: normal;
+    opacity: 1;
+  }
+}
+@keyframes tracking-in-contract {
+  0% {
+    letter-spacing: 1em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    letter-spacing: normal;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes ant-line {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+.vue-echarts-inner{
+  width: 100% !important;
+  height: 100% !important;
+}
+
