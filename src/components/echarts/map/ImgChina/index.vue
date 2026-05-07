@@ -24,22 +24,11 @@
       </div>
     </div>
     
-    <!-- 有 cube 的图表 -->
     <v-chart
-      v-if="isMapReady && cubeVisible"
       class="chart"
+      v-if="isMapReady"
       ref="mapChart"
-      :option="option"
-      :autoresize="true"
-      :style="mapLayerStyle"
-    ></v-chart>
-    
-    <!-- 没有 cube 的图表 -->
-    <v-chart
-      v-if="isMapReady && !cubeVisible"
-      class="chart"
-      ref="mapChartNoCube"
-      :option="optionWithoutCube"
+      :option="currentOption"
       :autoresize="true"
       :style="mapLayerStyle"
     ></v-chart>
@@ -47,7 +36,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onBeforeMount, onMounted, nextTick, watch } from "vue";
+import { computed, ref, onBeforeMount, onMounted, nextTick } from "vue";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import {
@@ -70,263 +59,7 @@ const NANSHA_SHIFT_LAT = -1;
 
 const mapChart = ref(null);
 const cubeVisible = ref(true);
-
-function toggleCubeLegend() {
-  cubeVisible.value = !cubeVisible.value;
-}
-
-const optionWithoutCube = computed(() => {
-  const mapData = transformDataForMap(props.data?.map || []);
-  const cubeData = transformDataForMap(props.data?.cube || []);
-  const lines = (props.data?.lines || []).map((line) => ({
-    ...line,
-    from: ChinaNameMap[line.from] || line.from,
-    to: ChinaNameMap[line.to] || line.to,
-  }));
-  const mapValues = mapData.map((item) => item.value);
-  const sortedMapValues = [...mapValues].sort((a, b) => b - a);
-  const v3 = sortedMapValues[2] ?? 0;
-  const v6 = sortedMapValues[5] ?? 0;
-  const v10 = sortedMapValues[9] ?? 0;
-
-  const mapMin = mapValues.length > 0 ? Math.min(...mapValues) : 0;
-  const mapMax = mapValues.length > 0 ? Math.max(...mapValues) : 100;
-  const cubeValues = cubeData.map((item) => item.value);
-  const cubeMin = cubeValues.length > 0 ? Math.min(...cubeValues) : 200;
-  const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
-  const cubeMiddle =
-    cubeValues.length > 0 ? cubeMin + (cubeMax - cubeMin) * 0.6 : 1400;
-  
-  return {
-    animation: true,
-    legend: {
-      show: false,
-    },
-    visualMap: [
-      {
-        show: false,
-        type: "piecewise",
-        orient: "vertical",
-        left: 0,
-        bottom: 250,
-        min: props.option?.visualMap1?.min || cubeMin,
-        max: props.option?.visualMap1?.max || cubeMax,
-        itemWidth: 14,
-        itemHeight: 14,
-        zlevel: 9,
-        seriesIndex: -1,
-      },
-      {
-        show: true,
-        type: "piecewise",
-        orient: "vertical",
-        left: 0,
-        bottom: 180,
-        min: props.option?.visualMap2?.min || mapMin,
-        max: props.option?.visualMap2?.max || mapMax,
-        zlevel: 9,
-        inverse: false,
-        itemWidth: 14,
-        itemHeight: 14,
-        itemGap: 14,
-        showLabel: true,
-        align: "left",
-        textGap: 10,
-        formatter: function(value, value2) {
-          if (value2 != null) {
-            return formatNum(value) + " - " + formatNum(value2);
-          }
-          return formatNum(value);
-        },
-        textStyle: {
-          color: "#ffffff",
-          fontFamily: '"PingFang SC", "Microsoft YaHei", "SourceHanSansSC", sans-serif',
-          fontSize: 20,
-        },
-        pieces: props.option?.visualMap2?.pieces || [
-          {
-            min: v3,
-            max: mapMax,
-            color: "rgba(22, 85, 175, 0.95)",
-            label: `${formatNum(Math.round(v3))} - ${formatNum(Math.round(mapMax))}`,
-          },
-          ...(sortedMapValues.length > 3
-            ? [
-                {
-                  min: v6,
-                  max: v3 - 0.01,
-                  color: "rgba(28, 115, 195, 0.8)",
-                  label: `${formatNum(Math.round(v6))} - ${formatNum(Math.round(v3))}`,
-                },
-              ]
-            : []),
-          ...(sortedMapValues.length > 6
-            ? [
-                {
-                  min: v10,
-                  max: v6 - 0.01,
-                  color: "rgba(35, 140, 215, 0.65)",
-                  label: `${formatNum(Math.round(v10))} - ${formatNum(Math.round(v6))}`,
-                },
-              ]
-            : []),
-          ...(sortedMapValues.length > 10
-            ? [
-                {
-                  min: mapMin,
-                  max: v10 - 0.01,
-                  color: "rgba(180, 210, 240, 0.2)",
-                  label: `< ${formatNum(Math.round(v10))}`,
-                },
-              ]
-            : []),
-        ],
-        text: props.option?.visualMap2?.text || [],
-        seriesIndex: 0,
-        ...pickPositionOnly(props.option?.visualMap2),
-      },
-    ],
-    tooltip: {
-      trigger: "item",
-      backgroundColor: "rgba(11,36,57,0.80)",
-      borderColor: "#4dd5ff",
-      textStyle: {
-        color: "#ffffff",
-        fontSize: 20,
-      },
-      ...props.option?.tooltip,
-    },
-    geo: createGeoLayers(),
-    series: createSeriesWithoutCube(mapData, lines),
-    graphic: [
-      {
-        type: "text",
-        left: (props.option?.visualMap2?.left || 0) + 10,
-        top: (props.option?.visualMap2?.top || 180) - 30,
-        style: {
-          text: `${
-            props.option?.visualMap2?.dimensionText || props.name1 || "区域数据"
-          }`,
-          fontSize: 20,
-          fontWeight: "normal",
-          fill: "#D1E8FF",
-          fontFamily: '"PingFang SC", "Microsoft YaHei", "SourceHanSansSC", sans-serif',
-        },
-        z: 100,
-      },
-    ],
-  };
-});
-
-function createSeriesWithoutCube(mapData, lines) {
-  const list = [];
-  list.push({
-    ...seriesOption.map,
-    id: "mapSeries",
-    name: props.name1 || "地图数据",
-    zlevel: 5,
-    nameMap: ChinaNameMap,
-    data: mapData,
-    silent: false,
-  });
-  
-  if (lines.length > 0) {
-    function parseLineCoords(lineData) {
-      const from = Array.isArray(lineData.from) ? lineData.from : (provinceCoords.value[lineData.from] || [0, 0]);
-      const to = Array.isArray(lineData.to) ? lineData.to : (provinceCoords.value[lineData.to] || [0, 0]);
-      return { from, to };
-    }
-    
-    function createKey(name, coords) {
-      if (Array.isArray(name)) {
-        return `coord_${name[0]}_${name[1]}`;
-      }
-      return name;
-    }
-    
-    list.push({
-      ...seriesOption.lines,
-      id: "linesSeries",
-      zlevel: 7,
-      silent: true,
-      data: lines.map((line) => {
-        const { from, to } = parseLineCoords(line);
-        return {
-          coords: [from, to],
-          value: line.value || 0,
-          name: `${line.fromName || line.from} -> ${line.toName || line.to}`,
-        };
-      }),
-    });
-    const scatterData = [];
-    const effectScatterData = [];
-    const processedCities = new Set();
-    lines.forEach((line) => {
-      const { from: fromCoords, to: toCoords } = parseLineCoords(line);
-      const fromKey = createKey(line.from, fromCoords);
-      const toKey = createKey(line.to, toCoords);
-      
-      if (fromCoords && !processedCities.has(fromKey)) {
-        processedCities.add(fromKey);
-        scatterData.push({
-          name: line.fromName || "境外攻击源",
-          value: fromCoords,
-          itemStyle: { color: "#FF0000" },
-          symbolSize: 15,
-        });
-        effectScatterData.push({
-          name: line.fromName || "境外攻击源",
-          value: fromCoords,
-          itemStyle: { color: "#FFEF4A" },
-          symbolSize: 12,
-        });
-      }
-      if (toCoords && !processedCities.has(toKey)) {
-        processedCities.add(toKey);
-        scatterData.push({
-          name: line.toName || line.to,
-          value: toCoords,
-          itemStyle: { color: "#FFFFFF" },
-          symbolSize: 8,
-        });
-        effectScatterData.push({
-          name: line.toName || line.to,
-          value: toCoords,
-          itemStyle: { color: "#FFEF4A" },
-          symbolSize: 8,
-        });
-      }
-    });
-    if (scatterData.length) {
-      list.push({
-        ...seriesOption.scatter,
-        id: "scatterSeries",
-        progressive: 2000,
-        silent: true,
-        data: scatterData,
-      });
-    }
-    if (effectScatterData.length) {
-      list.push({
-        ...seriesOption.effectScatter,
-        id: "effectScatterSeries",
-        showEffectOn: "render",
-        data: effectScatterData,
-      });
-    }
-  }
-  return list;
-}
-
-const legendStyle = computed(() => ({
-  position: 'absolute',
-  bottom: '10px',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  display: 'flex',
-  gap: '20px',
-  zIndex: 100,
-}));
+const currentCubeData = ref([]);
 
 use([
   CanvasRenderer,
@@ -725,7 +458,21 @@ const formatNum = (num) => {
   return num.toString();
 };
 
-const option = computed(() => {
+function toggleCubeLegend() {
+  cubeVisible.value = !cubeVisible.value;
+}
+
+const legendStyle = computed(() => ({
+  position: 'absolute',
+  bottom: '10px',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  display: 'flex',
+  gap: '20px',
+  zIndex: 100,
+}));
+
+const currentOption = computed(() => {
   const mapData = transformDataForMap(props.data?.map || []);
   const cubeData = transformDataForMap(props.data?.cube || []);
   const lines = (props.data?.lines || []).map((line) => ({
@@ -733,7 +480,9 @@ const option = computed(() => {
     from: ChinaNameMap[line.from] || line.from,
     to: ChinaNameMap[line.to] || line.to,
   }));
-  const currentCubeVisible = cubeVisible.value;
+  
+  currentCubeData.value = cubeVisible.value ? cubeData : [];
+  
   const mapValues = mapData.map((item) => item.value);
   const sortedMapValues = [...mapValues].sort((a, b) => b - a);
   const v3 = sortedMapValues[2] ?? 0;
@@ -755,7 +504,7 @@ const option = computed(() => {
     },
     visualMap: [
       {
-        show: props.showCube && cubeData.length > 0,
+        show: props.showCube && cubeData.length > 0 && cubeVisible.value,
         type: "piecewise",
         orient: "vertical",
         left: 0,
@@ -792,7 +541,7 @@ const option = computed(() => {
           fontSize: 20,
         },
         itemSymbol: "circle",
-        seriesIndex: currentCubeVisible && cubeData.length > 0 ? 1 : -1,
+        seriesIndex: cubeVisible.value && cubeData.length > 0 ? 1 : -1,
         ...pickPositionOnly(props.option?.visualMap1),
       },
       {
@@ -876,7 +625,7 @@ const option = computed(() => {
       ...props.option?.tooltip,
     },
     geo: createGeoLayers(),
-    series: createSeries(mapData, cubeData, lines, currentCubeVisible),
+    series: createSeries(mapData, currentCubeData.value, lines),
     graphic: [
       {
         type: "text",
@@ -893,7 +642,7 @@ const option = computed(() => {
         },
         z: 100,
       },
-      ...(props.showCube && currentCubeVisible
+      ...(props.showCube && cubeVisible.value
         ? [
             {
               type: "text",
@@ -936,19 +685,11 @@ onMounted(() => {
           cubeVisible.value = !cubeVisible.value;
         }
       });
-      
-      // 监听图例选中变化
-      chart.on('legendselectchanged', function(params) {
-        const legendName = props.name2 || "企业数量";
-        if (params.selected.hasOwnProperty(legendName)) {
-          cubeVisible.value = params.selected[legendName];
-        }
-      });
     }
   });
 });
 
-function createSeries(mapData, cubeData, lines, showCube) {
+function createSeries(mapData, cubeData, lines) {
   const list = [];
   list.push({
     ...seriesOption.map,
@@ -970,7 +711,7 @@ function createSeries(mapData, cubeData, lines, showCube) {
       data: [],
     });
   }
-  if (props.showCube && cubeData.length > 0 && showCube) {
+  if (props.showCube && cubeData.length > 0) {
     const cubeValues = cubeData.map((item) => item.value);
     const cubeMin = cubeValues.length > 0 ? Math.min(...cubeValues) : 200;
     const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
