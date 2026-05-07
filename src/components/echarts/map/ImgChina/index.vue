@@ -15,7 +15,6 @@
       :option="option"
       :autoresize="true"
       :style="mapLayerStyle"
-      @legendselectchanged="handleLegendSelectChanged"
     ></v-chart>
   </div>
 </template>
@@ -473,6 +472,18 @@ const option = computed(() => {
     cubeValues.length > 0 ? cubeMin + (cubeMax - cubeMin) * 0.6 : 1400;
   const option = {
     animation: true,
+    legend: {
+      show: true,
+      data: [props.name1 || "地图数据", props.name2 || "企业数量"],
+      selected: {
+        [props.name2 || "企业数量"]: true
+      },
+      bottom: 10,
+      textStyle: {
+        color: "#ffffff",
+        fontSize: 18,
+      },
+    },
     visualMap: [
       {
         show: props.showCube && cubeData.length > 0,
@@ -648,21 +659,6 @@ onBeforeMount(() => {
   isMapReady.value = true;
 });
 
-function handleLegendSelectChanged(params) {
-  const selected = params.selected;
-  if (props.name2 && selected.hasOwnProperty(props.name2)) {
-    const chart = mapChart.value?.chart;
-    if (chart) {
-      chart.setOption({
-        series: [{
-          id: 'cubeSeries',
-          data: selected[props.name2] ? coordsFmt(transformDataForMap(props.data?.cube || [])) : []
-        }]
-      });
-    }
-  }
-}
-
 function createSeries(mapData, cubeData, lines) {
   const list = [];
   list.push({
@@ -701,9 +697,13 @@ function createSeries(mapData, cubeData, lines) {
       coordinateSystem: "geo",
       geoIndex: 0,
       name: props.name2 || "企业数量",
-      legendIndex: 1,
-      legendHoverLink: false,
+      legendHoverLink: true,
+      selectedMode: true,
       renderItem: function (params, api) {
+        const isSelected = api.visual('selected');
+        if (isSelected === false) {
+          return { type: 'group', children: [] };
+        }
         const value = cubeData[params.dataIndex].value;
         let color;
         if (value >= max1) {
