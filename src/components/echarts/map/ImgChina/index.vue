@@ -665,29 +665,18 @@ function setupChartEvents() {
   nextTick(() => {
     const chart = mapChart.value?.chart;
     if (chart) {
+      chart.off('legendselectchanged');
       chart.on('legendselectchanged', function(params) {
-        if (props.name2 && params.selected.hasOwnProperty(props.name2)) {
-          const isVisible = params.selected[props.name2];
-          chart.setOption({
-            series: [{
-              id: 'cubeSeries',
-              data: isVisible ? coordsFmt(transformDataForMap(props.data?.cube || [])) : []
-            }]
-          });
-        }
-      });
-      chart.on('click', function(params) {
-        if (params.componentType === 'visualMap') {
+        const legendName = props.name2 || "企业数量";
+        if (params.selected.hasOwnProperty(legendName)) {
+          const isSelected = params.selected[legendName];
           const seriesIndex = chart.getOption().series.findIndex(s => s.id === 'cubeSeries');
           if (seriesIndex !== -1) {
-            const currentData = chart.getOption().series[seriesIndex].data || [];
-            const isVisible = currentData.length > 0;
-            chart.setOption({
-              series: [{
-                id: 'cubeSeries',
-                data: isVisible ? [] : coordsFmt(transformDataForMap(props.data?.cube || []))
-              }]
-            });
+            if (isSelected) {
+              chart.showSeries(seriesIndex);
+            } else {
+              chart.hideSeries(seriesIndex);
+            }
           }
         }
       });
