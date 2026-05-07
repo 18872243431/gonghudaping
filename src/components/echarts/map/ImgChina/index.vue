@@ -15,7 +15,7 @@
       :option="option"
       :autoresize="true"
       :style="mapLayerStyle"
-      @click="handleChartClick"
+      @legendselectchanged="handleLegendSelectChanged"
     ></v-chart>
   </div>
 </template>
@@ -663,18 +663,9 @@ onBeforeMount(() => {
   isMapReady.value = true;
 });
 
-function handleChartClick(params) {
-  if (params.componentType === 'visualMap') {
-    const chart = mapChart.value?.chart;
-    if (chart) {
-      cubeVisible.value = !cubeVisible.value;
-      chart.setOption({
-        series: [{
-          id: 'cubeSeries',
-          data: cubeVisible.value ? coordsFmt(transformDataForMap(props.data?.cube || [])) : []
-        }]
-      });
-    }
+function handleLegendSelectChanged(params) {
+  if (props.name2 && params.selected.hasOwnProperty(props.name2)) {
+    cubeVisible.value = params.selected[props.name2];
   }
 }
 
@@ -700,7 +691,7 @@ function createSeries(mapData, cubeData, lines) {
       data: [],
     });
   }
-  if (props.showCube && cubeData.length > 0) {
+  if (props.showCube && cubeData.length > 0 && cubeVisible.value) {
     const cubeValues = cubeData.map((item) => item.value);
     const cubeMin = cubeValues.length > 0 ? Math.min(...cubeValues) : 200;
     const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
@@ -716,13 +707,7 @@ function createSeries(mapData, cubeData, lines) {
       coordinateSystem: "geo",
       geoIndex: 0,
       name: props.name2 || "企业数量",
-      legendHoverLink: true,
-      selectedMode: true,
       renderItem: function (params, api) {
-        const isSelected = api.visual('selected');
-        if (isSelected === false) {
-          return { type: 'group', children: [] };
-        }
         const value = cubeData[params.dataIndex].value;
         let color;
         if (value >= max1) {
