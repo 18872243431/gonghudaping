@@ -41,6 +41,8 @@ import { CubeLeft, CubeRight, CubeTop } from "./cube";
 const NANSHA_SHIFT_LON = -2.5;
 const NANSHA_SHIFT_LAT = -1;
 
+const cubeHidden = ref(false);
+
 use([
   CanvasRenderer,
   MapChart,
@@ -455,6 +457,7 @@ const option = computed(() => {
     from: ChinaNameMap[line.from] || line.from,
     to: ChinaNameMap[line.to] || line.to,
   }));
+  const hidden = cubeHidden.value;
   const mapValues = mapData.map((item) => item.value);
   // 从大到小排序
   const sortedMapValues = [...mapValues].sort((a, b) => b - a);
@@ -670,14 +673,7 @@ function setupChartEvents() {
         const legendName = props.name2 || "企业数量";
         if (params.selected.hasOwnProperty(legendName)) {
           const isSelected = params.selected[legendName];
-          const seriesIndex = chart.getOption().series.findIndex(s => s.id === 'cubeSeries');
-          if (seriesIndex !== -1) {
-            if (isSelected) {
-              chart.showSeries(seriesIndex);
-            } else {
-              chart.hideSeries(seriesIndex);
-            }
-          }
+          cubeHidden.value = !isSelected;
         }
       });
     }
@@ -710,7 +706,7 @@ function createSeries(mapData, cubeData, lines) {
       data: [],
     });
   }
-  if (props.showCube && cubeData.length > 0) {
+  if (props.showCube && cubeData.length > 0 && !cubeHidden.value) {
     const cubeValues = cubeData.map((item) => item.value);
     const cubeMin = cubeValues.length > 0 ? Math.min(...cubeValues) : 200;
     const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
@@ -726,6 +722,7 @@ function createSeries(mapData, cubeData, lines) {
       coordinateSystem: "geo",
       geoIndex: 0,
       name: props.name2 || "企业数量",
+      legendIndex: 0,
       renderItem: function (params, api) {
         const value = cubeData[params.dataIndex].value;
         let color;
