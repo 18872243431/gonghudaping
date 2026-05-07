@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onBeforeMount, onMounted, nextTick } from "vue";
+import { computed, ref, onBeforeMount, onMounted, nextTick, watch } from "vue";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import {
@@ -460,6 +460,97 @@ const formatNum = (num) => {
 
 function toggleCubeLegend() {
   cubeVisible.value = !cubeVisible.value;
+  
+  // 手动更新图表
+  nextTick(() => {
+    const chart = mapChart.value?.chart;
+    if (chart) {
+      const cubeData = cubeVisible.value 
+        ? transformDataForMap(props.data?.cube || [])
+        : [];
+      
+      if (!cubeVisible.value) {
+        const filteredSeries = chart.getOption().series.filter(s => s.id !== 'cubeSeries');
+        chart.clear();
+        chart.setOption({
+          ...chart.getOption(),
+          series: filteredSeries
+        });
+      } else {
+        const currentSeries = chart.getOption().series;
+        const cubeSeriesIndex = currentSeries.findIndex(s => s.id === 'cubeSeries');
+        
+        if (cubeSeriesIndex === -1) {
+          const newCubeSeries = createCubeSeries(cubeData);
+          chart.setOption({
+            series: [...currentSeries, newCubeSeries]
+          });
+        } else {
+          const newSeries = [...currentSeries];
+          newSeries[cubeSeriesIndex] = {
+            ...newSeries[cubeSeriesIndex],
+            data: coordsFmt(cubeData)
+          };
+          chart.setOption({ series: newSeries });
+        }
+      }
+    }
+  });
+}
+
+function createCubeSeries(cubeData) {
+  const cubeValues = cubeData.map((item) => item.value);
+  const cubeMin = cubeValues.length > 0 ? Math.min(...cubeValues) : 200;
+  const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
+  const cubeMiddle =
+    cubeValues.length > 0 ? cubeMin + (cubeMax - cubeMin) * 0.6 : 1400;
+  const min1 = props.option?.visualMap1?.min || cubeMin;
+  const middle1 = props.option?.visualMap1?.middle || cubeMiddle;
+  const max1 = props.option?.visualMap1?.max || cubeMax;
+  
+  return {
+    id: "cubeSeries",
+    type: "custom",
+    zlevel: 5,
+    coordinateSystem: "geo",
+    geoIndex: 0,
+    name: props.name2 || "企业数量",
+    legendIndex: 0,
+    renderItem: function (params, api) {
+      const value = cubeData[params.dataIndex].value;
+      let color;
+      if (value >= max1) {
+        color = "255, 77, 77";
+      } else if (value >= middle1) {
+        color = "255, 210, 64";
+      } else if (value >= min1) {
+        color = "77, 213, 255";
+      } else {
+        color = "150, 150, 150";
+      }
+      const height = 18;
+      return renderItem(
+        params,
+        api,
+        {
+          left: [`rgba(${color},1)`, `rgba(${color},0.1)`],
+          right: [`rgba(${color},1)`, `rgba(${color},0.1)`],
+          top: "#fff",
+        },
+        { width: 12, height: 8 },
+        height * 3,
+      );
+    },
+    data: coordsFmt(cubeData),
+    silent: false,
+    tooltip: {
+      formatter: (params) => {
+        return `${props.name2 || "企业数量"} <br/>${params.name} ${
+          params.value[2]
+        }`;
+      },
+    },
+  };
 }
 
 const legendStyle = computed(() => ({
@@ -674,6 +765,15 @@ onBeforeMount(() => {
     window.__ChinaShapesRegistered__ = true;
   }
   isMapReady.value = true;
+});
+
+watch(cubeVisible, () => {
+  nextTick(() => {
+    const chart = mapChart.value?.chart;
+    if (chart) {
+      chart.setOption(currentOption.value, true);
+    }
+  });
 });
 
 onMounted(() => {
