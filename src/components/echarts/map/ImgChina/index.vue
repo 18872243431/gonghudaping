@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onBeforeMount } from "vue";
+import { computed, ref, onBeforeMount, onMounted, nextTick, watch } from "vue";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import {
@@ -41,7 +41,8 @@ import { CubeLeft, CubeRight, CubeTop } from "./cube";
 const NANSHA_SHIFT_LON = -2.5;
 const NANSHA_SHIFT_LAT = -1;
 
-const cubeHidden = ref(false);
+const mapChart = ref(null);
+const cubeVisible = ref(true);
 
 use([
   CanvasRenderer,
@@ -55,21 +56,14 @@ use([
 const props = defineProps({
   option: {
     type: Object,
-    default: () => ({
-    }),
+    default: () => ({}),
   },
   data: {
     type: Object,
     default: () => ({
-      map: [
-        // { name: "北京市", value: 920 },
-      ],
-      cube: [
-        // { name: "北京市", value: 2100 },
-      ],
-      lines: [
-        // { from: "广东省", to: "河南省", value: 14 },
-      ],
+      map: [],
+      cube: [],
+      lines: [],
     }),
   },
   showCube: {
@@ -105,6 +99,7 @@ const props = defineProps({
     default: "100%",
   },
 });
+
 const containerStyle = computed(() => props.style || {});
 const showClipDefs = computed(() => props.showClipDefs !== false);
 const mapLayerStyle = computed(() => ({
@@ -170,7 +165,6 @@ function createShiftedMapData(source) {
 const shiftedChinaMap = createShiftedMapData(ChinaMap);
 const shiftedChinaContour = createShiftedMapData(ChinaContour);
 
-// 数据转换函数：将完整地名转换为简化地名
 function transformDataForMap(data) {
   return data.map((item) => ({
     ...item,
@@ -184,8 +178,8 @@ const showBaseImage = computed(() => props.option?.showBaseImage !== false);
 const clipPathId = `china-map-clip-${Math.random().toString(36).slice(2, 10)}`;
 
 const bounds = [
-  [74.1, 53.1], // [西经, 北纬]
-  [134.5, 3.9], // [东经, 南纬]
+  [74.1, 53.1],
+  [134.5, 3.9],
 ];
 
 function projectPoint(point) {
@@ -247,7 +241,6 @@ function createGeoLayers() {
       fontSize: props.option?.label?.fontSize || 20,
       fontWeight: props.option?.label?.fontWeight || "normal",
     },
-
     emphasis: {
       label: {
         show: false,
@@ -422,7 +415,6 @@ const clipPathList = computed(() => {
   return paths;
 });
 
-// 仅从 visualMap 外部 option 中提取位置属性，避免 min/max/pieces 等数据相关属性覆盖内部计算值
 function pickPositionOnly(obj) {
   if (!obj) return {};
   const result = {};
@@ -457,11 +449,9 @@ const option = computed(() => {
     from: ChinaNameMap[line.from] || line.from,
     to: ChinaNameMap[line.to] || line.to,
   }));
-  const hidden = cubeHidden.value;
+  const currentCubeVisible = cubeVisible.value;
   const mapValues = mapData.map((item) => item.value);
-  // 从大到小排序
   const sortedMapValues = [...mapValues].sort((a, b) => b - a);
-  // 获取关键分段点的值 (第3, 6, 10名)
   const v3 = sortedMapValues[2] ?? 0;
   const v6 = sortedMapValues[5] ?? 0;
   const v10 = sortedMapValues[9] ?? 0;
@@ -473,13 +463,14 @@ const option = computed(() => {
   const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
   const cubeMiddle =
     cubeValues.length > 0 ? cubeMin + (cubeMax - cubeMin) * 0.6 : 1400;
-  const option = {
+  
+  return {
     animation: true,
     legend: {
       show: true,
       data: [props.name1 || "地图数据", props.name2 || "企业数量"],
       selected: {
-        [props.name2 || "企业数量"]: true
+        [props.name2 || "企业数量"]: cubeVisible.value
       },
       bottom: 10,
       textStyle: {
@@ -526,7 +517,7 @@ const option = computed(() => {
           fontSize: 20,
         },
         itemSymbol: "circle",
-        seriesIndex: cubeData.length > 0 ? 1 : -1,
+        seriesIndex: currentCubeVisible && cubeData.length > 0 ? 1 : -1,
         ...pickPositionOnly(props.option?.visualMap1),
       },
       {
@@ -610,7 +601,7 @@ const option = computed(() => {
       ...props.option?.tooltip,
     },
     geo: createGeoLayers(),
-    series: createSeries(mapData, cubeData, lines),
+    series: createSeries(mapData, cubeData, lines, currentCubeVisible),
     graphic: [
       {
         type: "text",
@@ -627,7 +618,7 @@ const option = computed(() => {
         },
         z: 100,
       },
-      ...(props.showCube
+      ...(props.showCube && currentCubeVisible
         ? [
             {
               type: "text",
@@ -646,10 +637,7 @@ const option = computed(() => {
         : []),
     ],
   };
-  return option;
 });
-
-import { nextTick, watch } from "vue";
 
 onBeforeMount(() => {
   echarts.registerMap("china", shiftedChinaMap);
@@ -672,19 +660,34 @@ function setupChartEvents() {
       chart.on('legendselectchanged', function(params) {
         const legendName = props.name2 || "企业数量";
         if (params.selected.hasOwnProperty(legendName)) {
-          const isSelected = params.selected[legendName];
-          cubeHidden.value = !isSelected;
+          cubeVisible.value = params.selected[legendName];
         }
       });
     }
   });
 }
 
+watch(cubeVisible, function(newVal) {
+  nextTick(() => {
+    const chart = mapChart.value?.chart;
+    if (chart) {
+      const legendName = props.name2 || "企业数量";
+      chart.setOption({
+        legend: {
+          selected: {
+            [legendName]: newVal
+          }
+        }
+      });
+    }
+  });
+});
+
 onMounted(() => {
   setupChartEvents();
 });
 
-function createSeries(mapData, cubeData, lines) {
+function createSeries(mapData, cubeData, lines, showCube) {
   const list = [];
   list.push({
     ...seriesOption.map,
@@ -706,7 +709,7 @@ function createSeries(mapData, cubeData, lines) {
       data: [],
     });
   }
-  if (props.showCube && cubeData.length > 0 && !cubeHidden.value) {
+  if (props.showCube && cubeData.length > 0 && showCube) {
     const cubeValues = cubeData.map((item) => item.value);
     const cubeMin = cubeValues.length > 0 ? Math.min(...cubeValues) : 200;
     const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
@@ -760,14 +763,12 @@ function createSeries(mapData, cubeData, lines) {
     });
   }
   if (lines.length > 0) {
-    // 解析飞线坐标：支持数组格式（经纬度）和字符串格式（省份名称）
     function parseLineCoords(lineData) {
       const from = Array.isArray(lineData.from) ? lineData.from : (provinceCoords.value[lineData.from] || [0, 0]);
       const to = Array.isArray(lineData.to) ? lineData.to : (provinceCoords.value[lineData.to] || [0, 0]);
       return { from, to };
     }
     
-    // 创建唯一key用于去重
     function createKey(name, coords) {
       if (Array.isArray(name)) {
         return `coord_${name[0]}_${name[1]}`;
@@ -857,7 +858,6 @@ function getProvinceCoords(data) {
     const originalName = props.name;
     const center = props.center || props.cp;
     if (originalName && Array.isArray(center) && center.length === 2) {
-      // 同时保存原始地名和简化地名的坐标映射，确保无论数据传哪种格式都能匹配到
       const simplifiedName = ChinaNameMap[originalName] || originalName;
       obj[originalName] = center;
       obj[simplifiedName] = center;
@@ -950,7 +950,6 @@ function renderItem(params, api, styleColor, cubeOption, value) {
   width: 100%;
   height: 100%;
   position: relative;
-  // 确保容器居中对齐，与 echarts 的 layoutCenter 一致
   display: flex;
   justify-content: center;
   align-items: center;
@@ -962,9 +961,7 @@ function renderItem(params, api, styleColor, cubeOption, value) {
     pointer-events: none;
   }
   img {
-    // 强制图片的宽高比与导出设置（700x685）完全一致，并居中显示
-    // width: auto;
-     width: 100%;
+    width: 100%;
     height: 100%;
     aspect-ratio: 700 / 685;
     position: absolute;
@@ -974,8 +971,6 @@ function renderItem(params, api, styleColor, cubeOption, value) {
     object-fit: contain;
   }
   .chart {
-    // 图表层也强制采用相同的宽高比，确保 GeoJSON 投影的边界和图片物理边界一致
-    // width: auto;
     width: 100% !important;
     height: 100%;
     aspect-ratio: 700 / 685;
