@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onBeforeMount, watch } from "vue";
+import { computed, ref, onBeforeMount } from "vue";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import {
@@ -41,8 +41,6 @@ import { CubeLeft, CubeRight, CubeTop } from "./cube";
 
 const NANSHA_SHIFT_LON = -2.5;
 const NANSHA_SHIFT_LAT = -1;
-
-const cubeVisible = ref(true);
 
 use([
   CanvasRenderer,
@@ -458,7 +456,6 @@ const option = computed(() => {
     from: ChinaNameMap[line.from] || line.from,
     to: ChinaNameMap[line.to] || line.to,
   }));
-  const visible = cubeVisible.value;
   const mapValues = mapData.map((item) => item.value);
   // 从大到小排序
   const sortedMapValues = [...mapValues].sort((a, b) => b - a);
@@ -655,6 +652,14 @@ function handleLegendSelectChanged(params) {
   const selected = params.selected;
   if (props.name2 && selected.hasOwnProperty(props.name2)) {
     cubeVisible.value = selected[props.name2];
+    const chart = mapChart.value?.chart;
+    if (chart) {
+      if (selected[props.name2]) {
+        chart.showSeries('cubeSeries');
+      } else {
+        chart.hideSeries('cubeSeries');
+      }
+    }
   }
 }
 
@@ -680,7 +685,7 @@ function createSeries(mapData, cubeData, lines) {
       data: [],
     });
   }
-  if (props.showCube && cubeData.length > 0 && cubeVisible.value) {
+  if (props.showCube && cubeData.length > 0) {
     const cubeValues = cubeData.map((item) => item.value);
     const cubeMin = cubeValues.length > 0 ? Math.min(...cubeValues) : 200;
     const cubeMax = cubeValues.length > 0 ? Math.max(...cubeValues) : 2600;
@@ -690,6 +695,7 @@ function createSeries(mapData, cubeData, lines) {
     const middle1 = props.option?.visualMap1?.middle || cubeMiddle;
     const max1 = props.option?.visualMap1?.max || cubeMax;
     list.push({
+      id: "cubeSeries",
       type: "custom",
       zlevel: 5,
       coordinateSystem: "geo",
