@@ -18,7 +18,6 @@ import ScaleBox from "@/components/ScaleBox";
 import { useRoute } from "vue-router";
 import { useTimeoutFn } from "@vueuse/core";
 import { setToken } from "@/libs/cookie";
-
 const route = useRoute();
 const width = Number(process.env.VUE_APP_SCREEN_WIDTH);
 
